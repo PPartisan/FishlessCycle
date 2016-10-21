@@ -1,8 +1,19 @@
 <resources>
 
-    <string name="app_name">Fishless Cycle</string>
+    <string name="app_name" translatable="false">Fishless Cycle</string>
 
     <!-- Main Fragment -->
     <string name="fm_empty_view_text">No Tanks Yet!</string>
+    <string name="fm_colon" translatable="false">:</string>
+    <string name="fm_last_updated_template">Last updated on %1$s</string>
+    <string name="fm_next_update_template">Next update on %1$s</string>
+
+    <!-- Data Names -->
+    <string name="ammonia">Ammonia</string>
+    <string name="nitrite">Nitrite</string>
+    <string name="nitrate">Nitrate</string>
+    <string name="quantity_template">%1$.1f %2$s</string>
+    <string name="unit_metric">mg/L</string>
+    <string name="unit_imperial">ppm</string>
 
 </resources>

@@ -28,6 +28,7 @@ public final class MainFragment extends Fragment {
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Override
