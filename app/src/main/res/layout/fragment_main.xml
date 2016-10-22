@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fm_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fm_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="8dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/fm_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:title="@string/app_name"
+                android:title="@string/app_name"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
         android:id="@+id/fm_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -17,6 +38,18 @@
         android:gravity="center_horizontal|top"
         android:layout_margin="@dimen/fm_margin_default"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/fm_empty_view_text"/>
+        android:text="@string/fm_empty_view_text"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fm_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fm_margin_default"
+        android:layout_marginRight="@dimen/fm_margin_default"
+        android:layout_marginBottom="@dimen/fm_margin_default"
+        android:src="@drawable/ic_add_white_24dp"
+        app:fabSize="normal" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -35,7 +35,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
         final Tank tank = mTanks.get(position);
         final Resources res = holder.itemView.getResources();
-        final @ConversionUtils.UnitType int type = ConversionUtils.METRIC;
+        final @ConversionUtils.UnitType int type = ConversionUtils.MGL;
 
         holder.image.setImageResource(R.mipmap.ic_launcher);
 
@@ -75,8 +75,10 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
+            //ToDo: Launch Detail Activity With Identifier
             Log.d(getClass().getSimpleName(), view.toString() + ": onClick");
         }
+
     }
 
 }
