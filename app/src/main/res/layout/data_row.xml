@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_small"
+    android:layout_marginStart="@dimen/horizontal_margin_default"
+    android:layout_marginLeft="@dimen/horizontal_margin_default">
+
+    <TextView
+        android:id="@+id/rd_date"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        android:textStyle="bold"
+        tools:text="18/08"/>
+
+    <TextView
+        android:id="@+id/rd_ammonia"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        tools:text="2"/>
+
+    <TextView
+        android:id="@+id/rd_nitrite"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        tools:text="0"/>
+
+    <TextView
+        android:id="@+id/rd_nitrate"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        tools:text="0"/>
+
+    <ImageButton
+        android:id="@+id/rd_overflow"
+        android:layout_width="@dimen/image_button_default"
+        android:layout_height="@dimen/image_button_default"
+        android:layout_weight="0"
+        android:src="@drawable/ic_more_vert_white_24dp"
+        android:tint="@color/primary"
+        android:layout_gravity="center"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+
+</LinearLayout>

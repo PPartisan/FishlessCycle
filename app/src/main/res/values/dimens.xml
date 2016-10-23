@@ -10,9 +10,15 @@
     <dimen name="fm_card_image_height">168dp</dimen>
     <dimen name="fm_title_margin_top">12dp</dimen>
 
+    <!-- Detail Fragment -->
+    <dimen name="fd_app_bar_height">360dp</dimen>
+
     <!-- Misc. -->
     <dimen name="image_button_small">36dp</dimen>
+    <dimen name="image_button_default">48dp</dimen>
     <dimen name="line_margin_top_small">4dp</dimen>
     <dimen name="line_margin_top_smallest">2dp</dimen>
+    <dimen name="list_item_small">48dp</dimen>
+    <dimen name="list_item_default">72dp</dimen>
 
 </resources>

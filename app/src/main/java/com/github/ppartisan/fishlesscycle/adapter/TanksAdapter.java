@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.ppartisan.fishlesscycle.DetailActivity;
+import com.github.ppartisan.fishlesscycle.DetailFragment;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
@@ -96,6 +99,8 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         public void onClick(View view) {
             //ToDo: Launch Detail Activity With Identifier
             Log.d(getClass().getSimpleName(), view.toString() + ": onClick");
+            Context context = view.getContext();
+            context.startActivity(new Intent(context, DetailActivity.class));
         }
 
     }
