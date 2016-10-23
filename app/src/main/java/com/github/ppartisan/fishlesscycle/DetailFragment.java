@@ -60,13 +60,15 @@ public final class DetailFragment extends Fragment {
 
         List<Data> dataList = new ArrayList<>();
 
-        dataList.add(new Data(0, (long)(System.currentTimeMillis() - Math.random()*10000000), 2, 0, 0));
-        dataList.add(new Data(1, (long)(System.currentTimeMillis() - Math.random()*10000000), 5, 0, 0));
-        dataList.add(new Data(2, (long)(System.currentTimeMillis() - Math.random()*10000000), 6, 0, 0));
-        dataList.add(new Data(3, (long)(System.currentTimeMillis() - Math.random()*10000000), 1, 2, 12));
-        dataList.add(new Data(4, (long)(System.currentTimeMillis() - Math.random()*10000000), 0, 4, 22));
-        dataList.add(new Data(5, (long)(System.currentTimeMillis() - Math.random()*10000000), 0, 10, 26));
-        dataList.add(new Data(6, (long)(System.currentTimeMillis() - Math.random()*10000000), 3, 5, 40));
+        long date = System.currentTimeMillis();
+
+        dataList.add(new Data(0, date, 2, 0, 0));
+        dataList.add(new Data(1, date -= 8.64e+7, 5, 0, 0));
+        dataList.add(new Data(2, date -= 8.64e+7, 6, 0, 0));
+        dataList.add(new Data(3, date -= 8.64e+7, 1, 2, 12));
+        dataList.add(new Data(4, date -= 8.64e+7, 0, 4, 22));
+        dataList.add(new Data(5, date -= 8.64e+7, 0, 10, 26));
+        dataList.add(new Data(6, date -= 8.64e+7, 3, 5, 40));
 
         return dataList;
 

@@ -99,8 +99,10 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         public void onClick(View view) {
             //ToDo: Launch Detail Activity With Identifier
             Log.d(getClass().getSimpleName(), view.toString() + ": onClick");
-            Context context = view.getContext();
-            context.startActivity(new Intent(context, DetailActivity.class));
+            if (view.getId() == itemView.getId()) {
+                Context context = view.getContext();
+                context.startActivity(new Intent(context, DetailActivity.class));
+            }
         }
 
     }

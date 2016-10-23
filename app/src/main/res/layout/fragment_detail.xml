@@ -11,7 +11,8 @@
         android:id="@+id/fd_app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fd_app_bar_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/fd_collapsing_toolbar"

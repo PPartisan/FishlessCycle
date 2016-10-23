@@ -18,4 +18,8 @@
     <string name="unit_metric">mg/L</string>
     <string name="unit_imperial">ppm</string>
 
+    <!-- Data Row Menu -->
+    <string name="mrd_action_edit">Edit</string>
+    <string name="mrd_action_delete">Delete</string>
+
 </resources>

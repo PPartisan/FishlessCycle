@@ -1,8 +1,12 @@
 package com.github.ppartisan.fishlesscycle.adapter;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -81,8 +85,26 @@ public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHold
         public void onClick(View view) {
             //ToDo; Show Pop-Up menu to view notes, edit or delete row
             Log.d(getClass().getSimpleName(), view.toString() + " clicked");
+            buildPopUpMenu(view).show();
+        }
+
+        private PopupMenu buildPopUpMenu(View target) {
+
+            PopupMenu menu = new PopupMenu(target.getContext(), target, GravityCompat.END);
+            menu.getMenuInflater().inflate(R.menu.data_row_menu, menu.getMenu());
+            menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Log.d(getClass().getSimpleName(), item.toString() + " clicked");
+                    return true;
+                }
+            });
+
+            return menu;
+
         }
 
     }
+
 
 }
