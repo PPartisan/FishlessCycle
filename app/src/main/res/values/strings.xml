@@ -7,6 +7,8 @@
     <string name="fm_colon" translatable="false">:</string>
     <string name="fm_last_updated_template">Last updated on %1$s</string>
     <string name="fm_next_update_template">Next update on %1$s</string>
+    <string name="fm_latest_data_title">Latest Data</string>
+    <string name="fm_cycle_stage_template">Status: %1$s</string>
 
     <!-- Data Names -->
     <string name="ammonia">Ammonia</string>

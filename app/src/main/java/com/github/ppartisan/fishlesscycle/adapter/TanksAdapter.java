@@ -1,17 +1,21 @@
 package com.github.ppartisan.fishlesscycle.adapter;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.TankUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,12 +38,15 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final Tank tank = mTanks.get(position);
-        final Resources res = holder.itemView.getResources();
+        final Context ctx = holder.itemView.getContext();
+        final Resources res = ctx.getResources();
         final @ConversionUtils.UnitType int type = ConversionUtils.MGL;
 
-        holder.image.setImageResource(R.mipmap.ic_launcher);
+        Picasso.with(ctx).load(R.drawable.test_card_image).into(holder.image);
 
         holder.title.setText(tank.name);
+        holder.options.setText(TankUtils.getTankOptionsText(ctx, tank));
+        holder.stage.setText(res.getString(R.string.fm_cycle_stage_template, TankUtils.getStageString(res)));
         holder.lastUpdated.setText(res.getString(R.string.fm_last_updated_template, "20th October"));
         holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, 3, type));
         holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, 0, type));
@@ -55,17 +62,29 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
     static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        final ImageButton editTitle, infoOptions, infoStages;
         final ImageView image;
-        final TextView title, lastUpdated, ammonia, nitrite, nitrate, nextUpdate;
+        final TextView title, options, lastUpdated, stage, ammonia, nitrite, nitrate, nextUpdate;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(this);
 
+            editTitle = (ImageButton) itemView.findViewById(R.id.tcv_edit_title);
+            infoOptions = (ImageButton) itemView.findViewById(R.id.tcv_options_info);
+            infoStages = (ImageButton) itemView.findViewById(R.id.tcv_stage_info);
+
+            editTitle.setOnClickListener(this);
+            infoOptions.setOnClickListener(this);
+            infoStages.setOnClickListener(this);
+
             image = (ImageView) itemView.findViewById(R.id.tcv_image);
+
             title = (TextView) itemView.findViewById(R.id.tcv_title);
+            options = (TextView) itemView.findViewById(R.id.tcv_options);
             lastUpdated = (TextView) itemView.findViewById(R.id.tcv_last_updated);
+            stage = (TextView) itemView.findViewById(R.id.tcv_stage);
             ammonia = (TextView) itemView.findViewById(R.id.tcv_ammonia);
             nitrite = (TextView) itemView.findViewById(R.id.tcv_nitrite);
             nitrate = (TextView) itemView.findViewById(R.id.tcv_nitrate);

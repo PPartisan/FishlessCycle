@@ -7,172 +7,350 @@
     android:foreground="?attr/selectableItemBackground"
     android:clickable="true"
     app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:rowCount="9"
-        app:columnCount="6"
-        app:alignmentMode="alignBounds">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/tcv_image"
-            android:layout_height="0dp"
-            android:layout_width="wrap_content"
-            app:layout_columnWeight="1"
-            app:layout_rowWeight="1"
-            app:layout_rowSpan="8"
-            tools:src="@mipmap/ic_launcher" />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fm_card_image_height"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/test_card_image"/>
 
-        <TextView
-            android:id="@+id/tcv_title"
-            android:layout_width="0dp"
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            app:layout_columnSpan="5"
-            app:layout_columnWeight="3"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:text="My First Tank!"/>
+            android:background="@drawable/main_fragment_card_view_scrim"
+            android:layout_alignBottom="@+id/tcv_image"
+            android:paddingTop="@dimen/fm_title_margin_top"
+            android:paddingStart="@dimen/horizontal_margin_default"
+            android:paddingLeft="@dimen/horizontal_margin_default"
+            app:columnCount="2"
+            app:rowCount="2">
+
+            <TextView
+                android:id="@+id/tcv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/white"
+                android:maxLines="1"
+                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_columnWeight="1"
+                tools:text="My First Tank!"/>
+
+            <ImageButton
+                android:id="@+id/tcv_edit_title"
+                android:layout_width="@dimen/image_button_small"
+                android:layout_height="@dimen/image_button_small"
+                android:src="@drawable/ic_mode_edit_white_24dp"
+                app:layout_columnWeight="0"
+                app:layout_gravity="center_vertical"
+                style="@style/Base.Widget.AppCompat.Button.Borderless" />
+
+            <TextView
+                android:id="@+id/tcv_options"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:maxLines="1"
+                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_columnWeight="1"
+                tools:text="Heated, Plants, Seeded"/>
+
+            <ImageButton
+                android:id="@+id/tcv_options_info"
+                android:layout_width="@dimen/image_button_small"
+                android:layout_height="@dimen/image_button_small"
+                android:src="@drawable/ic_info_outline_white_24dp"
+                app:layout_columnWeight="0"
+                app:layout_gravity="center_vertical"
+                style="@style/Base.Widget.AppCompat.Button.Borderless" />
+
+        </android.support.v7.widget.GridLayout>
 
         <TextView
             android:id="@+id/tcv_last_updated"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            app:layout_columnSpan="5"
-            app:layout_columnWeight="3"
-            tools:text="Last Updated 18th October at 3:14pm"/>
+            android:layout_below="@+id/tcv_image"
+            android:maxLines="1"
+            android:layout_marginTop="@dimen/line_margin_top_small"
+            android:layout_marginStart="@dimen/horizontal_margin_default"
+            android:layout_marginLeft="@dimen/horizontal_margin_default"
+            android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+            android:layout_marginRight="@dimen/horizontral_margin_default_small"
+            android:gravity="start"
+            android:textStyle="italic"
+            tools:text="Last Updated On 16th October"/>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_columnSpan="5"
-            app:layout_columnWeight="3" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:text="@string/ammonia"
-            app:layout_columnWeight="0"
-            tools:text="Ammonia"/>
+            android:layout_below="@+id/tcv_last_updated"
+            android:layout_marginStart="@dimen/horizontal_margin_default"
+            android:layout_marginLeft="@dimen/horizontal_margin_default"
+            app:columnCount="2"
+            app:rowCount="4">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:text="@string/fm_colon"
-            app:layout_columnWeight="0"
-            tools:text=":"/>
+            <TextView
+                android:id="@+id/tcv_stage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_columnWeight="1"
+                tools:text="Stage: Cycling [Ammonia]"/>
 
-        <TextView
-            android:id="@+id/tcv_ammonia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:layout_columnWeight="1"
-            app:layout_columnSpan="3"
-            tools:text="2 mg/L"
-            android:gravity="end" />
+            <ImageButton
+                android:id="@+id/tcv_stage_info"
+                android:layout_height="@dimen/image_button_small"
+                android:layout_width="@dimen/image_button_small"
+                android:tint="@color/primary"
+                android:src="@drawable/ic_info_outline_white_24dp"
+                app:layout_gravity="end|center_vertical"
+                app:layout_columnWeight="0"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:text="@string/nitrite"
-            app:layout_columnWeight="0"
-            tools:text="Nitrite"/>
+            <TextView
+                android:id="@+id/tcv_latest_data"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:textStyle="bold"
+                android:text="@string/fm_latest_data_title"
+                app:layout_columnSpan="2"
+                app:layout_gravity="fill"
+                app:layout_columnWeight="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:text="@string/fm_colon"
-            app:layout_columnWeight="0"
-            tools:text=":"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="@dimen/line_margin_top_small"
+                android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                app:layout_gravity="fill"
+                app:layout_columnSpan="2"
+                app:layout_columnWeight="1" />
 
-        <TextView
-            android:id="@+id/tcv_nitrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end|center_vertical"
-            android:textStyle="bold"
-            app:layout_columnWeight="1"
-            app:layout_columnSpan="3"
-            tools:text="0 mg/L" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ammonia"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:text="@string/nitrate"
-            app:layout_columnWeight="0"
-            tools:text="Nitrate"/>
+            <TextView
+                android:id="@+id/tcv_ammonia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                app:layout_gravity="end|center_vertical"
+                tools:text="2 mg/L"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:text="@string/fm_colon"
-            app:layout_columnWeight="0"
-            tools:text=":"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_margin_top_smallest"
+                android:text="@string/nitrite"/>
 
-        <TextView
-            android:id="@+id/tcv_nitrate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end|center_vertical"
-            android:textStyle="bold"
-            app:layout_columnWeight="1"
-            app:layout_columnSpan="3"
-            tools:text="16 mg/L" />
+            <TextView
+                android:id="@+id/tcv_nitrite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/line_margin_top_smallest"
+                android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                app:layout_gravity="end|center_vertical"
+                tools:text="0 mg/L" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_columnSpan="5"
-            app:layout_columnWeight="3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_margin_top_smallest"
+                android:text="@string/nitrate"/>
 
-        <TextView
-            android:id="@+id/tcv_next_update"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_columnSpan="5"
-            app:layout_columnWeight="3"
-            android:gravity="end|center_vertical"
-            tools:text="Next Update Scheduled For 19th October"/>
+            <TextView
+                android:id="@+id/tcv_nitrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/line_margin_top_smallest"
+                android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                app:layout_gravity="end|center_vertical"
+                tools:text="16 mg/L" />
 
-        <!--<android.support.v4.widget.Space-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:layout_columnSpan="3"-->
-            <!--app:layout_columnWeight="1"-->
-            <!--app:layout_gravity="fill" />-->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:layout_marginBottom="@dimen/line_margin_top_small"
+                android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                app:layout_gravity="fill"
+                app:layout_columnSpan="2"
+                app:layout_columnWeight="1" />
 
-        <!--<ImageButton-->
-            <!--android:layout_width="48dp"-->
-            <!--android:layout_height="48dp"-->
-            <!--app:layout_columnSpan="1"-->
-            <!--app:layout_columnWeight="1"-->
-            <!--app:layout_gravity="center"/>-->
+            <TextView
+                android:id="@+id/tcv_next_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="fill_vertical|end"
+                android:layout_marginBottom="@dimen/line_margin_top_small"
+                android:layout_marginEnd="@dimen/horizontral_margin_default_small"
+                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                app:layout_columnSpan="2"
+                app:layout_columnWeight="1"
+                tools:text="Next Update Scheduled For 19th October"/>
 
-        <!--<ImageButton-->
-            <!--android:layout_height="48dp"-->
-            <!--android:layout_width="48dp"-->
-            <!--app:layout_columnSpan="1"-->
-            <!--app:layout_columnWeight="1"-->
-            <!--app:layout_gravity="center" />-->
+        </android.support.v7.widget.GridLayout>
 
-        <!--<ImageButton-->
-            <!--android:layout_width="48dp"-->
-            <!--android:layout_height="48dp"-->
-            <!--app:layout_columnSpan="1"-->
-            <!--app:layout_columnWeight="1"-->
-            <!--app:layout_gravity="center" />-->
+    </RelativeLayout>
 
-    </android.support.v7.widget.GridLayout>
+    <!--<android.support.v7.widget.GridLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:rowCount="9"-->
+    <!--app:columnCount="6"-->
+    <!--app:alignmentMode="alignBounds">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/tcv_image"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--app:layout_columnWeight="1"-->
+    <!--app:layout_rowWeight="1"-->
+    <!--app:layout_rowSpan="8"-->
+    <!--tools:src="@mipmap/ic_launcher" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tcv_title"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--app:layout_columnSpan="5"-->
+    <!--app:layout_columnWeight="3"-->
+    <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+    <!--tools:text="My First Tank!"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tcv_last_updated"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--app:layout_columnSpan="5"-->
+    <!--app:layout_columnWeight="3"-->
+    <!--tools:text="Last Updated 18th October at 3:14pm"/>-->
+
+    <!--<View-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@android:color/darker_gray"-->
+    <!--app:layout_columnSpan="5"-->
+    <!--app:layout_columnWeight="3" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:text="@string/ammonia"-->
+    <!--app:layout_columnWeight="0"-->
+    <!--tools:text="Ammonia"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:text="@string/fm_colon"-->
+    <!--app:layout_columnWeight="0"-->
+    <!--tools:text=":"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tcv_ammonia"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_columnWeight="1"-->
+    <!--app:layout_columnSpan="3"-->
+    <!--tools:text="2 mg/L"-->
+    <!--android:gravity="end" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:text="@string/nitrite"-->
+    <!--app:layout_columnWeight="0"-->
+    <!--tools:text="Nitrite"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:text="@string/fm_colon"-->
+    <!--app:layout_columnWeight="0"-->
+    <!--tools:text=":"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tcv_nitrite"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="end|center_vertical"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_columnWeight="1"-->
+    <!--app:layout_columnSpan="3"-->
+    <!--tools:text="0 mg/L" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:text="@string/nitrate"-->
+    <!--app:layout_columnWeight="0"-->
+    <!--tools:text="Nitrate"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:text="@string/fm_colon"-->
+    <!--app:layout_columnWeight="0"-->
+    <!--tools:text=":"/>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tcv_nitrate"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="end|center_vertical"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_columnWeight="1"-->
+    <!--app:layout_columnSpan="3"-->
+    <!--tools:text="16 mg/L" />-->
+
+    <!--<View-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@android:color/darker_gray"-->
+    <!--app:layout_columnSpan="5"-->
+    <!--app:layout_columnWeight="3" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tcv_next_update"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_columnSpan="5"-->
+    <!--app:layout_columnWeight="3"-->
+    <!--android:gravity="end|center_vertical"-->
+    <!--tools:text="Next Update Scheduled For 19th October"/>-->
+
+    <!--</android.support.v7.widget.GridLayout>-->
 
 </android.support.v7.widget.CardView>

@@ -59,8 +59,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mToolbar = (Toolbar) view.findViewById(R.id.fm_toolbar);
-        //mCallbacks.setCustomActionBar(mToolbar);
-        //mCallbacks.getCustomActionBar().setTitle(getString(R.string.app_name));
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fm_fab);
         mFab.setOnClickListener(this);
@@ -85,8 +83,18 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     private static List<Tank> buildDummyTankData() {
         List<Tank> tanks = new ArrayList<>();
-        tanks.add(new Tank("My First Tank", 0));
-        tanks.add(new Tank("My Second Tank", 1));
+        tanks.add(new Tank.Builder("My First Tank")
+                .isHeated(true)
+                .plantStatus(Tank.LIGHT)
+                .identifier(0)
+                .build()
+        );
+        tanks.add(new Tank.Builder("My Second Tank")
+                .isSeeded(true)
+                .plantStatus(Tank.HEAVY)
+                .identifier(1)
+                .build()
+        );
         return tanks;
     }
 

@@ -30,4 +30,5 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
     public ActionBar getCustomActionBar() {
         return getSupportActionBar();
     }
+
 }
