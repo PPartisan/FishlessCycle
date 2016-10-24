@@ -337,6 +337,8 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
             x = in.readFloat();
             y = in.readFloat();
             dataSetIndex = in.readInt();
+            dataIndex = in.readInt();
+            stackIndex = in.readInt();
         }
 
         public static final Creator<ParcelableHighlightData> CREATOR = new Creator<ParcelableHighlightData>() {
@@ -361,6 +363,8 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
             parcel.writeFloat(x);
             parcel.writeFloat(y);
             parcel.writeInt(dataSetIndex);
+            parcel.writeInt(dataIndex);
+            parcel.writeInt(stackIndex);
         }
     }
 
