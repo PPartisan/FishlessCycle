@@ -11,8 +11,7 @@
         android:id="@+id/fd_app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fd_app_bar_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="0dp">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/fd_collapsing_toolbar"
@@ -20,12 +19,14 @@
             android:layout_height="match_parent"
             app:contentScrim="@color/primary"
             app:titleEnabled="false"
-            app:layout_scrollFlags="scroll">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <com.github.mikephil.charting.charts.CombinedChart
                 android:id="@+id/fd_chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginBottom="@dimen/line_margin_top_small"
                 app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
@@ -46,24 +47,36 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:id="@+id/fd_rv_parent_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/fd_rv_parent_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Showing data for date range 18th October to 23rd October"/>
+                android:orientation="vertical">
 
-            <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
-                android:id="@+id/fd_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Showing data for date range 18th October to 23rd October"/>
 
-        </LinearLayout>
+                <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
+                    android:id="@+id/fd_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fd_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fm_margin_default"
+        android:layout_marginRight="@dimen/fm_margin_default"
+        android:layout_marginBottom="@dimen/fm_margin_default"
+        android:src="@drawable/ic_add_white_24dp"
+        app:fabSize="normal" />
+
 
 </android.support.design.widget.CoordinatorLayout>

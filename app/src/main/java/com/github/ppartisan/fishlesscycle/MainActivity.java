@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 
-public class MainActivity extends AppCompatActivity implements MainFragment.Callbacks {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +19,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
                     .commit();
         }
 
-    }
-
-    @Override
-    public void setCustomActionBar(Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-    }
-
-    @Override
-    public ActionBar getCustomActionBar() {
-        return getSupportActionBar();
     }
 
 }

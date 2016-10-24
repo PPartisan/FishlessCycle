@@ -8,4 +8,17 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+
+    <color name="red_500">#f44336</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="green_500">#4CAF50</color>
+
+    <color name="red_300">#e57373</color>
+    <color name="blue_300">#64B5F6</color>
+    <color name="green_300">#81C784</color>
+
+
+    <color name="detail_primary">#9E9E9E</color>
+    <color name="detail_primary_dark">#616161</color>
+
 </resources>

@@ -24,8 +24,6 @@ import java.util.List;
 
 public final class MainFragment extends Fragment implements View.OnClickListener {
 
-    private Callbacks mCallbacks;
-
     private EmptyRecyclerView mRecyclerView;
     private TanksAdapter mAdapter;
 
@@ -40,17 +38,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         fragment.setArguments(args);
         return fragment;
 
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mCallbacks = (Callbacks) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.getClass().getSimpleName() + " must implement "
-                    + Callbacks.class.getCanonicalName());
-        }
     }
 
     @Override
@@ -75,12 +62,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = null;
-    }
-
     private static List<Tank> buildDummyTankData() {
         List<Tank> tanks = new ArrayList<>();
         tanks.add(new Tank.Builder("My First Tank")
@@ -102,11 +83,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         //ToDo: Add New "Tank" To RecyclerView
         Log.d(getClass().getSimpleName(), "FAB clicked");
-    }
-
-    public interface Callbacks {
-        void setCustomActionBar(Toolbar toolbar);
-        ActionBar getCustomActionBar();
     }
 
 }
