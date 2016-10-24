@@ -157,7 +157,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         }
         highlight = bundle.getParcelable(SELECTED_ITEM_KEY);
         if (highlight != null && highlight.dataSetIndex >= 0) {
-            Highlight h = new Highlight(highlight.x, highlight.y, highlight.dataSetIndex);
+            Highlight h = new Highlight(highlight.x, highlight.dataSetIndex, highlight.stackIndex);
             h.setDataIndex(highlight.dataIndex);
             mChart.highlightValue(h);
         }
