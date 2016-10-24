@@ -16,4 +16,10 @@
         <item>Cycled</item>
     </string-array>
 
+    <string-array name="chart_labels">
+        <item>Ammonia</item>
+        <item>Nitrite</item>
+        <item>Nitrate</item>
+    </string-array>
+
 </resources>

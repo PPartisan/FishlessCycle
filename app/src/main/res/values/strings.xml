@@ -22,4 +22,7 @@
     <string name="mrd_action_edit">Edit</string>
     <string name="mrd_action_delete">Delete</string>
 
+    <!-- Detail Menu -->
+    <string name="md_action_switch_graph">Switch Graph Type</string>
+
 </resources>

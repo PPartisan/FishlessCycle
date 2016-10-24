@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/md_action_switch_graph"
+        android:title="@string/md_action_switch_graph"
+        android:icon="@drawable/ic_switch_graph"
+        app:showAsAction="ifRoom"/>
+
+</menu>

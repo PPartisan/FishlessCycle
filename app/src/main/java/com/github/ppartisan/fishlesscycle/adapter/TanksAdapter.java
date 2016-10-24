@@ -46,7 +46,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         final @ConversionUtils.UnitType int type = ConversionUtils.MGL;
 
         Picasso.with(ctx).load(R.drawable.test_card_image)
-                .placeholder(R.color.red_500)
+                .placeholder(R.color.red_300)
                 .into(holder.image);
 
         holder.title.setText(tank.name);

@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,6 +46,8 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        setHasOptionsMenu(true);
 
         mToolbar = (Toolbar) view.findViewById(R.id.fm_toolbar);
 
@@ -84,5 +88,4 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         //ToDo: Add New "Tank" To RecyclerView
         Log.d(getClass().getSimpleName(), "FAB clicked");
     }
-
 }
