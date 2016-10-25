@@ -17,8 +17,16 @@
     <color name="blue_300">#64B5F6</color>
     <color name="green_300">#81C784</color>
 
+    <color name="blue_grey_500">#607D8B</color>
+    <color name="amber_500">#FF9800</color>
+    <color name="light_green_500">#8BC34A</color>
+    <color name="light_blue_500">#03A9F4</color>
+    <color name="indigo_500">#673AB7</color>
 
-    <color name="detail_primary">#9E9E9E</color>
-    <color name="detail_primary_dark">#616161</color>
+    <color name="blue_grey_300">#90A4AE</color>
+    <color name="amber_300">#FFB74D</color>
+    <color name="light_green_300">#AED581</color>
+    <color name="light_blue_300">#4FC3F7</color>
+    <color name="indigo_300">#9575CD</color>
 
 </resources>

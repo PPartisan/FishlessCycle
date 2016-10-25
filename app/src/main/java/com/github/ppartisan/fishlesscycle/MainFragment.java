@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.model.Tank;
+import com.github.ppartisan.fishlesscycle.setup.SetUpWizardActivity;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
 
 import java.util.ArrayList;
@@ -87,6 +89,8 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         //ToDo: Add New "Tank" To RecyclerView
         Log.d(getClass().getSimpleName(), "FAB clicked");
+        final Context context = view.getContext();
+        context.startActivity(new Intent(context, SetUpWizardActivity.class));
     }
 
 }

@@ -30,4 +30,16 @@
     <string name="mct_action_add_change_photo">Add/Change Photo</string>
     <string name="mct_action_delete_tank">Delete Tank</string>
 
+    <!-- Set-Up Wizard -->
+
+    <!-- 1. Introduction Fragment -->
+    <string name="wus_intro_content">
+        This guide will help you set-up your new aquarium!\n\nThe following pages will give a list
+        of recommended items to buy, provide tools to help calculate dosage amounts and configure
+        extra items.\n\nIf you prefer, you may skip the guide and enter these details manually by
+        pressing the "Skip" button below. Otherwise, choose "Continue", or swipe to the right.
+    </string>
+    <string name="wus_intro_continue">Continue</string>
+    <string name="wus_intro_skip">Skip</string>
+
 </resources>

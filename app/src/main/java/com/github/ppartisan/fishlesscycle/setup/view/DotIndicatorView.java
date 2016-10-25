@@ -4,17 +4,18 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 public final class DotIndicatorView extends View {
 
-    private static final float RADIUS = ViewUtils.dpToPx(2);
-    private static final float PADDING_INTERNAL = ViewUtils.dpToPx(1);
-    private static final float STROKE_WIDTH = 1f;
+    private static final float RADIUS = ViewUtils.dpToPx(6);
+    private static final float STROKE_WIDTH = 4f;
 
     private ViewPager mPager;
 
@@ -46,6 +47,11 @@ public final class DotIndicatorView extends View {
         invalidate();
     }
 
+    public void setColor(int color) {
+        mCirclePaint.setColor(color);
+        invalidate();
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
@@ -55,8 +61,8 @@ public final class DotIndicatorView extends View {
         }
 
         final int circleCount = mPager.getAdapter().getCount();
-        final int targetWidth = (int)((RADIUS*circleCount) + (PADDING_INTERNAL*(circleCount-2)));
-        final int targetHeight = (int)(RADIUS*2);
+        final int targetWidth = (int)((RADIUS*2*circleCount) + (STROKE_WIDTH*2*circleCount));
+        final int targetHeight = (int)((RADIUS*2)+(STROKE_WIDTH*2));
 
         setMeasuredDimension(targetWidth, targetHeight);
     }
@@ -79,7 +85,7 @@ public final class DotIndicatorView extends View {
             final float left = counter*subCanvasWidth;
             final float x = left + (subCanvasWidth/2);
 
-            mCirclePaint.setStyle((counter==currentPage) ? Paint.Style.FILL : Paint.Style.STROKE);
+            mCirclePaint.setStyle((counter==currentPage) ? Paint.Style.FILL_AND_STROKE : Paint.Style.STROKE);
             canvas.drawCircle(x,y,RADIUS,mCirclePaint);
 
             counter++;

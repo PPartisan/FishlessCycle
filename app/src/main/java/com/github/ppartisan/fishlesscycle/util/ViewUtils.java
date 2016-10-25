@@ -1,6 +1,8 @@
 package com.github.ppartisan.fishlesscycle.util;
 
+import android.app.Activity;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.DisplayMetrics;
@@ -21,6 +23,12 @@ public final class ViewUtils {
     public static int dpToPx(int dp) {
         final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         return (int)((dp * metrics.density));
+    }
+
+    public static void setStatusBarColor(Activity activity, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().setStatusBarColor(color);
+        }
     }
 
 }

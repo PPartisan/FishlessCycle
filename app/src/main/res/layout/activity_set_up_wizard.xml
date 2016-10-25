@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager
-    android:id="@+id/wusa_pager"
+
+<RelativeLayout
+    android:id="@+id/wusa_parent"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/wusa_image"
+        android:layout_width="@dimen/wus_image_dimen"
+        android:layout_height="@dimen/wus_image_dimen"
+        android:layout_marginLeft="@dimen/horizontal_margin_default"
+        android:layout_marginRight="@dimen/horizontal_margin_default"
+        android:layout_marginTop="@dimen/vertical_margin_default"
+        android:layout_marginBottom="@dimen/vertical_margin_default"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/wusa_pager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+       android:layout_above="@+id/wusa_indicator" />
+
+    <com.github.ppartisan.fishlesscycle.setup.view.DotIndicatorView
+        android:id="@+id/wusa_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/line_margin_top_small"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -13,6 +13,10 @@
     <!-- Detail Fragment -->
     <dimen name="fd_app_bar_height">360dp</dimen>
 
+    <!-- Set Up Wizard -->
+    <dimen name="wus_indicator_height">24dp</dimen>
+    <dimen name="wus_image_dimen">168dp</dimen>
+
     <!-- Misc. -->
     <dimen name="image_button_small">36dp</dimen>
     <dimen name="image_button_default">48dp</dimen>

@@ -47,7 +47,7 @@
         android:layout_marginEnd="@dimen/fm_margin_default"
         android:layout_marginRight="@dimen/fm_margin_default"
         android:layout_marginBottom="@dimen/fm_margin_default"
-        android:src="@drawable/ic_add_white_24dp"
+        app:srcCompat="@drawable/ic_add_white_24dp"
         app:fabSize="normal"
         app:layout_behavior="com.github.ppartisan.fishlesscycle.view.ScrollAwareFloatingActionButtonBehavior" />
 

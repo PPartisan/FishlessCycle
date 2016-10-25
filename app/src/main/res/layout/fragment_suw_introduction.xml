@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/introduction_wusf_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/wus_intro_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/horizontal_margin_default"
+        android:layout_marginRight="@dimen/horizontal_margin_default"
+        android:layout_marginTop="@dimen/vertical_margin_default"
+        android:layout_marginBottom="@dimen/vertical_margin_default"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:text="@string/wus_intro_content"/>
+
+    <Button
+        android:id="@+id/wus_intro_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wus_intro_continue"
+        android:layout_below="@+id/wus_intro_text"
+        android:layout_alignEnd="@+id/wus_intro_text"
+        android:layout_alignRight="@id/wus_intro_text"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+    <Button
+        android:id="@+id/wus_intro_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wus_intro_skip"
+        android:layout_below="@+id/wus_intro_text"
+        android:layout_alignStart="@+id/wus_intro_text"
+        android:layout_alignLeft="@id/wus_intro_text"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
+
+</RelativeLayout>
