@@ -1,12 +1,12 @@
 package com.github.ppartisan.fishlesscycle.model;
 
-public final class Data {
+public final class Reading {
 
     public final long id, date;
     public final float ammonia, nitrite, nitrate;
     private String note;
 
-    public Data(long id, long date, float ammonia, float nitrite, float nitrate) {
+    public Reading(long id, long date, float ammonia, float nitrite, float nitrate) {
         this.id = id;
         this.date = date;
         this.ammonia = ammonia;

@@ -2,14 +2,14 @@ package com.github.ppartisan.fishlesscycle.chart;
 
 import android.os.Bundle;
 
-import com.github.ppartisan.fishlesscycle.model.Data;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 
 import java.util.List;
 
 public interface ChartAdapter {
 
-    void setData(List<Data> data);
-    void addDataItem(Data item);
+    void setData(List<Reading> reading);
+    void addDataItem(Reading item);
     void showLineChart();
     void showBarChat();
     void switchChartType();

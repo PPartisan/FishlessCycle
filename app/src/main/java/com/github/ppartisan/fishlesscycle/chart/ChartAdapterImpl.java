@@ -25,8 +25,8 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.ppartisan.fishlesscycle.R;
-import com.github.ppartisan.fishlesscycle.model.Data;
-import com.github.ppartisan.fishlesscycle.util.DataUtils;
+import com.github.ppartisan.fishlesscycle.model.Reading;
+import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -50,7 +50,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
     private final CombinedChart mChart;
 
-    private List<Data> mData;
+    private List<Reading> mReading;
 
     private LineData mLineData;
     private BarData mBarData;
@@ -85,15 +85,15 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
         mCombinedData = new CombinedData();
 
-        mData = new ArrayList<>();
+        mReading = new ArrayList<>();
         highlight = new ParcelableHighlightData();
 
     }
 
     @Override
-    public void setData(@NonNull List<Data> data) {
+    public void setData(@NonNull List<Reading> reading) {
 
-        mData = data;
+        mReading = reading;
 
         switch (chartMode) {
             case LINE:
@@ -110,7 +110,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     }
 
     @Override
-    public void addDataItem(Data item) {
+    public void addDataItem(Reading item) {
     }
 
     @Override
@@ -209,7 +209,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
     private LineData getLineData() {
         if (mLineData == null || mLineData.getEntryCount() == 0) {
-            Map<String, List<Entry>> entryMap = buildEntryMapFromDataList(mData);
+            Map<String, List<Entry>> entryMap = buildEntryMapFromDataList(mReading);
             mLineData = buildLineDataFromEntryMap(entryMap);
         }
         return mLineData;
@@ -217,7 +217,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
     private BarData getBarData() {
         if (mBarData == null || mBarData.getEntryCount() == 0) {
-            List<BarEntry> barEntries = buildBarEntryListFromDataList(mData);
+            List<BarEntry> barEntries = buildBarEntryListFromDataList(mReading);
             final BarDataSet set = new BarDataSet(barEntries, "");
 
             final int[] colors = new int[] { green300, blue300, red300 };
@@ -235,16 +235,16 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         return mBarData;
     }
 
-    private Map<String, List<Entry>> buildEntryMapFromDataList(@NonNull List<Data> data) {
+    private Map<String, List<Entry>> buildEntryMapFromDataList(@NonNull List<Reading> reading) {
 
-        final int size = data.size();
+        final int size = reading.size();
 
         List<Entry> ammonia = new ArrayList<>(size);
         List<Entry> nitrite = new ArrayList<>(size);
         List<Entry> nitrate = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
-            final Data item = data.get(i);
+            final Reading item = reading.get(i);
             ammonia.add(new Entry(i, item.ammonia));
             nitrite.add(new Entry(i, item.nitrite));
             nitrate.add(new Entry(i, item.nitrate));
@@ -259,14 +259,14 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
     }
 
-    private List<BarEntry> buildBarEntryListFromDataList(@NonNull List<Data> data) {
+    private List<BarEntry> buildBarEntryListFromDataList(@NonNull List<Reading> reading) {
 
-        final int size = data.size();
+        final int size = reading.size();
 
         List<BarEntry> stackedBars = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
-            final Data item = data.get(i);
+            final Reading item = reading.get(i);
             final float[] values = new float[] { item.ammonia, item.nitrite, item.nitrate };
             stackedBars.add(new BarEntry(i, values));
         }
@@ -314,7 +314,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            return DataUtils.getReadableDateString(mData.get((int) value).date);
+            return ReadingUtils.getReadableDateString(mReading.get((int) value).date);
         }
 
         @Override

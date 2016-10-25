@@ -10,7 +10,7 @@
     <string name="fm_latest_data_title">Latest Data</string>
     <string name="fm_cycle_stage_template">Status: %1$s</string>
 
-    <!-- Data Names -->
+    <!-- Reading Names -->
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>
     <string name="nitrate">Nitrate</string>
@@ -18,11 +18,16 @@
     <string name="unit_metric">mg/L</string>
     <string name="unit_imperial">ppm</string>
 
-    <!-- Data Row Menu -->
+    <!-- Reading Row Menu -->
     <string name="mrd_action_edit">Edit</string>
     <string name="mrd_action_delete">Delete</string>
 
     <!-- Detail Menu -->
     <string name="md_action_switch_graph">Switch Graph Type</string>
+
+    <!-- Tank Card Menu -->
+    <string name="mct_action_edit_title">Edit Title</string>
+    <string name="mct_action_add_change_photo">Add/Change Photo</string>
+    <string name="mct_action_delete_tank">Delete Tank</string>
 
 </resources>

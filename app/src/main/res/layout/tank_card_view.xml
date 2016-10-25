@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tcv_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
     android:clickable="true"
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -21,6 +22,16 @@
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
             tools:src="@drawable/test_card_image"/>
+
+        <ImageButton
+            android:id="@+id/tcv_overflow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_more_vert_white_24dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
         <android.support.v7.widget.GridLayout
             android:layout_width="match_parent"
@@ -42,16 +53,17 @@
                 android:maxLines="1"
                 app:layout_gravity="fill_horizontal|center_vertical"
                 app:layout_columnWeight="1"
+                app:layout_columnSpan="2"
                 tools:text="My First Tank!"/>
 
-            <ImageButton
-                android:id="@+id/tcv_edit_title"
-                android:layout_width="@dimen/image_button_small"
-                android:layout_height="@dimen/image_button_small"
-                android:src="@drawable/ic_mode_edit_white_24dp"
-                app:layout_columnWeight="0"
-                app:layout_gravity="center_vertical"
-                style="@style/Base.Widget.AppCompat.Button.Borderless" />
+            <!--<ImageButton-->
+                <!--android:id="@+id/tcv_edit_title"-->
+                <!--android:layout_width="@dimen/image_button_small"-->
+                <!--android:layout_height="@dimen/image_button_small"-->
+                <!--android:src="@drawable/ic_mode_edit_white_24dp"-->
+                <!--app:layout_columnWeight="0"-->
+                <!--app:layout_gravity="center_vertical"-->
+                <!--style="@style/Base.Widget.AppCompat.Button.Borderless" />-->
 
             <TextView
                 android:id="@+id/tcv_options"

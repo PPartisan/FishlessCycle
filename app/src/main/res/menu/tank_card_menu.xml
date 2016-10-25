@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mct_action_edit_tank"
+        android:title="@string/mct_action_edit_title"
+        android:icon="@drawable/ic_mode_edit_white_24dp" />
+
+    <item
+        android:id="@+id/mct_action_add_change_photo"
+        android:title="@string/mct_action_add_change_photo"
+        android:icon="@drawable/ic_photo_camera_white_24dp" />
+
+    <item
+        android:id="@+id/mct_action_delete_tank"
+        android:title="@string/mct_action_delete_tank"
+        android:icon="@drawable/ic_delete_white_24dp" />
+
+</menu>

@@ -1,14 +1,10 @@
 package com.github.ppartisan.fishlesscycle;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,25 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.CombinedData;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.ppartisan.fishlesscycle.adapter.DataAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapterImpl;
-import com.github.ppartisan.fishlesscycle.model.Data;
-import com.github.ppartisan.fishlesscycle.util.DataUtils;
-import com.github.ppartisan.fishlesscycle.util.TankUtils;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -84,18 +68,18 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         mFab = (FloatingActionButton) view.findViewById(R.id.fd_fab);
         mFab.setOnClickListener(this);
 
-        final List<Data> dummyData = buildDummyData();
+        final List<Reading> dummyReading = buildDummyData();
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fd_recycler_view);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new DataAdapter(dummyData);
+        mAdapter = new DataAdapter(dummyReading);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mChart = (CombinedChart) view.findViewById(R.id.fd_chart);
         mChartAdapter = new ChartAdapterImpl(mChart);
-        mChartAdapter.setData(dummyData);
+        mChartAdapter.setData(dummyReading);
 
         if (savedInstanceState != null) {
             mChartAdapter.onRestoreInstanceState(savedInstanceState);
@@ -110,9 +94,9 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         mChartAdapter.onSaveInstanceState(outState);
     }
 
-    private static List<Data> buildDummyData() {
+    private static List<Reading> buildDummyData() {
 
-        List<Data> dataList = new ArrayList<>();
+        List<Reading> readingList = new ArrayList<>();
 
         long date = System.currentTimeMillis();
         final int count = 31;
@@ -123,16 +107,16 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
             final int ammonia = rnd.nextInt(8);
             final int nitrite = rnd.nextInt(15);
             final int nitrate = rnd.nextInt(50);
-            dataList.add(new Data(i, adjDate, ammonia, nitrite, nitrate));
+            readingList.add(new Reading(i, adjDate, ammonia, nitrite, nitrate));
         }
 
-        return dataList;
+        return readingList;
 
     }
 
     @Override
     public void onClick(View view) {
-        //ToDo: Add New Entry to Data Table for Tank
+        //ToDo: Add New Entry to Reading Table for Tank
         Log.d(getClass().getSimpleName(), view.toString() + " clicked");
     }
 

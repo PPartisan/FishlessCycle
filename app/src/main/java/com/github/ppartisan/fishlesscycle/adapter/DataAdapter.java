@@ -1,10 +1,8 @@
 package com.github.ppartisan.fishlesscycle.adapter;
 
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,18 +11,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
-import com.github.ppartisan.fishlesscycle.model.Data;
-import com.github.ppartisan.fishlesscycle.util.DataUtils;
+import com.github.ppartisan.fishlesscycle.model.Reading;
+import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
+import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.util.List;
 
 
 public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
-    private List<Data> mData;
+    private List<Reading> mReading;
 
-    public DataAdapter(List<Data> data) {
-        mData = data;
+    public DataAdapter(List<Reading> reading) {
+        mReading = reading;
     }
 
     @Override
@@ -36,31 +35,31 @@ public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Data item = mData.get(position);
+        final Reading item = mReading.get(position);
 
-        holder.date.setText(DataUtils.getReadableDateString(item.date));
-        holder.ammonia.setText(DataUtils.toOneDecimalPlace(item.ammonia));
-        holder.nitrite.setText(DataUtils.toOneDecimalPlace(item.nitrite));
-        holder.nitrate.setText(DataUtils.toOneDecimalPlace(item.nitrate));
+        holder.date.setText(ReadingUtils.getReadableDateString(item.date));
+        holder.ammonia.setText(ReadingUtils.toOneDecimalPlace(item.ammonia));
+        holder.nitrite.setText(ReadingUtils.toOneDecimalPlace(item.nitrite));
+        holder.nitrate.setText(ReadingUtils.toOneDecimalPlace(item.nitrate));
 
     }
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        return mReading == null ? 0 : mReading.size();
     }
 
-    public void setDataItems(List<Data> items) {
-        mData = items;
+    public void setDataItems(List<Reading> items) {
+        mReading = items;
     }
 
-    public void addDataItem(Data item) {
-        mData.add(item);
-        notifyItemInserted(mData.size());
+    public void addDataItem(Reading item) {
+        mReading.add(item);
+        notifyItemInserted(mReading.size());
     }
 
-    public Data getDataItem(int index) {
-        return mData.get(index);
+    public Reading getDataItem(int index) {
+        return mReading.get(index);
     }
 
     static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -90,8 +89,7 @@ public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHold
 
         private PopupMenu buildPopUpMenu(View target) {
 
-            PopupMenu menu = new PopupMenu(target.getContext(), target, GravityCompat.END);
-            menu.getMenuInflater().inflate(R.menu.data_row_menu, menu.getMenu());
+            PopupMenu menu = ViewUtils.buildPopUpMenu(target, R.menu.data_row_menu);
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
