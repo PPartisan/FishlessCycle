@@ -1,7 +1,9 @@
 package com.github.ppartisan.fishlesscycle.util;
 
+import android.content.res.Resources;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 public final class ViewUtils {
@@ -14,6 +16,11 @@ public final class ViewUtils {
         menu.getMenuInflater().inflate(menuId, menu.getMenu());
         return menu;
 
+    }
+
+    public static int dpToPx(int dp) {
+        final DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return (int)((dp * metrics.density));
     }
 
 }

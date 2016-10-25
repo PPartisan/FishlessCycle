@@ -21,6 +21,10 @@
             android:name=".DetailActivity"
             android:theme="@style/DetailTheme"/>
 
+        <activity
+            android:name=".setup.SetUpWizardActivity"
+            android:theme="@style/SetUpTheme" />
+
     </application>
 
 </manifest>
