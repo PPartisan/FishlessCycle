@@ -88,4 +88,5 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         //ToDo: Add New "Tank" To RecyclerView
         Log.d(getClass().getSimpleName(), "FAB clicked");
     }
+
 }
