@@ -38,4 +38,12 @@ public final class ConversionUtils {
 
     }
 
+    public static float getCubicInchesAsUkGallon(float cubicInches) {
+        return cubicInches*0.0036047f;
+    }
+
+    public static float getMlAsLitres(float ml) {
+        return ml/1000;
+    }
+
 }

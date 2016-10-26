@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.github.ppartisan.fishlesscycle.setup.fragment.IntroductionFragment;
+import com.github.ppartisan.fishlesscycle.setup.fragment.TankVolumeCalculatorFragment;
 
 public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
 
@@ -14,7 +15,14 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return IntroductionFragment.newInstance();
+        switch (position) {
+            case 0:
+                return IntroductionFragment.newInstance();
+            case 2:
+                return TankVolumeCalculatorFragment.newInstance();
+            default:
+                return IntroductionFragment.newInstance();
+        }
     }
 
     @Override

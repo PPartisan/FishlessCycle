@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 public final class DotIndicatorView extends View {

@@ -42,4 +42,20 @@
     <string name="wus_intro_continue">Continue</string>
     <string name="wus_intro_skip">Skip</string>
 
+    <!-- 2. Tank Volume Calculator Fragment -->
+    <string name="wus_fcvt_content">
+        In order to calculate the correct dosage of ammonia for your aquarium, it is first necessary
+        to know its volume. Enter the height, width and length of your aquarium below.\n\nIf you
+        already know the volume of your aquarium, you
+        may enter it into the box at the bottom of this page.\n\n
+    </string>
+    <string name="wus_fcvt_hint_height">Height</string>
+    <string name="wus_fcvt_hint_width">Width</string>
+    <string name="wus_fcvt_hint_length">Length</string>
+    <string name="wus_fcvt_multiplication_symbol">×</string>
+    <string name="wus_fcvt_hint_output">Volume</string>
+    <string name="wus_fcvt_switch_label">Change unit type</string>
+    <string name="wus_fcvt_decription_metric">Currently showing centimetres and litres</string>
+    <string name="wus_fcvt_decription_imperial">Currently showing inches and gallons</string>
+
 </resources>

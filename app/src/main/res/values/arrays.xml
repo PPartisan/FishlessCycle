@@ -22,4 +22,9 @@
         <item>Nitrate</item>
     </string-array>
 
+    <string-array name="unit_options">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
 </resources>
