@@ -39,7 +39,7 @@ public final class SetUpPageChangeListener implements ViewPager.OnPageChangeList
 
             final ColorPack finalColor = mColors.get(mColors.size()-1);
 
-            mCallback.onUpdateColors(finalColor.colorRegular, finalColor.colorDark);
+            mCallback.onUpdateColors(finalColor.regular, finalColor.dark);
 
         }
     }
@@ -51,11 +51,11 @@ public final class SetUpPageChangeListener implements ViewPager.OnPageChangeList
     public void onPageScrollStateChanged(int state) { }
 
     private int getEvaluatedRegularColor(float offset, ColorPack current, ColorPack next) {
-        return (Integer) mEvaluator.evaluate(offset, current.colorRegular, next.colorRegular);
+        return (Integer) mEvaluator.evaluate(offset, current.regular, next.regular);
     }
 
     private int getEvaluatedDarkColor(float offset, ColorPack current, ColorPack next) {
-        return (Integer) mEvaluator.evaluate(offset, current.colorDark, next.colorDark);
+        return (Integer) mEvaluator.evaluate(offset, current.dark, next.dark);
     }
 
 }

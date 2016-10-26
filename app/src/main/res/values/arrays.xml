@@ -27,4 +27,81 @@
         <item>Imperial</item>
     </string-array>
 
+    <string-array name="info_item_headers">
+        <item>Essential</item>
+        <item>Optional</item>
+    </string-array>
+    
+    <string-array name="info_item_parents">
+        <item>An Aquarium Tank (with Filter, Filter media etc.)</item>
+        <item>An Ammonia Source</item>
+        <item>A Water Testing Kit</item>
+        <item>A Water Siphon/Gravel Cleaner</item>
+        <item>A Large Bucket</item>
+        <item>A Towel</item>
+        <item>Water Conditioner/Dechlorinator</item>
+        <item>Syringe/Pipette/Dropper</item>
+        <item>Cleaned Substrate</item>
+    </string-array>
+
+    <string-array name="info_item_parents_optional">
+        <item>Plants</item>
+        <item>Decorations</item>
+        <item>Heater</item>
+        <item>Seed Material</item>
+    </string-array>
+
+    <string-array name="info_item_children">
+        <item>Ammonia sources typically include chemical (i.e. household cleaning Ammonia) and
+            organic (i.e. ammonia naturally produced by decaying shrimp, or as a waste product).
+            \n\nChemical ammonia is recommended as it provides greater control over dosage
+        levels. It is also less likely to encourage "bacterial blooms" during the cycle.
+            \n\nIf using store-bought ammonia, check to make sure it does not contain any surfactants
+        or fragrances. Check the ingredients label if unsure. The ammonia should not form bubbles or
+        foam when shaken.</item>
+        <item>
+            Water Testing Kits often come as either packs of paper strips or as liquid test kits.
+            \n\nLiquid tests kits are recommended as they are more accurate than paper strips.
+        </item>
+        <item>
+            In addition to cleaning substrate, water siphons make water changes substantially easier.
+        </item>
+        <item>
+            As with water siphons, a simple bucket is very useful for conducting water changes. It
+            can also be a helpful place to store items related to the aquarium.\n\nIt is recommended
+            any bucket used for an aquarium is not used for other tasks (i.e. cleaning) because of
+            the risk of contaminating the aquarium with cleaning products.
+        </item>
+        <item>
+            Water Conditioner removes chlorine and chloramines from tap water.\n\nBoth these chemicals
+            are toxic to fish and cycling bacteria.
+        </item>
+        <item>
+            To clean substrate, place it inside a bucket and fill the bucket with water. Once the
+            substrate has settled to the bottom, tip out the water.\n\nRepeat the process until the
+            water runs clear.
+        </item>
+    </string-array>
+
+    <string-array name="info_item_child_optional">
+        <item>
+            In addition to their aesthetic effects, plants can help speed up or even replace a fishless
+            cycle. Plants use ammonia, nitrite and nitrate as a food source, which reduces the load
+            on the bacteria in the aquarium.\n\nIf present in a high enough concentration, a \"silent
+            cycle\" may take place. This is where the ammonia produced by the tank\'s wildlife is low
+            enough that it can be absorbed completely by the plants.
+        </item>
+        <item>
+            Bacteria grow on aquarium surfaces. This mostly takes place inside the filter, but decorations
+            will also host some bacteria.
+        </item>
+        <item>
+            Seed material can drastically reduce the time it takes to cycle a new tank.\n\nSeed material
+            consists of taking an item from an established, cycled tank (i.e. a piece of filter media)
+            and introducing it to the new tank. The bacteria present will begin to multiply immediately
+            under the right conditions.\n\nKeep in mind that it is also possible to transmit pathogens
+            in this way, so ensure the seeding tank is healthy.
+        </item>
+    </string-array>
+
 </resources>

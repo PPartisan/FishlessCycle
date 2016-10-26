@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/iwus_row_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:textColor="@android:color/white"
+    android:layout_marginStart="@dimen/horizontal_margin_default"
+    android:layout_marginLeft="@dimen/horizontal_margin_default"
+    tools:text="Aquarium Tank"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" />

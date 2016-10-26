@@ -1,6 +1,5 @@
 package com.github.ppartisan.fishlesscycle.setup.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
-import com.github.ppartisan.fishlesscycle.setup.ColorPackSupplier;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 
 import java.text.DecimalFormat;
@@ -34,7 +32,6 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
     private final DecimalFormat mFormat = new DecimalFormat(".##");
 
-    private ColorPackSupplier mColorPackSupplier;
     private EditText mHeight, mWidth, mLength, mOutput;
 
     private TextView mUnitDescription;
@@ -50,17 +47,6 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
         return fragment;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try{
-            mColorPackSupplier = (ColorPackSupplier) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement " +
-                    ColorPackSupplier.class.getCanonicalName());
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,7 +58,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
         mLength = (EditText) v.findViewById(R.id.vt_suwf_length);
         mOutput = (EditText) v.findViewById(R.id.vt_swuf_output);
 
-        final int editTextBackgroundColor = mColorPackSupplier.getColorPackForIndexId(0).colorDark;
+        final int editTextBackgroundColor = mColorPackSupplier.getColorPackForIndexId(0).dark;
 
         mHeight.setHintTextColor(editTextBackgroundColor);
         mWidth.setHintTextColor(editTextBackgroundColor);

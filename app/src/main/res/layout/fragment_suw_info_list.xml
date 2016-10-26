@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/li_swuf_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="@dimen/horizontal_margin_default"
+            android:layout_marginRight="@dimen/horizontal_margin_default"
+            android:layout_marginTop="@dimen/vertical_margin_default"
+            android:layout_marginBottom="@dimen/vertical_margin_default"
+            android:text="@string/wus_pl_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/li_swuf_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/vertical_margin_default"
+            android:layout_marginLeft="@dimen/horizontal_margin_default"
+            android:layout_marginRight="@dimen/horizontal_margin_default"
+            android:layout_below="@id/li_swuf_content"/>
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>
