@@ -38,12 +38,20 @@ public final class ConversionUtils {
 
     }
 
-    public static float getCubicInchesAsUkGallon(float cubicInches) {
+    public static float getCubicInchesAsImperialGallon(float cubicInches) {
         return cubicInches*0.0036047f;
+    }
+
+    public static float getCubicInchesAsUsGallon(float cubicInches) {
+        return cubicInches*0.004329f;
     }
 
     public static float getMlAsLitres(float ml) {
         return ml/1000;
+    }
+
+    public static float getAmmoniaDosage(float tankVolumeInLitres, float targetDose, float percentSolution) {
+        return (float)((tankVolumeInLitres*1000)*(targetDose/1e+6)*(100/percentSolution));
     }
 
 }

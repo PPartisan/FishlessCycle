@@ -119,7 +119,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
             final float volumeInLitres = ConversionUtils.getMlAsLitres(volumeInMlOrCubicInches);
             final float volumeInUkGallons =
-                    ConversionUtils.getCubicInchesAsUkGallon(volumeInMlOrCubicInches);
+                    ConversionUtils.getCubicInchesAsImperialGallon(volumeInMlOrCubicInches);
 
             mTankModifier.getTankBuilder().volumeInLitres(volumeInLitres);
 

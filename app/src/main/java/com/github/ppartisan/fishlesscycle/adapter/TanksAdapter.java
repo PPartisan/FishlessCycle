@@ -107,12 +107,11 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            //ToDo: Launch Detail Activity With Identifier
-            Log.d(getClass().getSimpleName(), view.toString() + ": onClick");
 
             switch (view.getId()) {
                 case R.id.tcv_parent:
                     Context context = view.getContext();
+                    //ToDo: Launch Detail Activity *With Identifier*
                     context.startActivity(new Intent(context, DetailActivity.class));
                     break;
                 case R.id.tcv_overflow:
@@ -127,10 +126,13 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
             switch (item.getItemId()) {
                 case R.id.mct_action_edit_tank:
+                    //ToDo: Update Tank table entry
                     return true;
                 case R.id.mct_action_add_change_photo:
+                    //ToDo: Launch Camera/open gallery (should probably be two options...)
                     return true;
                 case R.id.mct_action_delete_tank:
+                    //ToDo: Remove Tank from table
                     return true;
             }
 
