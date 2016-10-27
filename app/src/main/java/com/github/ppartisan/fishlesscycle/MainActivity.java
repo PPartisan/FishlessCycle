@@ -13,8 +13,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(getClass().getName(), "Test Dosage: " + ConversionUtils.getAmmoniaDosage(46,5,10));
-
         if(getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
             getSupportFragmentManager()
                     .beginTransaction()
