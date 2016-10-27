@@ -27,6 +27,16 @@
         <item>Imperial</item>
     </string-array>
 
+    <string-array name="dose_unit_options">
+        <item>mg/L</item>
+        <item>ppm</item>
+    </string-array>
+
+    <string-array name="volume_unit_options">
+        <item>Litres</item>
+        <item>Gallons</item>
+    </string-array>
+
     <string-array name="info_item_headers">
         <item>Essential</item>
         <item>Optional</item>
@@ -102,6 +112,17 @@
             under the right conditions.\n\nKeep in mind that it is also possible to transmit pathogens
             in this way, so ensure the seeding tank is healthy.
         </item>
+    </string-array>
+
+    <string-array name="ammonia_doses">
+        <item>1^1</item>
+        <item>2^1</item>
+        <item>3^1 (Recommended)</item>
+        <item>4^1</item>
+        <item>5^1</item>
+        <item>6^1</item>
+        <item>7^1</item>
+        <item>8^1</item>
     </string-array>
 
 </resources>

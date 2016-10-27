@@ -6,5 +6,6 @@ import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 public interface TankModifier {
 
     Tank.Builder getTankBuilder();
+    void notifyTankBuilderUpdated();
 
 }

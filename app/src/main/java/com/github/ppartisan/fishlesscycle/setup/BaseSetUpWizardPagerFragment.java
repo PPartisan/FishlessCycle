@@ -3,8 +3,10 @@ package com.github.ppartisan.fishlesscycle.setup;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import com.github.ppartisan.fishlesscycle.model.Tank;
 
-public class BaseSetUpWizardPagerFragment extends Fragment {
+
+public class BaseSetUpWizardPagerFragment extends Fragment implements TankModifierObserver {
 
     protected TankModifier mTankModifier;
     protected ColorPackSupplier mColorPackSupplier;
@@ -28,4 +30,10 @@ public class BaseSetUpWizardPagerFragment extends Fragment {
         mTankModifier = null;
         mColorPackSupplier = null;
     }
+
+    @Override
+    public void onTankModified(Tank.Builder builder) {
+
+    }
+
 }

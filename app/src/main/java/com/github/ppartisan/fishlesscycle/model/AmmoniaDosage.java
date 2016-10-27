@@ -1,8 +1,8 @@
 package com.github.ppartisan.fishlesscycle.model;
 
-final class AmmoniaDosage {
+public final class AmmoniaDosage {
 
-    final float dosage, targetConcentration;
+    public final float dosage, targetConcentration;
 
     public AmmoniaDosage(AmmoniaDosage ammoniaDosage) {
         this(ammoniaDosage.dosage, ammoniaDosage.targetConcentration);

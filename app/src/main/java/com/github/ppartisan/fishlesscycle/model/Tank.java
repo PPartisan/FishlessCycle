@@ -137,6 +137,38 @@ public final class Tank {
             );
         }
 
+        public String getName() {
+            return name;
+        }
+
+        public float getVolumeInLitres() {
+            return volumeInLitres;
+        }
+
+        public float getSoftenerDosagePerLitre() {
+            return softenerDosagePerLitre;
+        }
+
+        public AmmoniaDosage getAmmoniaDosage() {
+            return ammoniaDosage;
+        }
+
+        public boolean isHeated() {
+            return isHeated;
+        }
+
+        public boolean isSeeded() {
+            return isSeeded;
+        }
+
+        public long getIdentifier() {
+            return identifier;
+        }
+
+        public int getPlantStatus() {
+            return plantStatus;
+        }
+
     }
 
 }

@@ -62,7 +62,7 @@
             android:textStyle="italic"
             android:layout_below="@+id/vt_suwf_switch_parent"
             android:layout_marginBottom="@dimen/vertical_margin_default"
-            tools:text="@string/wus_fcvt_decription_metric"/>
+            tools:text="@string/wus_fcvt_description_metric"/>
 
         <LinearLayout
             android:id="@+id/vt_suwf_linear_layout"

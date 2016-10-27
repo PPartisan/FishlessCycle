@@ -4,11 +4,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.github.ppartisan.fishlesscycle.model.Tank;
+import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
+import com.github.ppartisan.fishlesscycle.setup.TankModifierObserver;
+import com.github.ppartisan.fishlesscycle.setup.fragment.AmmoniaDosageFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.InfoListFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.IntroductionFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.TankVolumeCalculatorFragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
+
+    private static final int NUM_PAGES = 10;
+
+    private Set<TankModifierObserver> mTankModifierObservers = new HashSet<>(NUM_PAGES);
 
     public SetUpWizardAdapter(FragmentManager fm) {
         super(fm);
@@ -16,21 +31,43 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
+        BaseSetUpWizardPagerFragment f = null;
+
         switch (position) {
             case 0:
-                return IntroductionFragment.newInstance();
+                f = IntroductionFragment.newInstance();
+                mTankModifierObservers.add(f);
+                return f;
             case 1:
-                return InfoListFragment.newInstance();
+                f = InfoListFragment.newInstance();
+                mTankModifierObservers.add(f);
+                return f;
             case 2:
-                return TankVolumeCalculatorFragment.newInstance();
+                f = TankVolumeCalculatorFragment.newInstance();
+                mTankModifierObservers.add(f);
+                return f;
+            case 3:
+                f = AmmoniaDosageFragment.newInstance();
+                mTankModifierObservers.add(f);
+
+                return f;
             default:
-                return IntroductionFragment.newInstance();
+                f = IntroductionFragment.newInstance();
+                mTankModifierObservers.add(f);
+                return f;
         }
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return NUM_PAGES;
+    }
+
+    public void notifyTankBuilderUpdated(Tank.Builder builder) {
+        for (TankModifierObserver observer : mTankModifierObservers) {
+            observer.onTankModified(builder);
+        }
     }
 
 }

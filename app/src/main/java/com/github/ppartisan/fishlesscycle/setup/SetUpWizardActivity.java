@@ -74,6 +74,11 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     }
 
     @Override
+    public void notifyTankBuilderUpdated() {
+        mAdapter.notifyTankBuilderUpdated(mTankBuilder);
+    }
+
+    @Override
     public int getCount() {
         return mAdapter == null ? 0 : mAdapter.getCount();
     }

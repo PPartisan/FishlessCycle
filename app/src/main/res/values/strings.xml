@@ -14,7 +14,7 @@
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>
     <string name="nitrate">Nitrate</string>
-    <string name="quantity_template">%1$.1f %2$s</string>
+    <string name="quantity_template" translatable="false">%1$.1f %2$s</string>
     <string name="unit_metric">mg/L</string>
     <string name="unit_imperial">ppm</string>
 
@@ -61,10 +61,21 @@
     <string name="wus_fcvt_hint_height">Height</string>
     <string name="wus_fcvt_hint_width">Width</string>
     <string name="wus_fcvt_hint_length">Length</string>
-    <string name="wus_fcvt_multiplication_symbol">×</string>
+    <string name="wus_fcvt_multiplication_symbol" translatable="false">×</string>
     <string name="wus_fcvt_hint_output">Volume</string>
     <string name="wus_fcvt_switch_label">Change unit type</string>
-    <string name="wus_fcvt_decription_metric">Currently showing centimetres and litres</string>
+    <string name="wus_fcvt_description_metric">Currently showing centimetres and litres</string>
     <string name="wus_fcvt_decription_imperial">Currently showing inches and gallons</string>
 
+    <!-- 4.Ammonia Dosage Fragment -->
+    <string name="wus_fda_content">
+        Now we have your tank volume, we can work out how much ammonia you should use!\n\nEnter in
+        the percentage of pure ammonia in your ammonia solution and the concentration of ammonia
+        you would like in your tank. Three parts-per-million/milligrams per litre is recommended.
+    </string>
+    <string name="wus_fda_tank_volume_label">Tank Volume (%1$s)</string>
+    <string name="wus_fda_percent_ammonia_label">Percentage of Ammonia (%)</string>
+    <string name="wus_fda_target_dose_label">Target Concentration (%1$s)</string>
+    <string name="wus_fda_output_label">Ammonia Dosage (ml)</string>
+    
 </resources>

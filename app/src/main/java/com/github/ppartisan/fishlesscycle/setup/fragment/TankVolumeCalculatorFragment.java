@@ -20,6 +20,8 @@ import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 
 import java.text.DecimalFormat;
 
+import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isEditTextEmpty;
+
 //ToDo: See Below
 /*
 This class should pull the unit preference value from SharedPreferences, which is configured in
@@ -97,14 +99,11 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
     @Override
     public void afterTextChanged(Editable editable) {}
 
-    private static boolean isEditTextEmpty(EditText editText) {
-        return TextUtils.isEmpty(editText.getText());
-    }
 
     private String getUnitDescriptionText(boolean isImperial) {
         final int resId = (isImperial)
                 ? R.string.wus_fcvt_decription_imperial
-                : R.string.wus_fcvt_decription_metric;
+                : R.string.wus_fcvt_description_metric;
         return getString(resId);
     }
 
@@ -125,6 +124,8 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
             final float displayVolume = (isImperial) ? volumeInUkGallons : volumeInLitres;
             mOutput.setText(mFormat.format(displayVolume));
+
+            mTankModifier.notifyTankBuilderUpdated();
 
         }
     }
