@@ -39,6 +39,13 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (mTankBuilderSupplier == null) mTankBuilderSupplier = (TankBuilderSupplier) getContext();
+        if (mColorPackSupplier == null) mColorPackSupplier = (ColorPackSupplier) getContext();
+    }
+
+    @Override
     public void onDestroy() {
         PreferenceManager.getDefaultSharedPreferences(getContext())
                 .unregisterOnSharedPreferenceChangeListener(this);

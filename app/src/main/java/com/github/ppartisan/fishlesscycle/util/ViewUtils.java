@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
 
@@ -70,8 +71,8 @@ public final class ViewUtils {
 
     }
 
-    public static boolean isEditTextEmpty(EditText editText) {
-        return TextUtils.isEmpty(editText.getText());
+    public static boolean isTextWidgetEmpty(TextView textWidget) {
+        return TextUtils.isEmpty(textWidget.getText());
     }
 
 }
