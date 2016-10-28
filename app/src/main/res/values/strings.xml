@@ -2,6 +2,15 @@
 
     <string name="app_name" translatable="false">Fishless Cycle</string>
 
+    <!-- Preferences -->
+    <string name="pref_volume_unit_type_key">volume_unit_type_key</string>
+    <string name="pref_volume_unit_type_title">Volume and Measurement Units</string>
+    <string name="pref_dosage_unit_type_key">dosage_unit_type_key</string>
+    <string name="pref_dosage_unit_type_title">Dosage Units</string>
+
+    <!-- Settings Activity -->
+    <string name="as_label">Settings</string>
+
     <!-- Main Fragment -->
     <string name="fm_empty_view_text">No Tanks Yet!</string>
     <string name="fm_colon" translatable="false">:</string>
@@ -17,6 +26,9 @@
     <string name="quantity_template" translatable="false">%1$.1f %2$s</string>
     <string name="unit_metric">mg/L</string>
     <string name="unit_imperial">ppm</string>
+
+    <!-- Main Menu -->
+    <string name="mm_action_settings">Settings</string>
 
     <!-- Reading Row Menu -->
     <string name="mrd_action_edit">Edit</string>
@@ -77,5 +89,18 @@
     <string name="wus_fda_percent_ammonia_label">Percentage of Ammonia (%)</string>
     <string name="wus_fda_target_dose_label">Target Concentration (%1$s)</string>
     <string name="wus_fda_output_label">Ammonia Dosage (ml)</string>
+    <string name="wus_fda_description_template">Currently showing %1$s</string>
+
+    <!-- Units Misc -->
+    <string name="units_description_template_single">Currently showing %1$s</string>
+    <string name="units_description_template_double">Currently showing %1$s and %2$s</string>
+    <string name="centimetres">Centimetres</string>
+    <string name="inches">Inches</string>
+    <string name="litres">Litres</string>
+    <string name="imperial_gallons">Imperial gallons</string>
+    <string name="us_gallons">US gallons</string>
+    <string name="mgl" translatable="false">mg/L</string>
+    <string name="ppm" translatable="false">ppm</string>
+    <string name="ml" translatable="false">ml</string>
     
 </resources>

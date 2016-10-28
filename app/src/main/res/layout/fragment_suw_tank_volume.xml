@@ -42,14 +42,17 @@
                     android:id="@+id/vt_suwf_switch_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
                     android:text="@string/wus_fcvt_switch_label"/>
 
-                <android.support.v7.widget.SwitchCompat
+                <ImageButton
                     android:id="@+id/vt_suwf_switch_units"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="@dimen/image_button_default"
+                    android:layout_height="@dimen/image_button_default"
+                    android:src="@drawable/ic_settings_white_24dp"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
         </LinearLayout>
 

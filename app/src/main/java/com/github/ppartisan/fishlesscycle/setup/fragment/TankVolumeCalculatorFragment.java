@@ -1,22 +1,26 @@
 package com.github.ppartisan.fishlesscycle.setup.fragment;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.SettingsActivity;
+import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 
 import java.text.DecimalFormat;
 
@@ -30,15 +34,16 @@ This class should pull the unit preference value from SharedPreferences, which i
  */
 
 public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFragment
-        implements TextWatcher, CompoundButton.OnCheckedChangeListener {
+        implements TextWatcher, View.OnClickListener {
 
     private final DecimalFormat mFormat = new DecimalFormat(".##");
 
     private EditText mHeight, mWidth, mLength, mOutput;
 
+    private @PreferenceUtils.VolumeUnit int volumeUnit = PreferenceUtils.METRIC;
+
     private TextView mUnitDescription;
-    private SwitchCompat mUnitSwitch;
-    private boolean isImperial;
+    private ImageButton mSettingsBtn;
 
     public static TankVolumeCalculatorFragment newInstance() {
 
@@ -47,6 +52,12 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
         TankVolumeCalculatorFragment fragment = new TankVolumeCalculatorFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        volumeUnit = PreferenceUtils.getVolumeUnit(getContext());
     }
 
     @Nullable
@@ -60,6 +71,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
         mLength = (EditText) v.findViewById(R.id.vt_suwf_length);
         mOutput = (EditText) v.findViewById(R.id.vt_swuf_output);
 
+        //Below Index could be passed via Fragment arguments. Optional feature.
         final int editTextBackgroundColor = mColorPackSupplier.getColorPackForIndexId(0).dark;
 
         mHeight.setHintTextColor(editTextBackgroundColor);
@@ -78,11 +90,10 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
         mUnitDescription = (TextView) v.findViewById(R.id.vt_suwf_unit_description);
 
-        mUnitSwitch = (SwitchCompat) v.findViewById(R.id.vt_suwf_switch_units);
-        mUnitSwitch.setOnCheckedChangeListener(this);
-        mUnitSwitch.setChecked(true);
+        mSettingsBtn = (ImageButton) v.findViewById(R.id.vt_suwf_switch_units);
+        mSettingsBtn.setOnClickListener(this);
 
-        mUnitDescription.setText(getUnitDescriptionText(mUnitSwitch.isChecked()));
+        mUnitDescription.setText(getUnitDescriptionText());
 
         return v;
 
@@ -100,11 +111,26 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
     public void afterTextChanged(Editable editable) {}
 
 
-    private String getUnitDescriptionText(boolean isImperial) {
-        final int resId = (isImperial)
-                ? R.string.wus_fcvt_decription_imperial
-                : R.string.wus_fcvt_description_metric;
-        return getString(resId);
+    private String getUnitDescriptionText() {
+
+        String measurement = null, volume = null;
+
+        switch (volumeUnit) {
+            case PreferenceUtils.METRIC:
+                measurement = getString(R.string.centimetres).toLowerCase();
+                volume = getString(R.string.litres).toLowerCase();
+                break;
+            case PreferenceUtils.IMPERIAL:
+                measurement = getString(R.string.inches).toLowerCase();
+                volume = getString(R.string.imperial_gallons).toLowerCase();
+                break;
+            case PreferenceUtils.US:
+                measurement = getString(R.string.inches).toLowerCase();
+                volume = getString(R.string.us_gallons);
+                break;
+        }
+
+        return getString(R.string.units_description_template_double, measurement, volume);
     }
 
     private void updateVolume() {
@@ -114,28 +140,146 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
             final float width = Float.parseFloat(mWidth.getText().toString());
             final float length = Float.parseFloat(mLength.getText().toString());
 
-            float volumeInMlOrCubicInches = (height*width*length);
+            float volumeInCmOrCubicInches = (height*width*length);
 
-            final float volumeInLitres = ConversionUtils.getMlAsLitres(volumeInMlOrCubicInches);
-            final float volumeInUkGallons =
-                    ConversionUtils.getCubicInchesAsImperialGallon(volumeInMlOrCubicInches);
+            Log.d(getClass().getSimpleName(), "volumeInCmOrCubicInches: " + volumeInCmOrCubicInches);
 
-            mTankModifier.getTankBuilder().volumeInLitres(volumeInLitres);
+            float volume = 0;
 
-            final float displayVolume = (isImperial) ? volumeInUkGallons : volumeInLitres;
-            mOutput.setText(mFormat.format(displayVolume));
+            switch (volumeUnit) {
+                case PreferenceUtils.METRIC:
+                    volume = ConversionUtils.getCubicCmAsLitres(volumeInCmOrCubicInches);
+                    Log.d(getClass().getSimpleName(), "volume - Metric: " + volume);
+                    break;
+                case PreferenceUtils.IMPERIAL:
+                    volume = ConversionUtils.getCubicInchesAsImperialGallon(volumeInCmOrCubicInches);
+                    volume = ConversionUtils.getImperialGallonsAsLitres(volume);
+                    Log.d(getClass().getSimpleName(), "volume - Imperial: " + volume);
+                    break;
+                case PreferenceUtils.US:
+                    volume = ConversionUtils.getCubicInchesAsUsGallon(volumeInCmOrCubicInches);
+                    volume = ConversionUtils.getUsGallonsAsLitres(volume);
+                    Log.d(getClass().getSimpleName(), "volume - Us: " + volume);
+                    break;
+            }
 
-            mTankModifier.notifyTankBuilderUpdated();
+            updateOutput(volume);
 
         }
     }
 
+    private void updateOutput(float volumeInLitres) {
+
+        float displayVolume = 0;
+        switch (volumeUnit) {
+            case PreferenceUtils.METRIC:
+                displayVolume = volumeInLitres;
+                Log.d(getClass().getSimpleName(), "displayVolume - Metric: " + displayVolume);
+                break;
+            case PreferenceUtils.IMPERIAL:
+                displayVolume = ConversionUtils.getLitresAsImperialGallons(volumeInLitres);
+                Log.d(getClass().getSimpleName(), "displayVolume - Imperial: " + displayVolume);
+                break;
+            case PreferenceUtils.US:
+                displayVolume = ConversionUtils.getLitresAsUsGallons(volumeInLitres);
+                Log.d(getClass().getSimpleName(), "displayVolume - US: " + displayVolume);
+                break;
+        }
+
+        final String outputText = mFormat.format(displayVolume);
+
+        if(!outputText.equals(mOutput.getText().toString())) {
+
+            final Tank.Builder builder = mTankBuilderSupplier.getTankBuilder();
+
+            if (builder.getVolumeInLitres() != volumeInLitres) {
+                builder.volumeInLitres(volumeInLitres);
+                mTankBuilderSupplier.notifyTankBuilderUpdated();
+                mOutput.setText(mFormat.format(displayVolume));
+            }
+
+        }
+
+    }
+
+    private String getConvertedTankVolumeString() {
+
+        final float volumeInLitres = mTankBuilderSupplier.getTankBuilder().getVolumeInLitres();
+
+        float displayVolume = 0;
+        switch (volumeUnit) {
+            case PreferenceUtils.METRIC:
+                displayVolume = volumeInLitres;
+                break;
+            case PreferenceUtils.IMPERIAL:
+                displayVolume = ConversionUtils.getLitresAsImperialGallons(volumeInLitres);
+                break;
+            case PreferenceUtils.US:
+                displayVolume = ConversionUtils.getLitresAsUsGallons(volumeInLitres);
+                break;
+        }
+
+        return mFormat.format(displayVolume);
+
+    }
+
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isImperial) {
-        //Unchecked is metric
-        this.isImperial = isImperial;
-        mUnitDescription.setText(getUnitDescriptionText(isImperial));
-        updateVolume();
+    public void onTankModified(Tank.Builder builder) {
+
+        final float volumeInLitres = builder.getVolumeInLitres();
+        final float outputVolumeInLitres = getOutputTextAsMetricLitres();
+
+        if (volumeInLitres != outputVolumeInLitres) {
+            mOutput.setText(getConvertedTankVolumeString());
+        }
+    }
+
+    private float getOutputTextAsMetricLitres() {
+
+        if(isEditTextEmpty(mOutput)) {
+            return -1;
+        }
+
+        final String volumeText = mOutput.getText().toString();
+        float volumeInLitres = Float.parseFloat(volumeText);
+
+        switch (volumeUnit) {
+            case PreferenceUtils.METRIC:
+                //Already in metric
+                break;
+            case PreferenceUtils.IMPERIAL:
+                volumeInLitres = ConversionUtils.getImperialGallonsAsLitres(volumeInLitres);
+                break;
+            case PreferenceUtils.US:
+                volumeInLitres = ConversionUtils.getUsGallonsAsLitres(volumeInLitres);
+                break;
+        }
+
+        return volumeInLitres;
+
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+        final String volumeUnitPreferenceKey = getString(R.string.pref_volume_unit_type_key);
+
+        if(volumeUnitPreferenceKey.equals(s)) {
+
+            final float volumeInLitres = getOutputTextAsMetricLitres();
+
+            volumeUnit = PreferenceUtils.getVolumeUnit(getContext());
+            mUnitDescription.setText(getUnitDescriptionText());
+
+            updateOutput(volumeInLitres);
+
+        }
+
+}
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(getContext(), SettingsActivity.class));
     }
 
 }

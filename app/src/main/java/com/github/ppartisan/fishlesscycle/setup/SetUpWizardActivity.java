@@ -1,13 +1,9 @@
 package com.github.ppartisan.fishlesscycle.setup;
 
-import android.animation.ArgbEvaluator;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
@@ -26,7 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SetUpWizardActivity extends AppCompatActivity implements TankModifier, ColorPackSupplier, SetUpPageChangeListenerCallbacks {
+public final class SetUpWizardActivity extends AppCompatActivity implements TankBuilderSupplier, ColorPackSupplier, SetUpPageChangeListenerCallbacks {
 
     private ViewGroup mParent;
     private ImageView mImage;

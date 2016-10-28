@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="@string/pref_volume_unit_type_key"
+        android:title="@string/pref_volume_unit_type_title"
+        android:dialogTitle="@string/pref_volume_unit_type_title"
+        android:entries="@array/pref_volume_unit_entries"
+        android:entryValues="@array/pref_volume_unit_values"
+        android:defaultValue="metric"/>
+
+    <ListPreference
+        android:key="@string/pref_dosage_unit_type_key"
+        android:title="@string/pref_dosage_unit_type_title"
+        android:dialogTitle="@string/pref_dosage_unit_type_title"
+        android:entries="@array/pref_dosage_unit_entries"
+        android:entryValues="@array/pref_dosage_unit_values"
+        android:defaultValue="mgl"/>
+
+</PreferenceScreen>

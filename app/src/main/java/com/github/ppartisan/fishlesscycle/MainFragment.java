@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,7 +23,7 @@ import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class MainFragment extends Fragment implements View.OnClickListener {
+public final class MainFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
     private EmptyRecyclerView mRecyclerView;
     private TanksAdapter mAdapter;
@@ -52,6 +49,8 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         setHasOptionsMenu(true);
 
         mToolbar = (Toolbar) view.findViewById(R.id.fm_toolbar);
+        mToolbar.inflateMenu(R.menu.main_menu);
+        mToolbar.setOnMenuItemClickListener(this);
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fm_fab);
         mFab.setOnClickListener(this);
@@ -93,4 +92,16 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         context.startActivity(new Intent(context, SetUpWizardActivity.class));
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.mm_action_settings:
+                Intent settingsIntent = new Intent(getContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+        }
+
+        return true;
+    }
 }

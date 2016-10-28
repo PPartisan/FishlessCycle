@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="pref_volume_unit_entries">
+        <item>Centimetres and Litres</item>
+        <item>Inches and Imperial Gallons</item>
+        <item>Inches and US Gallons</item>
+    </string-array>
+
+    <string-array name="pref_volume_unit_values">
+        <item>metric</item>
+        <item>imperial</item>
+        <item>us</item>
+    </string-array>
+
+    <string-array name="pref_dosage_unit_entries">
+        <item>mg/L</item>
+        <item>ppm</item>
+    </string-array>
+
+    <string-array name="pref_dosage_unit_values">
+        <item>mgl</item>
+        <item>ppm</item>
+    </string-array>
+
     <string-array name="tank_options">
         <item>Heated</item>
         <item>Plants</item>
@@ -34,7 +56,8 @@
 
     <string-array name="volume_unit_options">
         <item>Litres</item>
-        <item>Gallons</item>
+        <item>Imp. Gallons</item>
+        <item>US Gallons</item>
     </string-array>
 
     <string-array name="info_item_headers">

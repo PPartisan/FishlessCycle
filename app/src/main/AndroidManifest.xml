@@ -25,6 +25,11 @@
             android:name=".setup.SetUpWizardActivity"
             android:theme="@style/SetUpTheme" />
 
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/SettingsTheme"
+            android:label="@string/as_label"/>
+
     </application>
 
 </manifest>
