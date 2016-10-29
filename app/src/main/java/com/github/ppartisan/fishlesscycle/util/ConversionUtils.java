@@ -50,10 +50,6 @@ public final class ConversionUtils {
         return ml/1000;
     }
 
-    public static float getCubicCmAsLitres(float cubicCm) {
-        return cubicCm*0.001f;
-    }
-
     public static float getLitresAsImperialGallons(float litres) {
         return litres*0.219969f;
     }
@@ -68,6 +64,10 @@ public final class ConversionUtils {
 
     public static float getUsGallonsAsLitres(float usGallons) {
         return usGallons*3.78541f;
+    }
+
+    public static float getCubicInchesAsLitres(float cubicInches) {
+        return cubicInches*0.0163871f;
     }
 
     public static float getAmmoniaDosage(float tankVolumeInLitres, float targetDose, float percentSolution) {

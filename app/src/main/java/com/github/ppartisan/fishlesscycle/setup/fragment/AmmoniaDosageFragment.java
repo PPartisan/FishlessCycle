@@ -23,6 +23,7 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 
 import java.text.DecimalFormat;
 
+import static com.github.ppartisan.fishlesscycle.util.ViewUtils.getParsedFloatFromTextWidget;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpty;
 
 public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment implements TextWatcher, View.OnClickListener {
@@ -41,6 +42,9 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
     private TextView mTankVolumeLabel, mTargetConcentrationLabel;
     private TextView mSettingsDescription;
     private TextView mTankVolume, mOutput;
+
+    private final AmmoniaDosage nullAmmoniaDosage =
+            new AmmoniaDosage(0, DEFAULT_TARGET_CONCENTRATION);
 
     public static AmmoniaDosageFragment newInstance() {
 
@@ -66,55 +70,57 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
         ImageButton settings = (ImageButton) v.findViewById(R.id.da_suwf_settings);
         settings.setOnClickListener(this);
 
-        mTankVolume = (TextView) v.findViewById(R.id.da_suwf_tank_volume);
-
         mAmmoniaPercentEntry = (AppCompatEditText) v.findViewById(R.id.da_suwf_per_ammonia);
         mTargetConcentrationEntry = (AppCompatEditText) v.findViewById(R.id.da_suwf_target_dose);
 
         mOutput = (TextView) v.findViewById(R.id.da_suwf_ouput);
-
+        mTankVolume = (TextView) v.findViewById(R.id.da_suwf_tank_volume);
         mTankVolumeLabel = (TextView) v.findViewById(R.id.da_suwf_tank_volume_label);
         mTargetConcentrationLabel = (TextView) v.findViewById(R.id.da_suwf_target_dose_label);
-
         mSettingsDescription = (TextView) v.findViewById(R.id.da_suwf_settings_description);
 
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        //todo Currently builder info is not saved on rotation. This will be written and retrieved
+        // from a ContentProvider later
         mTankVolume.setText(getConvertedTankVolumeString());
-
-        final AmmoniaDosage ammoniaDosage = mTankBuilderSupplier.getTankBuilder().getAmmoniaDosage();
-
-        if(ammoniaDosage != null) {
-            mTargetConcentrationEntry.setText(mFormat.format(ammoniaDosage.targetConcentration));
-            mOutput.setText(mFormat.format(ammoniaDosage.dosage));
-        }
-
-        mAmmoniaPercentEntry.addTextChangedListener(this);
-        mTargetConcentrationEntry.addTextChangedListener(this);
-        mTankVolume.addTextChangedListener(this);
+        mAmmoniaPercentEntry.setText(mFormat.format(DEFAULT_AMMONIA_PERCENTAGE));
+        mTargetConcentrationEntry.setText(mFormat.format(getAmmoniaDosage().targetConcentration));
+        mOutput.setText(mFormat.format(getAmmoniaDosage().dosage));
 
         mSettingsDescription.setText(getSettingsDescriptionText());
         mTankVolumeLabel.setText(getTankVolumeLabel());
         mTargetConcentrationLabel.setText(getTargetConcentrationLabel());
 
-        updateTankVolume(mTankBuilderSupplier.getTankBuilder().getVolumeInLitres());
+        return v;
+        
+    }
 
-        mAmmoniaPercentEntry.setText(mFormat.format(DEFAULT_AMMONIA_PERCENTAGE));
-        mTargetConcentrationEntry.setText(mFormat.format(DEFAULT_TARGET_CONCENTRATION));
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAmmoniaPercentEntry.addTextChangedListener(this);
+        mTargetConcentrationEntry.addTextChangedListener(this);
+        mTankVolume.addTextChangedListener(this);
     }
 
     @Override
     public void onTankModified(Tank.Builder builder) {
         if(builder == null) return;
 
-        if(builder.getVolumeInLitres() != getTankVolumeInLitres()) {
-            mTankVolume.setText(getConvertedTankVolumeString());
+        mTankVolume.setText(getConvertedTankVolumeStringFromBuilder(builder));
+        updateOutput();
+
+    }
+
+    private AmmoniaDosage getAmmoniaDosage() {
+
+        if (getTankBuilderSupplier() == null) {
+            return nullAmmoniaDosage;
         }
+
+        final AmmoniaDosage dosage = getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();
+
+        return (dosage == null) ? nullAmmoniaDosage : dosage;
+
     }
 
     private String getSettingsDescriptionText() {
@@ -180,61 +186,24 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
 
     }
 
-    private void updateTankVolume(float volumeInLitres) {
-
-        float displayVolume = 0;
-        switch (volumeUnit) {
-            case PreferenceUtils.METRIC:
-                displayVolume = volumeInLitres;
-                break;
-            case PreferenceUtils.IMPERIAL:
-                displayVolume = ConversionUtils.getLitresAsImperialGallons(volumeInLitres);
-                break;
-            case PreferenceUtils.US:
-                displayVolume = ConversionUtils.getLitresAsUsGallons(volumeInLitres);
-                break;
-        }
-
-        final String outputText = mFormat.format(displayVolume);
-
-        if(!outputText.equals(mTankVolume.getText().toString())) {
-
-            final Tank.Builder builder = mTankBuilderSupplier.getTankBuilder();
-
-            if (builder.getVolumeInLitres() != volumeInLitres) {
-                builder.volumeInLitres(volumeInLitres);
-                mTankBuilderSupplier.notifyTankBuilderUpdated();
-            }
-
-            mTankVolume.setText(mFormat.format(displayVolume));
-
-        }
-
-    }
-
     private String getConvertedTankVolumeString() {
 
-        if(mTankBuilderSupplier == null) {
+        if(getTankBuilderSupplier() == null) {
             return null;
         }
 
-        final float volumeInLitres = mTankBuilderSupplier.getTankBuilder().getVolumeInLitres();
-
-        float displayVolume = 0;
-        switch (volumeUnit) {
-            case PreferenceUtils.METRIC:
-                displayVolume = volumeInLitres;
-                break;
-            case PreferenceUtils.IMPERIAL:
-                displayVolume = ConversionUtils.getLitresAsImperialGallons(volumeInLitres);
-                break;
-            case PreferenceUtils.US:
-                displayVolume = ConversionUtils.getLitresAsUsGallons(volumeInLitres);
-                break;
-        }
+        final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
+        final float volumeInLitres = builder.getVolumeInLitres();
+        final float displayVolume = getTankVolumeInLitresAsUserUnitPreference(volumeInLitres, volumeUnit);
 
         return mFormat.format(displayVolume);
 
+    }
+
+    private String getConvertedTankVolumeStringFromBuilder(Tank.Builder builder) {
+        final float volumeInLitres = builder.getVolumeInLitres();
+        final float displayVolume = getTankVolumeInLitresAsUserUnitPreference(volumeInLitres, volumeUnit);
+        return mFormat.format(displayVolume);
     }
 
     @Override
@@ -255,95 +224,64 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
         final String dosageUnitPreferenceKey = getString(R.string.pref_dosage_unit_type_key);
 
         if (volumeUnitPreferenceKey.equals(s)) {
+
             final float tankVolumeInLitres = getTankVolumeInLitres();
             volumeUnit = PreferenceUtils.getVolumeUnit(getContext());
-            updateTankVolume(tankVolumeInLitres);
+            final float convertedVolume =
+                    getTankVolumeInLitresAsUserUnitPreference(tankVolumeInLitres, volumeUnit);
+            mTankVolume.setText(mFormat.format(convertedVolume));
             mTankVolumeLabel.setText(getTankVolumeLabel());
             mSettingsDescription.setText(getSettingsDescriptionText());
+            updateOutput();
         }
 
         if (dosageUnitPreferenceKey.equals(s)) {
+
             isDosageMetric = PreferenceUtils.isDosageMetric(getContext());
-            mTargetConcentrationLabel.setText(getTargetConcentrationLabel());
             mSettingsDescription.setText(getSettingsDescriptionText());
-        }
-
-    }
-
-    private void updateOutput() {
-        final boolean inputFieldsNotEmpty =
-                !isTextWidgetEmpty(mTankVolume) &&
-                !isTextWidgetEmpty(mAmmoniaPercentEntry) &&
-                !isTextWidgetEmpty(mTargetConcentrationEntry);
-
-        if (inputFieldsNotEmpty && mTankBuilderSupplier != null) {
-
-            final Tank.Builder builder = mTankBuilderSupplier.getTankBuilder();
-
-            float tankVolumeInLitres;
-            float ammoniaPercent;
-            float targetConcentration;
-
-            try {
-                tankVolumeInLitres = getTankVolumeInLitres();
-                ammoniaPercent = Float.parseFloat(mAmmoniaPercentEntry.getText().toString());
-                targetConcentration = Float.parseFloat(mTargetConcentrationEntry.getText().toString());
-            } catch (NumberFormatException e) {
-                return;
-            }
-
-            if (tankVolumeInLitres != builder.getVolumeInLitres()) {
-                builder.volumeInLitres(tankVolumeInLitres);
-                mTankBuilderSupplier.notifyTankBuilderUpdated();
-            }
-
-            final float ammoniaDosage =
-                    ConversionUtils.getAmmoniaDosage(
-                            tankVolumeInLitres, targetConcentration, ammoniaPercent
-                    );
-
-            final String formattedAmmoniaDosage = mFormat.format(ammoniaDosage);
-
-            if (!mOutput.getText().toString().equals(formattedAmmoniaDosage)) {
-                mOutput.setText(formattedAmmoniaDosage);
-            }
-
-            final AmmoniaDosage currentDosage = builder.getAmmoniaDosage();
-
-            if (currentDosage == null || !currentDosage.equalsValues(ammoniaDosage, targetConcentration)) {
-                final AmmoniaDosage newDosage =
-                        new AmmoniaDosage(ammoniaDosage, targetConcentration);
-                mTankBuilderSupplier.getTankBuilder().ammoniaDosage(newDosage);
-                mTankBuilderSupplier.notifyTankBuilderUpdated();
-            }
+            mTargetConcentrationLabel.setText(getTargetConcentrationLabel());
 
         }
+
     }
 
     private float getTankVolumeInLitres() {
 
-        final String volumeText = mTankVolume.getText().toString();
+        float volumeInLitres = getParsedFloatFromTextWidget(mTankVolume);
+        return getVolumeAsLitres(volumeInLitres, volumeUnit);
 
-        float volumeInLitres;
-        try {
-            volumeInLitres = Float.parseFloat(volumeText);
-        } catch (NumberFormatException ignored) {
-            return 0;
+    }
+
+
+
+    private void updateOutput() {
+
+        if (isTextWidgetEmpty(mTankVolume) ||
+                isTextWidgetEmpty(mAmmoniaPercentEntry) ||
+                isTextWidgetEmpty(mTargetConcentrationEntry)) {
+            return;
         }
 
-        switch (volumeUnit) {
-            case PreferenceUtils.METRIC:
-                //Already in metric
-                break;
-            case PreferenceUtils.IMPERIAL:
-                volumeInLitres = ConversionUtils.getImperialGallonsAsLitres(volumeInLitres);
-                break;
-            case PreferenceUtils.US:
-                volumeInLitres = ConversionUtils.getUsGallonsAsLitres(volumeInLitres);
-                break;
-        }
+        final float tankVolumeInLitres = getTankVolumeInLitres();
+        final float ammoniaPercentage = getParsedFloatFromTextWidget(mAmmoniaPercentEntry);
+        final float targetConcentration = getParsedFloatFromTextWidget(mTargetConcentrationEntry);
 
-        return volumeInLitres;
+        final float ammoniaDosage = ConversionUtils.getAmmoniaDosage(
+                tankVolumeInLitres, targetConcentration, ammoniaPercentage
+        );
+
+        final String formattedDosageString = mFormat.format(ammoniaDosage);
+
+        if (!formattedDosageString.equals(mOutput.getText().toString())) {
+            mOutput.setText(formattedDosageString);
+
+            final AmmoniaDosage currentDosage = getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();
+
+            if (currentDosage == null || !currentDosage.equalsValues(ammoniaDosage, targetConcentration)) {
+                getTankBuilderSupplier().getTankBuilder().ammoniaDosage(ammoniaDosage, targetConcentration);
+                getTankBuilderSupplier().notifyTankBuilderUpdated();
+            }
+        }
 
     }
 

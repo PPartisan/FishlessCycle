@@ -75,4 +75,18 @@ public final class ViewUtils {
         return TextUtils.isEmpty(textWidget.getText());
     }
 
+    public static float getParsedFloatFromTextWidget(TextView textView) {
+
+        float value;
+
+        try {
+            value = Float.parseFloat(textView.getText().toString());
+        } catch (NumberFormatException e) {
+            value = 0;
+        }
+
+        return value;
+
+    }
+
 }
