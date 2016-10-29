@@ -16,10 +16,12 @@
     <!-- Set Up Wizard -->
     <dimen name="wus_indicator_height">24dp</dimen>
     <dimen name="wus_image_dimen">168dp</dimen>
+    <dimen name="wus_margin_top_half_button_height">24dp</dimen>
 
     <!-- Misc. -->
     <dimen name="image_button_small">36dp</dimen>
     <dimen name="image_button_default">48dp</dimen>
+    <dimen name="line_margin_default">8dp</dimen>
     <dimen name="line_margin_top_small">4dp</dimen>
     <dimen name="line_margin_top_smallest">2dp</dimen>
     <dimen name="list_item_small">48dp</dimen>

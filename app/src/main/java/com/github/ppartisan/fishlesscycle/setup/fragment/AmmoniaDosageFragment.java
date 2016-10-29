@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +80,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
         mTargetConcentrationLabel = (TextView) v.findViewById(R.id.da_suwf_target_dose_label);
         mSettingsDescription = (TextView) v.findViewById(R.id.da_suwf_settings_description);
 
-        //todo Currently builder info is not saved on rotation. This will be written and retrieved
+        //todo Currently builder info is not saved on rotation. This will be written to and retrieved
         // from a ContentProvider later
         mTankVolume.setText(getConvertedTankVolumeString());
         mAmmoniaPercentEntry.setText(mFormat.format(DEFAULT_AMMONIA_PERCENTAGE));
@@ -91,7 +92,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
         mTargetConcentrationLabel.setText(getTargetConcentrationLabel());
 
         return v;
-        
+
     }
 
     @Override
@@ -258,7 +259,8 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
 
         if (isTextWidgetEmpty(mTankVolume) ||
                 isTextWidgetEmpty(mAmmoniaPercentEntry) ||
-                isTextWidgetEmpty(mTargetConcentrationEntry)) {
+                isTextWidgetEmpty(mTargetConcentrationEntry) ||
+                getTankBuilderSupplier() == null) {
             return;
         }
 
@@ -273,6 +275,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
         final String formattedDosageString = mFormat.format(ammoniaDosage);
 
         if (!formattedDosageString.equals(mOutput.getText().toString())) {
+
             mOutput.setText(formattedDosageString);
 
             final AmmoniaDosage currentDosage = getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();

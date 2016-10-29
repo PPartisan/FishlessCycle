@@ -56,40 +56,60 @@
 
     <!-- 2. Purchasing List Fragment -->
     <string name="wus_pl_content">
-        This page contains a list of essential and optional items required for setting up your new
-        aquarium. Although it is possible to continue without some of the items under the \"Essential\"
-        category, they are nonetheless included because of their usefulness.
+        This is a list of essential and optional items required for setting up a new
+        aquarium.\n\nIt is possible to continue without some of the \"Essential\"
+        items, but they are included because of their usefulness.
     </string>
     <string name="wus_pl_essential_title">Essential</string>
     <string name="wus_pl_optional_title">Optional</string>
 
     <!-- 3. Tank Volume Calculator Fragment -->
     <string name="wus_fcvt_content">
-        In order to calculate the correct dosage of ammonia for your aquarium, it is first necessary
-        to know its volume. Enter the height, width and length of your aquarium below.\n\nIf you
-        already know the volume of your aquarium, you
-        may enter it into the box at the bottom of this page.\n\n
+        To calculate the correct dosage of ammonia for an aquarium, it is first necessary
+        to know its volume.\n\nIf your aquarium is a traditional box shape, enter its height, width
+        and length below to calculate its volume.\n\nIf you already know the volume of your aquarium,
+        then you may enter it directly.
     </string>
     <string name="wus_fcvt_hint_height">Height</string>
     <string name="wus_fcvt_hint_width">Width</string>
     <string name="wus_fcvt_hint_length">Length</string>
     <string name="wus_fcvt_multiplication_symbol" translatable="false">×</string>
     <string name="wus_fcvt_hint_output">Volume</string>
-    <string name="wus_fcvt_switch_label">Change unit type</string>
+    <string name="wus_fcvt_switch_label">Change unit types</string>
     <string name="wus_fcvt_description_metric">Currently showing centimetres and litres</string>
     <string name="wus_fcvt_decription_imperial">Currently showing inches and gallons</string>
 
     <!-- 4.Ammonia Dosage Fragment -->
     <string name="wus_fda_content">
-        Now we have your tank volume, we can work out how much ammonia you should use!\n\nEnter in
-        the percentage of pure ammonia in your ammonia solution and the concentration of ammonia
-        you would like in your tank. Three parts-per-million/milligrams per litre is recommended.
+        The dosage amount for your aquarium is based on its volume, the amount of pure
+        ammonia in your ammonia source, and what overall concentration of ammonia you would like.
+        \n\nThe volume of your aquarium was calculated on the last slide. Enter the amount of pure
+        ammonia in your ammonia source, and desired final concentration, below.\n\nMost cleaning
+        products that use ammonia contain around 10% pure ammonia. 3
+        ppm or mg/L is the recommended concentration of ammonia for your aquarium during the
+        fishless cycle.
     </string>
     <string name="wus_fda_tank_volume_label">Tank Volume (%1$s)</string>
     <string name="wus_fda_percent_ammonia_label">Percentage of Ammonia (%)</string>
     <string name="wus_fda_target_dose_label">Target Concentration (%1$s)</string>
     <string name="wus_fda_output_label">Ammonia Dosage (ml)</string>
     <string name="wus_fda_description_template">Currently showing %1$s</string>
+
+    <!-- 5. Tank Set Up Fragment -->
+    <string name="wus_fust_content">
+        Place your aquarium on a stable, level surface away from direct sunlight.\n\nAquariums can be
+        very heavy once filled with water, and this should be factored in to any decisions on its
+        location. Direct sunlight can encourage algae growth, particularly whilst
+        a tank is cycling, so it is best avoided.\n\n
+        If your tank includes a heater, plants or seed material, then check the corresponding boxes
+        below.
+    </string>
+    <string name="wus_fust_aquarium_options_title">My Aquarium…</string>
+    <string name="wus_fust_heated_label">…has a heater</string>
+    <string name="wus_fust_planted_label">…has plants</string>
+    <string name="wus_fust_planted_description">An aquarium can be considered heavily planted if
+        less than a quarter of its substrate is visible when viewed from above.</string>
+    <string name="wus_fust_seeded_label">…has seed material</string>
 
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>

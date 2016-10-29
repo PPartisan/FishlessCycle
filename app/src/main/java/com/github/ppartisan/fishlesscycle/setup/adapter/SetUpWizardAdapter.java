@@ -10,6 +10,7 @@ import com.github.ppartisan.fishlesscycle.setup.TankBuilderObserver;
 import com.github.ppartisan.fishlesscycle.setup.fragment.AmmoniaDosageFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.InfoListFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.IntroductionFragment;
+import com.github.ppartisan.fishlesscycle.setup.fragment.TankSetUpFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.TankVolumeCalculatorFragment;
 
 import java.util.HashSet;
@@ -46,7 +47,10 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
             case 3:
                 f = AmmoniaDosageFragment.newInstance();
                 mTankBuilderObservers.add(f);
-
+                return f;
+            case 4:
+                f = TankSetUpFragment.newInstance();
+                mTankBuilderObservers.add(f);
                 return f;
             default:
                 f = IntroductionFragment.newInstance();

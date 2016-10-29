@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:paddingStart="@dimen/horizontal_margin_default"
+    android:paddingLeft="@dimen/horizontal_margin_default"
+    android:paddingEnd="@dimen/horizontal_margin_default"
+    android:paddingRight="@dimen/horizontal_margin_default"
+    android:scrollbarStyle="outsideOverlay">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin_default"
+        android:layout_marginBottom="@dimen/vertical_margin_default"
+        android:paddingTop="@dimen/vertical_margin_default"
+        android:paddingBottom="@dimen/vertical_margin_default"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/ust_suwf_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vertical_margin_default"
+            android:layout_marginBottom="@dimen/vertical_margin_default"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:text="@string/wus_fust_content"/>
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ust_suwf_content"
+            app:columnCount="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/image_button_default"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="@string/wus_fust_aquarium_options_title"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_columnSpan="2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="@string/wus_fust_heated_label"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"/>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/ust_suwf_heated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:gravity="center_vertical"
+                app:layout_gravity="end|center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="@string/wus_fust_seeded_label"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"/>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/ust_suwf_seeded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/white"
+                app:layout_gravity="end|center_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="@string/wus_fust_planted_label"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_columnSpan="2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_smallest"
+                android:textColor="@android:color/white"
+                android:textStyle="italic"
+                android:text="@string/wus_fust_planted_description"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_columnSpan="2"/>
+
+            <RadioGroup
+                android:id="@+id/ust_suwf_planted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontal_margin_default"
+                android:layout_marginStart="@dimen/horizontal_margin_default"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/ust_suwf_radio_no_plants"
+                app:layout_columnSpan="2">
+
+                <RadioButton
+                    android:id="@+id/ust_suwf_radio_no_plants"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_default"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/vertical_margin_default"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="No Plants" />
+
+                <RadioButton
+                    android:id="@+id/ust_suwf_radio_light_plants"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_default"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/vertical_margin_default"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="Lightly Planted"/>
+
+                <RadioButton
+                    android:id="@+id/ust_suwf_radio_heavy_plants"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_item_default"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/vertical_margin_default"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:text="Heavily Planted"/>
+
+            </RadioGroup>
+
+        </android.support.v7.widget.GridLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

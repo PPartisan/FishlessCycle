@@ -8,7 +8,11 @@
 
     <style name="DetailTheme" parent="AppTheme" />
 
-    <style name="SetUpTheme" parent="AppTheme" />
+    <style name="SetUpTheme" parent="AppTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@color/accent</item>
+    </style>
 
     <style name="SettingsTheme" parent="Theme.AppCompat.Light.DarkActionBar" >
         <item name="colorPrimary">@color/primary</item>

@@ -30,6 +30,12 @@
         <item>Seeded</item>
     </string-array>
 
+    <string-array name="plant_options">
+        <item>No Plants</item>
+        <item>Lightly Planted</item>
+        <item>Heavily Planted</item>
+    </string-array>
+
     <string-array name="tank_stage">
         <item>Not Started</item>
         <item>Cycling &lt;Ammonia&gt;</item>
@@ -110,9 +116,10 @@
             are toxic to fish and cycling bacteria.
         </item>
         <item>
-            To clean substrate, place it inside a bucket and fill the bucket with water. Once the
-            substrate has settled to the bottom, tip out the water.\n\nRepeat the process until the
-            water runs clear.
+            Substrate is the stuff that lines the aquarium floor; examples include gravel, sand or
+            soil.\n\nTo clean substrate, place it inside a bucket and fill the bucket with water.
+            Once the substrate has settled to the bottom, tip out the water.\n\nRepeat the process
+            until the water runs clear.
         </item>
     </string-array>
 
