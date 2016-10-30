@@ -31,6 +31,7 @@
     <string name="mm_action_settings">Settings</string>
 
     <!-- Reading Row Menu -->
+    <string name="mrd_action_notes">Notes</string>
     <string name="mrd_action_edit">Edit</string>
     <string name="mrd_action_delete">Delete</string>
 
@@ -97,12 +98,11 @@
 
     <!-- 5. Tank Set Up Fragment -->
     <string name="wus_fust_content">
-        Place your aquarium on a stable, level surface away from direct sunlight.\n\nAquariums can be
-        very heavy once filled with water, and this should be factored in to any decisions on its
-        location. Direct sunlight can encourage algae growth, particularly whilst
-        a tank is cycling, so it is best avoided.\n\n
-        If your tank includes a heater, plants or seed material, then check the corresponding boxes
-        below.
+        Place your aquarium in its final location. This should be on a stable, level surface away
+        from direct sunlight.\n\nAquariums can be very heavy once filled with water.
+        Direct sunlight can encourage algae growth,
+        particularly whilst a tank is cycling, so it is best avoided.\n\nIf your tank includes a
+        heater, plants or seed material, then check the corresponding boxes below.
     </string>
     <string name="wus_fust_aquarium_options_title">My Aquarium…</string>
     <string name="wus_fust_heated_label">…has a heater</string>
@@ -110,6 +110,22 @@
     <string name="wus_fust_planted_description">An aquarium can be considered heavily planted if
         less than a quarter of its substrate is visible when viewed from above.</string>
     <string name="wus_fust_seeded_label">…has seed material</string>
+    <string name="wus_fust_no_plants_label">No Plants</string>
+    <string name="wus_fust_light_plants_label">Lightly Planted</string>
+    <string name="wus_fust_heavy_plants_label">Heavily Planted</string>
+
+    <!-- 6. First Readings Fragment -->
+    <string name="wus_frf_content">
+        Use your water softener to prepare %1$d %2$s of dechlorinated tap water, and add it to your
+        aquarium. Turn on your aquarium\'s filter%3$s.\n\nFollow the instructions
+        on your water testing kit to get the ammonia, nitrite and
+        nitrate values of your dechlorinated tap water. Enter these numbers into the Control Reading
+        boxes.\n\nAdd %4$sml of ammonia solution to your aquarium, wait for an hour, then conduct
+        a second reading. Add these values to the First Reading boxes.
+    </string>
+    <string name="wus_frf_content_and_heater">and heater</string>
+    <string name="wus_frf_control_header">Control Reading (%1$s)</string>
+    <string name="wus_frf_first_reading_header">First Reading (%1$s)</string>
 
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>

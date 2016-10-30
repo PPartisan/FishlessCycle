@@ -91,7 +91,7 @@
     </string-array>
 
     <string-array name="info_item_children">
-        <item>Ammonia sources typically include chemical (i.e. household cleaning Ammonia) and
+        <item>Ammonia sources can be chemical (i.e. household cleaning Ammonia) or
             organic (i.e. ammonia naturally produced by decaying shrimp, or as a waste product).
             \n\nChemical ammonia is recommended as it provides greater control over dosage
         levels. It is also less likely to encourage "bacterial blooms" during the cycle.
@@ -103,13 +103,12 @@
             \n\nLiquid tests kits are recommended as they are more accurate than paper strips.
         </item>
         <item>
-            In addition to cleaning substrate, water siphons make water changes substantially easier.
+            In addition to cleaning substrate, water siphons make water changes substantially simpler.
         </item>
         <item>
-            As with water siphons, a simple bucket is very useful for conducting water changes. It
-            can also be a helpful place to store items related to the aquarium.\n\nIt is recommended
-            any bucket used for an aquarium is not used for other tasks (i.e. cleaning) because of
-            the risk of contaminating the aquarium with cleaning products.
+            A simple bucket is very useful for conducting water changes. It
+            is also a helpful place to store items related to the aquarium.\n\nThis bucket should
+            not used for other tasks (i.e. cleaning) because of the risk of contaminating the aquarium.
         </item>
         <item>
             Water Conditioner removes chlorine and chloramines from tap water.\n\nBoth these chemicals

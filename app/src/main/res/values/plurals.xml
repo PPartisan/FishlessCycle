@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <plurals name="litres">
+        <item quantity="one">Litre</item>
+        <item quantity="other">Litres</item>
+    </plurals>
+    
+    <plurals name="us_gallons">
+        <item quantity="one">US gallon</item>
+        <item quantity="other">US gallons</item>
+    </plurals>
+    
+    <plurals name="imperial_gallons">
+        <item quantity="one">Imperial gallon</item>
+        <item quantity="other">Imperial gallons</item>
+    </plurals>
+    
+</resources>

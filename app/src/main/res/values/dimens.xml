@@ -4,6 +4,7 @@
     <dimen name="horizontal_margin_default">16dp</dimen>
     <dimen name="horizontral_margin_default_small">8dp</dimen>
     <dimen name="vertical_margin_default">16dp</dimen>
+    <dimen name="vertical_margin_default_small">8dp</dimen>
 
     <!-- Main Fragment -->
     <dimen name="fm_margin_default">16dp</dimen>

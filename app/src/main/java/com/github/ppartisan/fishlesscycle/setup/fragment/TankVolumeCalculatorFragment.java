@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -72,7 +73,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
         mOutput = (EditText) v.findViewById(R.id.vt_swuf_output);
 
         //Below Index could be passed via Fragment arguments. Optional feature.
-        final int editTextBackgroundColor = getColorPackSupplier().getColorPackForIndexId(0).dark;
+        final int editTextBackgroundColor = ContextCompat.getColor(getContext(), R.color.grey_500);
 
         mHeight.setHintTextColor(editTextBackgroundColor);
         mWidth.setHintTextColor(editTextBackgroundColor);

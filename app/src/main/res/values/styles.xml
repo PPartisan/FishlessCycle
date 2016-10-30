@@ -20,4 +20,25 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="AmmoniaTextTheme" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@color/green_300</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/green_100</item>
+    </style>
+
+    <style name="NitriteTextTheme" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@color/blue_300</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/blue_100</item>
+    </style>
+
+    <style name="NitrateTextTheme" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@color/red_300</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/red_100</item>
+    </style>
+
 </resources>

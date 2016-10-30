@@ -35,6 +35,10 @@
 
     <color name="blue_200">#90CAF9</color>
 
+    <color name="green_100">#C8E6C9</color>
+    <color name="blue_100">#BBDEFB</color>
+    <color name="red_100">#ffcdd2</color>
+
     <color name="grey_600">#757575</color>
 
 </resources>

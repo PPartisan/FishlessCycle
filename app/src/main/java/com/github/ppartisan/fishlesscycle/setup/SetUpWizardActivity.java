@@ -22,7 +22,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SetUpWizardActivity extends AppCompatActivity implements TankBuilderSupplier, ColorPackSupplier, SetUpPageChangeListenerCallbacks {
+public final class SetUpWizardActivity extends AppCompatActivity implements TankBuilderSupplier, SetUpPageChangeListenerCallbacks {
+
+    private static final String TAG = SetUpWizardActivity.class.getSimpleName();
+    private static final String TANK_BUILDER_KEY = TAG + ".TANK_BUILDER_KEY";
 
     private ViewGroup mParent;
     private ImageView mImage;
@@ -62,8 +65,19 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         mIndicator = (DotIndicatorView) findViewById(R.id.wusa_indicator);
         mIndicator.attachToViewPager(mPager);
 
-        mTankBuilder = new Tank.Builder();
+        // TODO: Is It best to retrieve this from database each time, or save to parcel for config?
+        if (savedInstanceState == null) {
+            mTankBuilder = new Tank.Builder();
+        } else {
+            mTankBuilder = savedInstanceState.getParcelable(TANK_BUILDER_KEY);
+        }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(TANK_BUILDER_KEY, mTankBuilder);
     }
 
     @Override
@@ -91,10 +105,4 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
 
     }
 
-    @Override
-    public ColorPack getColorPackForIndexId(int index) {
-        final int maxIndex = mColors.size() - 1;
-        if(index > maxIndex) index = maxIndex;
-        return mColors.get(index);
-    }
 }

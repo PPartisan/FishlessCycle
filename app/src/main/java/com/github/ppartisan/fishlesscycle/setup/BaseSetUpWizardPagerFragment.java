@@ -19,18 +19,15 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilderObserver, TankBuilderModifier, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private TankBuilderSupplier mTankBuilderSupplier;
-    private ColorPackSupplier mColorPackSupplier;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
             mTankBuilderSupplier = (TankBuilderSupplier) context;
-            mColorPackSupplier = (ColorPackSupplier) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement "
-                    + TankBuilderSupplier.class.getCanonicalName() + " and "
-                    + ColorPackSupplier.class.getCanonicalName());
+                    + TankBuilderSupplier.class.getCanonicalName());
         }
     }
 
@@ -52,7 +49,6 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
     public void onDetach() {
         super.onDetach();
         mTankBuilderSupplier = null;
-        mColorPackSupplier = null;
     }
 
     @Override
@@ -68,13 +64,6 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
             mTankBuilderSupplier = (TankBuilderSupplier) getContext();
         }
         return mTankBuilderSupplier;
-    }
-
-    protected ColorPackSupplier getColorPackSupplier() {
-        if (mColorPackSupplier == null) {
-            mColorPackSupplier = (ColorPackSupplier) getContext();
-        }
-        return mColorPackSupplier;
     }
 
 

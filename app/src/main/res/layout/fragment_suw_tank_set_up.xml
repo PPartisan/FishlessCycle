@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/horizontral_margin_default_small"
                 android:layout_marginStart="@dimen/horizontral_margin_default_small"
-                android:layout_marginTop="@dimen/line_margin_top_smallest"
+                android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="italic"
                 android:text="@string/wus_fust_planted_description"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/horizontal_margin_default"
                 android:layout_marginStart="@dimen/horizontal_margin_default"
-                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:layout_marginTop="@dimen/line_margin_top_smallest"
                 android:orientation="horizontal"
                 android:checkedButton="@+id/ust_suwf_radio_no_plants"
                 app:layout_columnSpan="2">
@@ -133,7 +133,7 @@
                     android:layout_marginBottom="@dimen/vertical_margin_default"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/white"
-                    android:text="No Plants" />
+                    android:text="@string/wus_fust_no_plants_label" />
 
                 <RadioButton
                     android:id="@+id/ust_suwf_radio_light_plants"
@@ -143,7 +143,7 @@
                     android:layout_marginBottom="@dimen/vertical_margin_default"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/white"
-                    android:text="Lightly Planted"/>
+                    android:text="@string/wus_fust_light_plants_label"/>
 
                 <RadioButton
                     android:id="@+id/ust_suwf_radio_heavy_plants"
@@ -153,7 +153,7 @@
                     android:layout_marginBottom="@dimen/vertical_margin_default"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/white"
-                    android:text="Heavily Planted"/>
+                    android:text="@string/wus_fust_heavy_plants_label"/>
 
             </RadioGroup>
 

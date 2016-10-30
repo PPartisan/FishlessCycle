@@ -8,6 +8,7 @@ import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.setup.TankBuilderObserver;
 import com.github.ppartisan.fishlesscycle.setup.fragment.AmmoniaDosageFragment;
+import com.github.ppartisan.fishlesscycle.setup.fragment.FirstReadingFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.InfoListFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.IntroductionFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.TankSetUpFragment;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
 
-    private static final int NUM_PAGES = 10;
+    private static final int NUM_PAGES = 7;
 
     private final Set<TankBuilderObserver> mTankBuilderObservers = new HashSet<>(NUM_PAGES);
 
@@ -50,6 +51,10 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
                 return f;
             case 4:
                 f = TankSetUpFragment.newInstance();
+                mTankBuilderObservers.add(f);
+                return f;
+            case 5:
+                f = FirstReadingFragment.newInstance();
                 mTankBuilderObservers.add(f);
                 return f;
             default:

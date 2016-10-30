@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/drm_action_notes"
+        android:title="@string/mrd_action_notes" />
+
+    <item
         android:id="@+id/drm_action_edit"
         android:title="@string/mrd_action_edit" />
 

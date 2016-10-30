@@ -24,13 +24,13 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 
 import java.text.DecimalFormat;
 
+import static com.github.ppartisan.fishlesscycle.model.Tank.DEFAULT_TARGET_CONCENTRATION;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.getParsedFloatFromTextWidget;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpty;
 
 public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment implements TextWatcher, View.OnClickListener {
 
     private static final float DEFAULT_AMMONIA_PERCENTAGE = 10f;
-    private static final float DEFAULT_TARGET_CONCENTRATION = 3f;
 
     private final DecimalFormat mFormat = new DecimalFormat("##.##");
 
