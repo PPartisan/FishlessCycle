@@ -90,9 +90,6 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
         mSettingsBtn = (ImageButton) v.findViewById(R.id.vt_suwf_switch_units);
         mSettingsBtn.setOnClickListener(this);
 
-        mOutput.setText(getConvertedTankVolumeString());
-        mUnitDescription.setText(getUnitDescriptionText());
-
         return v;
 
     }
@@ -100,6 +97,10 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
     @Override
     public void onResume() {
         super.onResume();
+
+        mUnitDescription.setText(getUnitDescriptionText());
+        mOutput.setText(getConvertedTankVolumeString());
+
         mHeight.addTextChangedListener(this);
         mWidth.addTextChangedListener(this);
         mLength.addTextChangedListener(this);

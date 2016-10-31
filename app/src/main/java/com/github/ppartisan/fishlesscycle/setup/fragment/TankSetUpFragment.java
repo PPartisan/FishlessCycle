@@ -33,6 +33,7 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         final View v = inflater.inflate(R.layout.fragment_suw_tank_set_up, container, false);
 
         mHeater = (CheckBox) v.findViewById(R.id.ust_suwf_heated);
@@ -48,6 +49,14 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
         mSeedMaterial.setOnCheckedChangeListener(this);
         plantedGroup.setOnCheckedChangeListener(this);
 
+        return v;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
 
         mHeater.setChecked(builder.isHeated());
@@ -56,7 +65,6 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
         final @PlantStatus int plantStatus = builder.getPlantStatus();
         setPlantedButtonChecked(plantStatus);
 
-        return v;
     }
 
     private void setPlantedButtonChecked(@PlantStatus int plantStatus) {
