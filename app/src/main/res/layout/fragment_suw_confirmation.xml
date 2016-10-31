@@ -20,25 +20,25 @@
         android:paddingBottom="@dimen/vertical_margin_default"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/ust_suwf_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vertical_margin_default"
-            android:layout_marginBottom="@dimen/vertical_margin_default"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:text="@string/wus_fust_content"/>
+        <!--<TextView-->
+            <!--android:id="@+id/ust_suwf_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/vertical_margin_default"-->
+            <!--android:layout_marginBottom="@dimen/vertical_margin_default"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:text="@string/wus_fust_content"/>-->
 
         <android.support.v7.widget.GridLayout
+            android:id="@+id/c_suwf_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ust_suwf_content"
             app:columnCount="2">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/image_button_default"
+                android:layout_height="@dimen/list_item_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:text="@string/wus_fust_aquarium_options_title"
@@ -49,40 +49,114 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_item_small"
                 android:layout_marginLeft="@dimen/horizontral_margin_default_small"
                 android:layout_marginStart="@dimen/horizontral_margin_default_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:text="@string/wus_fust_heated_label"
+                android:text="Title"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"/>
+
+            <EditText
+                android:id="@+id/c_suwf_title_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:gravity="center"
+                android:minEms="5"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                app:layout_gravity="end|center_vertical"/>
+
+            <TextView
+                android:id="@+id/c_suwf_volume_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="Volume (Litres)"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"/>
+
+            <EditText
+                android:id="@+id/c_suwf_volume_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:gravity="center"
+                android:minEms="5"
+                android:maxLength="4"
+                android:inputType="number"
+                android:textColor="@android:color/white"
+                app:layout_gravity="end|center_vertical"/>
+
+            <TextView
+                android:id="@+id/c_suwf_dosage_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="Ammonia Dosage (ml)"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="fill_horizontal|center_vertical"/>
+
+            <EditText
+                android:id="@+id/c_suwf_dosage_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:gravity="center"
+                android:minEms="5"
+                android:maxLength="4"
+                android:inputType="numberDecimal"
+                android:textColor="@android:color/white"
+                app:layout_gravity="end|center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
+                android:layout_marginStart="@dimen/horizontral_margin_default_small"
+                android:layout_marginTop="@dimen/line_margin_top_small"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:text="@string/wus_cf_heater"
                 android:gravity="start|center_vertical"
                 app:layout_gravity="fill_horizontal|center_vertical"/>
 
             <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/ust_suwf_heated"
+                android:id="@+id/c_suwf_heated"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_item_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:gravity="center_vertical"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_item_small"
                 android:layout_marginLeft="@dimen/horizontral_margin_default_small"
                 android:layout_marginStart="@dimen/horizontral_margin_default_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:text="@string/wus_fust_seeded_label"
+                android:text="@string/wus_cf_seed_material"
                 android:gravity="start|center_vertical"
                 app:layout_gravity="fill_horizontal|center_vertical"/>
 
             <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/ust_suwf_seeded"
+                android:id="@+id/c_suwf_seeded"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_item_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/white"
@@ -90,75 +164,69 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_item_small"
                 android:layout_marginLeft="@dimen/horizontral_margin_default_small"
                 android:layout_marginStart="@dimen/horizontral_margin_default_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:text="@string/wus_fust_planted_label"
-                android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"
-                app:layout_columnSpan="2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginStart="@dimen/horizontral_margin_default_small"
-                android:layout_marginTop="@dimen/line_margin_top_small"
-                android:textColor="@android:color/white"
-                android:textStyle="italic"
-                android:text="@string/wus_fust_planted_description"
+                android:text="@string/wus_cf_plants"
                 android:gravity="start|center_vertical"
                 app:layout_gravity="fill_horizontal|center_vertical"
                 app:layout_columnSpan="2"/>
 
             <RadioGroup
-                android:id="@+id/ust_suwf_planted"
+                android:id="@+id/c_suwf_planted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/horizontal_margin_default"
                 android:layout_marginStart="@dimen/horizontal_margin_default"
                 android:layout_marginTop="@dimen/line_margin_top_smallest"
                 android:orientation="horizontal"
-                android:gravity="center"
                 android:checkedButton="@+id/ust_suwf_radio_no_plants"
+                android:gravity="center"
                 app:layout_columnSpan="2">
 
                 <RadioButton
-                    android:id="@+id/ust_suwf_radio_no_plants"
-                    android:layout_width="match_parent"
+                    android:id="@+id/c_suwf_radio_no_plants"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/list_item_default"
                     android:layout_weight="1"
                     android:layout_marginBottom="@dimen/vertical_margin_default"
-                    android:gravity="center_vertical"
                     android:textColor="@android:color/white"
                     android:text="@string/wus_fust_no_plants_label" />
 
                 <RadioButton
-                    android:id="@+id/ust_suwf_radio_light_plants"
-                    android:layout_width="match_parent"
+                    android:id="@+id/c_suwf_radio_light_plants"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/list_item_default"
                     android:layout_weight="1"
                     android:layout_marginBottom="@dimen/vertical_margin_default"
-                    android:gravity="center_vertical"
                     android:textColor="@android:color/white"
                     android:text="@string/wus_fust_light_plants_label"/>
 
                 <RadioButton
-                    android:id="@+id/ust_suwf_radio_heavy_plants"
-                    android:layout_width="match_parent"
+                    android:id="@+id/c_suwf_radio_heavy_plants"
+                    android:layout_width="0dp"
                     android:layout_height="@dimen/list_item_default"
                     android:layout_weight="1"
                     android:layout_marginBottom="@dimen/vertical_margin_default"
-                    android:gravity="center_vertical"
                     android:textColor="@android:color/white"
                     android:text="@string/wus_fust_heavy_plants_label"/>
 
             </RadioGroup>
 
         </android.support.v7.widget.GridLayout>
+
+        <Button
+            android:id="@+id/c_suwf_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/vertical_margin_default"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/c_suwf_grid"
+            android:text="Confirm"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
     </RelativeLayout>
 

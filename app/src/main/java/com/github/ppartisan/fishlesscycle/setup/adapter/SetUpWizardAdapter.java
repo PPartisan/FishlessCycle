@@ -8,6 +8,7 @@ import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.setup.TankBuilderObserver;
 import com.github.ppartisan.fishlesscycle.setup.fragment.AmmoniaDosageFragment;
+import com.github.ppartisan.fishlesscycle.setup.fragment.ConfirmationFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.FirstReadingFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.InfoListFragment;
 import com.github.ppartisan.fishlesscycle.setup.fragment.IntroductionFragment;
@@ -57,11 +58,14 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
                 f = FirstReadingFragment.newInstance();
                 mTankBuilderObservers.add(f);
                 return f;
-            default:
-                f = IntroductionFragment.newInstance();
+            case 6:
+                f = ConfirmationFragment.newInstance();
                 mTankBuilderObservers.add(f);
                 return f;
         }
+
+        throw new IllegalStateException("Number of fragments must be no greater than " + NUM_PAGES);
+
     }
 
     @Override

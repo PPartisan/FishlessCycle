@@ -16,7 +16,6 @@ import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
-import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.text.DecimalFormat;
 
@@ -149,7 +148,7 @@ public final class FirstReadingFragment extends BaseSetUpWizardPagerFragment imp
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        // TODO: 30/10/16 Add row to table using identifier for this TankBuilder 
+        // TODO: 30/10/16 Add row to table using identifier for this TankBuilder
 
     }
 

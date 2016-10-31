@@ -50,12 +50,13 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         Picasso.with(this).load(R.drawable.tank_white).into(mImage);
 
         mColors = new ArrayList<>();
-        mColors.add(ColorPack.buildFromId(this, R.color.light_blue_300, R.color.light_blue_500));
-        mColors.add(ColorPack.buildFromId(this, R.color.blue_grey_300, R.color.blue_grey_500));
+        mColors.add(ColorPack.buildFromId(this, R.color.cyan_700, R.color.cyan_900));
+        mColors.add(ColorPack.buildFromId(this, R.color.grey_500, R.color.grey_700));
         mColors.add(ColorPack.buildFromId(this, R.color.indigo_300, R.color.indigo_500));
-        mColors.add(ColorPack.buildFromId(this, R.color.blue_300, R.color.blue_500));
-        mColors.add(ColorPack.buildFromId(this, R.color.brown_300, R.color.brown_500));
-        mColors.add(ColorPack.buildFromId(this, R.color.primary, R.color.primary_dark));
+        mColors.add(ColorPack.buildFromId(this, R.color.blue_grey_300, R.color.blue_grey_500));
+        mColors.add(ColorPack.buildFromId(this, R.color.cyan_500, R.color.cyan_700));
+        mColors.add(ColorPack.buildFromId(this, R.color.grey_500, R.color.grey_700));
+        mColors.add(ColorPack.buildFromId(this, R.color.blue_500, R.color.blue_700));
 
         mPager = (ViewPager) findViewById(R.id.wusa_pager);
         mPager.addOnPageChangeListener(new SetUpPageChangeListener(this, mColors));

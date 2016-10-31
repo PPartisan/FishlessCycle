@@ -2,6 +2,7 @@ package com.github.ppartisan.fishlesscycle.setup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -11,9 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.ConversionUtils.UnitType;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
+
+import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.MGL;
+import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.PPM;
 
 
 public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilderObserver, TankBuilderModifier, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -68,7 +75,7 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
 
 
     @Override
-    public float getVolumeAsLitres(float volume, @PreferenceUtils.VolumeUnit int unit) {
+    public float getVolumeAsLitres(float volume, @VolumeUnit int unit) {
 
         float volumeInLitres = 0;
 
@@ -89,7 +96,7 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
     }
 
     @Override
-    public float getTankVolumeInLitresAsUserUnitPreference(float volumeInLitres, @PreferenceUtils.VolumeUnit int unit) {
+    public float getTankVolumeInLitresAsUserUnitPreference(float volumeInLitres, @VolumeUnit int unit) {
 
         float displayVolume = 0;
         switch (unit) {
@@ -105,6 +112,47 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
         }
 
         return displayVolume;
+    }
+
+    @Override
+    public String getUserDosageUnitAsString(@UnitType int unit) {
+
+            String unitString;
+
+            switch (unit) {
+                case MGL:
+                    unitString = getString(R.string.unit_metric);
+                    break;
+                case PPM:
+                    unitString = getString(R.string.unit_imperial);
+                    break;
+                default:
+                    throw new IllegalArgumentException("'type' parameter must be of type "
+                            + UnitType.class.getCanonicalName());
+            }
+
+            return unitString;
+
+    }
+
+    public String getUserVolumeUnitAsString(@VolumeUnit int unit) {
+
+        String unitString = null;
+
+        switch (unit) {
+            case PreferenceUtils.METRIC:
+                unitString = getString(R.string.litres);
+                break;
+            case PreferenceUtils.IMPERIAL:
+                unitString = getString(R.string.imperial_gallons);
+                break;
+            case PreferenceUtils.US:
+                unitString = getString(R.string.us_gallons);
+                break;
+        }
+
+        return unitString;
+
     }
 
 }
