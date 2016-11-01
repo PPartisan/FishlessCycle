@@ -87,8 +87,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
     public void onResume() {
         super.onResume();
 
-        //todo Currently builder info is not saved on rotation. This will be written to and retrieved
-        // from a ContentProvider later
+        //todo This will be written to and retrieved from a ContentProvider later
         mTankVolume.setText(getConvertedTankVolumeString());
         mAmmoniaPercentEntry.setText(mFormat.format(DEFAULT_AMMONIA_PERCENTAGE));
         mTargetConcentrationEntry.setText(mFormat.format(getAmmoniaDosage().targetConcentration));
@@ -118,9 +117,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
             return nullAmmoniaDosage;
         }
 
-        final AmmoniaDosage dosage = getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();
-
-        return (dosage == null) ? nullAmmoniaDosage : dosage;
+        return getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();
 
     }
 
@@ -281,7 +278,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
             final AmmoniaDosage currentDosage = getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();
 
             if (currentDosage == null || !currentDosage.equalsValues(ammoniaDosage, targetConcentration)) {
-                getTankBuilderSupplier().getTankBuilder().ammoniaDosage(ammoniaDosage, targetConcentration);
+                getTankBuilderSupplier().getTankBuilder().setAmmoniaDosage(ammoniaDosage, targetConcentration);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
         }

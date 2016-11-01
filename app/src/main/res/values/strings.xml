@@ -131,6 +131,7 @@
     <string name="wus_cf_heater">Heater</string>
     <string name="wus_cf_seed_material">Seed Material</string>
     <string name="wus_cf_plants">Plants</string>
+    <string name="wus_cf_name_template">Aquarium (%1$d)</string>
 
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>

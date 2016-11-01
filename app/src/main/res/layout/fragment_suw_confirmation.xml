@@ -105,7 +105,7 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:text="Ammonia Dosage (ml)"
+                android:text="@string/wus_fda_output_label"
                 android:gravity="start|center_vertical"
                 app:layout_gravity="fill_horizontal|center_vertical"/>
 

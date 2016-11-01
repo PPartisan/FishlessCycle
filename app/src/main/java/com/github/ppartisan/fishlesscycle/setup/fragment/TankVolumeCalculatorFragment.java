@@ -196,7 +196,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
             final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
             if (builder.getVolumeInLitres() != volumeInLitres) {
-                builder.volumeInLitres(volumeInLitres);
+                builder.setVolumeInLitres(volumeInLitres);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
 
@@ -292,7 +292,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
             final float outputVolume = getOutputTextAsMetricLitres();
             final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
             if(builder.getVolumeInLitres() != outputVolume) {
-                builder.volumeInLitres(outputVolume);
+                builder.setVolumeInLitres(outputVolume);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
         }

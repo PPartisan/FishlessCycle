@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -40,11 +41,12 @@ public final class Tank implements Parcelable {
 
         this.name = name;
         this.volumeInLitres = volumeInLitres;
-        this.ammoniaDosage = ammoniaDosage;
         this.isHeated = isHeated;
         this.isSeeded = isSeeded;
         this.plantStatus = plantStatus;
         this.identifier = identifier;
+
+        this.ammoniaDosage = ammoniaDosage;
 
     }
 
@@ -88,6 +90,7 @@ public final class Tank implements Parcelable {
     }
 
     public AmmoniaDosage getAmmoniaDosage() {
+
         return ammoniaDosage;
     }
 
@@ -160,32 +163,32 @@ public final class Tank implements Parcelable {
             return this;
         }
 
-        public Builder isHeated(boolean isHeated) {
+        public Builder setIsHeated(boolean isHeated) {
             this.isHeated = isHeated;
             return this;
         }
 
-        public Builder isSeeded(boolean isSeeded) {
+        public Builder setIsSeeded(boolean isSeeded) {
             this.isSeeded = isSeeded;
             return this;
         }
 
-        public Builder plantStatus(@PlantStatus int plantStatus) {
+        public Builder setPlantStatus(@PlantStatus int plantStatus) {
             this.plantStatus = plantStatus;
             return this;
         }
 
-        public Builder volumeInLitres(float volumeInLitres) {
+        public Builder setVolumeInLitres(float volumeInLitres) {
             this.volumeInLitres = volumeInLitres;
             return this;
         }
 
-        public Builder ammoniaDosage(AmmoniaDosage ammoniaDosage) {
+        public Builder setAmmoniaDosage(AmmoniaDosage ammoniaDosage) {
             this.ammoniaDosage = ammoniaDosage;
             return this;
         }
 
-        public Builder ammoniaDosage(float dosage, float targetConcentration) {
+        public Builder setAmmoniaDosage(float dosage, float targetConcentration) {
             this.ammoniaDosage = new AmmoniaDosage(dosage, targetConcentration);
             return this;
         }
@@ -219,6 +222,11 @@ public final class Tank implements Parcelable {
         }
 
         public AmmoniaDosage getAmmoniaDosage() {
+
+            if (ammoniaDosage == null) {
+                ammoniaDosage = new AmmoniaDosage(0, DEFAULT_TARGET_CONCENTRATION);
+            }
+
             return ammoniaDosage;
         }
 

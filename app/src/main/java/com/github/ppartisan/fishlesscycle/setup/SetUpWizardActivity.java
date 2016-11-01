@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SetUpWizardActivity extends AppCompatActivity implements TankBuilderSupplier, SetUpPageChangeListenerCallbacks {
+public final class SetUpWizardActivity extends AppCompatActivity implements TankBuilderSupplier, SetUpPageChangeListenerCallbacks, AdapterSupplier {
 
     private static final String TAG = SetUpWizardActivity.class.getSimpleName();
     private static final String TANK_BUILDER_KEY = TAG + ".TANK_BUILDER_KEY";
@@ -104,6 +104,11 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         mIndicator.setColor(colorDark);
         ViewUtils.setStatusBarColor(this, colorDark);
 
+    }
+
+    @Override
+    public void setPagerToLastPage() {
+        mPager.setCurrentItem(mAdapter.getCount()-1, false);
     }
 
 }

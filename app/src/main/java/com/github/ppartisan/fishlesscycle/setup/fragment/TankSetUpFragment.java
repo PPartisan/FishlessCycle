@@ -2,6 +2,7 @@ package com.github.ppartisan.fishlesscycle.setup.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.github.ppartisan.fishlesscycle.setup.TankBuilderSupplier;
 
 public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implements
         CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener{
+
+    private boolean isVisible = false;
 
     private CheckBox mHeater, mSeedMaterial;
     private RadioButton mNoPlants, mLightPlants, mHeavyPlants;
@@ -100,14 +103,16 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
         final TankBuilderSupplier supplier = getTankBuilderSupplier();
         if (supplier == null) return;
 
+        if(!isVisible) return;
+
         final Tank.Builder builder = supplier.getTankBuilder();
 
         switch (button.getId()) {
             case R.id.ust_suwf_heated:
-                builder.isHeated(isChecked);
+                builder.setIsHeated(isChecked);
                 break;
             case R.id.ust_suwf_seeded:
-                builder.isSeeded(isChecked);
+                builder.setIsSeeded(isChecked);
                 break;
         }
 
@@ -121,21 +126,25 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
         final TankBuilderSupplier supplier = getTankBuilderSupplier();
         if (supplier == null) return;
 
+        if(!isVisible) return;
+
         final Tank.Builder builder = supplier.getTankBuilder();
 
         switch (i) {
             case R.id.ust_suwf_radio_no_plants:
-                builder.plantStatus(Tank.NONE);
+                builder.setPlantStatus(Tank.NONE);
+                supplier.notifyTankBuilderUpdated();
                 break;
             case R.id.ust_suwf_radio_light_plants:
-                builder.plantStatus(Tank.LIGHT);
+                builder.setPlantStatus(Tank.LIGHT);
+                supplier.notifyTankBuilderUpdated();
                 break;
             case R.id.ust_suwf_radio_heavy_plants:
-                builder.plantStatus(Tank.HEAVY);
+                builder.setPlantStatus(Tank.HEAVY);
+                supplier.notifyTankBuilderUpdated();
                 break;
         }
 
-        supplier.notifyTankBuilderUpdated();
 
     }
 
@@ -155,10 +164,18 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
         }
 
         final @PlantStatus int plantStatus = builder.getPlantStatus();
-        if (plantStatus != getPlantedStatusFromCheckedButton()) {
+        final @PlantStatus int currentPlantStatus = getPlantedStatusFromCheckedButton();
+        if (plantStatus != currentPlantStatus) {
             setPlantedButtonChecked(plantStatus);
         }
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //Without this, Radio Group auto-checks first button in group on page swipe.
+        this.isVisible = isVisibleToUser;
     }
 
 }

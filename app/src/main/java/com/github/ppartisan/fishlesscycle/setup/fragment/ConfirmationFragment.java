@@ -3,31 +3,38 @@ package com.github.ppartisan.fishlesscycle.setup.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.AmmoniaDosage;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
+import com.github.ppartisan.fishlesscycle.setup.TankBuilderSupplier;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.text.DecimalFormat;
 
-public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
+public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
     private final DecimalFormat mFormat = new DecimalFormat("##.#");
 
     private @PreferenceUtils.VolumeUnit int volumeUnit;
 
-    private TextView mVolumeLabel, mAmmoniaLabel;
+    private boolean isVisible = false;
+
+    private TextView mVolumeLabel;
     private EditText mTitle, mVolume, mAmmonia;
     private CheckBox mHeater, mSeedMaterial;
     private RadioButton mNoPlants, mLightlyPlanted, mHeavilyPlanted;
@@ -53,7 +60,6 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
         final View v= inflater.inflate(R.layout.fragment_suw_confirmation, container, false);
 
         mVolumeLabel = (TextView) v.findViewById(R.id.c_suwf_volume_label);
-        mAmmoniaLabel = (TextView) v.findViewById(R.id.c_suwf_dosage_label);
 
         mTitle = (EditText) v.findViewById(R.id.c_suwf_title_entry);
         mVolume = (EditText) v.findViewById(R.id.c_suwf_volume_entry);
@@ -66,6 +72,9 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
         mLightlyPlanted = (RadioButton) v.findViewById(R.id.c_suwf_radio_light_plants);
         mHeavilyPlanted = (RadioButton) v.findViewById(R.id.c_suwf_radio_heavy_plants);
 
+        final RadioGroup group = (RadioGroup) v.findViewById(R.id.c_suwf_planted);
+        group.setOnCheckedChangeListener(this);
+
         return v;
     }
 
@@ -73,12 +82,11 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
     public void onResume() {
         super.onResume();
 
+        mTitle.setText(getTitleText());
         mVolumeLabel.setText(getVolumeLabelText());
-        mAmmoniaLabel.setText(getAmmoniaLabelText());
 
         final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
 
-        mTitle.setText(builder.getName());
         mVolume.setText(getVolumeText());
         mAmmonia.setText(getAmmoniaText());
 
@@ -86,20 +94,38 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
         mSeedMaterial.setChecked(builder.isSeeded());
 
         final @Tank.PlantStatus int plantStatus = builder.getPlantStatus();
+
         setPlantedButtonChecked(plantStatus);
 
         mTitle.addTextChangedListener(new TitleTextWatcher());
         mVolume.addTextChangedListener(new TankVolumeTextWatcher());
         mAmmonia.addTextChangedListener(new AmmoniaTextWatcher());
 
+        mHeater.setOnCheckedChangeListener(this);
+        mSeedMaterial.setOnCheckedChangeListener(this);
+
+    }
+
+    private String getTitleText() {
+
+        if (getTankBuilderSupplier() == null) return null;
+
+        final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
+
+        String title;
+
+        if (!TextUtils.isEmpty(builder.getName())) {
+            title = builder.getName();
+        } else {
+            title = getString(R.string.wus_cf_name_template, builder.getIdentifier() + 1);
+        }
+
+        return title;
+
     }
 
     private String getVolumeLabelText() {
         return getString(R.string.wus_fda_tank_volume_label, getUserVolumeUnitAsString(volumeUnit));
-    }
-
-    private String getAmmoniaLabelText() {
-        return getString(R.string.wus_fda_percent_ammonia_label);
     }
 
     private String getVolumeText() {
@@ -110,7 +136,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
         final float volume =
                 getTankVolumeInLitresAsUserUnitPreference(builder.getVolumeInLitres(), volumeUnit);
 
-        return (volume <=0) ? "" : String.valueOf((int)Math.ceil(volume));
+        return (volume <=0) ? "0" : String.valueOf((int)Math.ceil(volume));
     }
 
     private String getAmmoniaText() {
@@ -130,8 +156,8 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
     @Override
     public void onTankModified(Tank.Builder builder) {
 
-        if (!mTitle.getText().toString().equals(builder.getName())) {
-            mTitle.setText(builder.getName());
+        if (builder.getName() != null && !mTitle.getText().toString().equals(builder.getName())) {
+            mTitle.setText(getTitleText());
         }
 
         final String volume = getVolumeText();
@@ -153,8 +179,8 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
         }
 
         final @Tank.PlantStatus int plantStatus = builder.getPlantStatus();
-
-        if (plantStatus != getPlantedStatusFromCheckedButton()) {
+        final @Tank.PlantStatus int currentPlantStatus = getPlantedStatusFromCheckedButton();
+        if (plantStatus != currentPlantStatus) {
             setPlantedButtonChecked(plantStatus);
         }
 
@@ -186,6 +212,62 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
         throw new RuntimeException("Included solely to satisfy compiler. " +
                 Tank.PlantStatus.class.getSimpleName() + " is IntDef so this should never be thrown");
 
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+        final TankBuilderSupplier supplier = getTankBuilderSupplier();
+        if (supplier == null) return;
+
+        if(!isVisible) return;
+
+        final Tank.Builder builder = supplier.getTankBuilder();
+
+        switch (i) {
+            case R.id.c_suwf_radio_no_plants:
+                builder.setPlantStatus(Tank.NONE);
+                supplier.notifyTankBuilderUpdated();
+                break;
+            case R.id.c_suwf_radio_light_plants:
+                builder.setPlantStatus(Tank.LIGHT);
+                supplier.notifyTankBuilderUpdated();
+                break;
+            case R.id.c_suwf_radio_heavy_plants:
+                builder.setPlantStatus(Tank.HEAVY);
+                supplier.notifyTankBuilderUpdated();
+                break;
+        }
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //Without this, Radio Group auto-checks first button in group on page swipe.
+        this.isVisible = isVisibleToUser;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+
+        final TankBuilderSupplier supplier = getTankBuilderSupplier();
+        if (supplier == null) return;
+
+        if(!isVisible) return;
+
+        final Tank.Builder builder = supplier.getTankBuilder();
+
+        switch (button.getId()) {
+            case R.id.c_suwf_heated:
+                builder.setIsHeated(isChecked);
+                break;
+            case R.id.c_suwf_seeded:
+                builder.setIsSeeded(isChecked);
+                break;
+        }
+
+        supplier.notifyTankBuilderUpdated();
     }
 
     private final class TitleTextWatcher implements TextWatcher {
@@ -228,7 +310,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
             final float parsedVolume = ViewUtils.getParsedFloatFromTextWidget(mVolume);
             final float volumeInLitres = getVolumeAsLitres(parsedVolume, volumeUnit);
             if (volumeInLitres != builder.getVolumeInLitres()) {
-                builder.volumeInLitres(volumeInLitres);
+                builder.setVolumeInLitres(volumeInLitres);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
 
@@ -258,7 +340,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment {
                     ? Tank.DEFAULT_TARGET_CONCENTRATION : dosage.targetConcentration;
 
             if (dosage == null || dosage.dosage != parsedAmmonia) {
-                builder.ammoniaDosage(parsedAmmonia, targetConcentration);
+                builder.setAmmoniaDosage(parsedAmmonia, targetConcentration);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
 

@@ -122,7 +122,7 @@ public final class FirstReadingFragment extends BaseSetUpWizardPagerFragment imp
 
     @Override
     public void onTankModified(Tank.Builder builder) {
-        mContent.setText(getContentString());
+        if (mContent != null) mContent.setText(getContentString());
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.github.ppartisan.fishlesscycle.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +21,9 @@ import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.List;
 
@@ -47,9 +50,9 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         final Resources res = ctx.getResources();
         final @ConversionUtils.UnitType int type = ConversionUtils.MGL;
 
-        Picasso.with(ctx).load(R.drawable.test_card_image)
-                .placeholder(R.color.red_300)
-                .into(holder.image);
+        Picasso.with(ctx).load(R.drawable.test_card_image + 1)
+                .placeholder(R.drawable.tank_white)
+                .into(holder.image, new ImageLoadCallbacks(holder.image));
 
         holder.title.setText(tank.name);
         holder.options.setText(TankUtils.getTankOptionsText(ctx, tank));
@@ -138,6 +141,29 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
             return false;
         }
+    }
+
+    private static final class ImageLoadCallbacks implements Callback {
+
+        private final ImageView mImage;
+
+        private ImageLoadCallbacks(ImageView imageView) {
+            mImage = imageView;
+        }
+
+        @Override
+        public void onSuccess() {
+            mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            mImage.clearColorFilter();
+        }
+
+        @Override
+        public void onError() {
+            mImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            mImage.setBackgroundColor(ContextCompat.getColor(mImage.getContext(), R.color.red_500));
+            mImage.setColorFilter(ContextCompat.getColor(mImage.getContext(), R.color.red_700));
+        }
+
     }
 
 }

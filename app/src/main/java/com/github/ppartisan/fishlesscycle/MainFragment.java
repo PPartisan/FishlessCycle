@@ -70,14 +70,14 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     private static List<Tank> buildDummyTankData() {
         List<Tank> tanks = new ArrayList<>();
         tanks.add(new Tank.Builder("My First Tank")
-                .isHeated(true)
-                .plantStatus(Tank.LIGHT)
+                .setIsHeated(true)
+                .setPlantStatus(Tank.LIGHT)
                 .identifier(0)
                 .build()
         );
         tanks.add(new Tank.Builder("My Second Tank")
-                .isSeeded(true)
-                .plantStatus(Tank.HEAVY)
+                .setIsSeeded(true)
+                .setPlantStatus(Tank.HEAVY)
                 .identifier(1)
                 .build()
         );
