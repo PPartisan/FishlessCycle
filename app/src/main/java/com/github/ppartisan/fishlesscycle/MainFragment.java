@@ -1,29 +1,35 @@
 package com.github.ppartisan.fishlesscycle;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
+import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.SetUpWizardActivity;
+import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class MainFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener {
+public final class MainFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener, TankCardCallbacks, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private EmptyRecyclerView mRecyclerView;
     private TanksAdapter mAdapter;
@@ -39,6 +45,13 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         fragment.setArguments(args);
         return fragment;
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -58,7 +71,13 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         mRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.fm_recycler);
         mRecyclerView.setEmptyView(view.findViewById(R.id.fm_empty_view));
 
-        mAdapter = new TanksAdapter(buildDummyTankData());
+        final @ConversionUtils.UnitType int dosUnitType =
+                PreferenceUtils.getDosageUnitType(getContext());
+
+        final @PreferenceUtils.VolumeUnit int volUnitType =
+                PreferenceUtils.getVolumeUnit(getContext());
+
+        mAdapter = new TanksAdapter(this, null, dosUnitType, volUnitType);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -67,29 +86,21 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private static List<Tank> buildDummyTankData() {
-        List<Tank> tanks = new ArrayList<>();
-        tanks.add(new Tank.Builder("My First Tank")
-                .setIsHeated(true)
-                .setPlantStatus(Tank.LIGHT)
-                .identifier(0)
-                .build()
-        );
-        tanks.add(new Tank.Builder("My Second Tank")
-                .setIsSeeded(true)
-                .setPlantStatus(Tank.HEAVY)
-                .identifier(1)
-                .build()
-        );
-        return tanks;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    public void updateTankList(List<Tank> tanks) {
+        mAdapter.updateTanksList(tanks);
     }
 
     @Override
     public void onClick(View view) {
-        //ToDo: Add New "Tank" To RecyclerView
-        Log.d(getClass().getSimpleName(), "FAB clicked");
-        final Context context = view.getContext();
-        context.startActivity(new Intent(context, SetUpWizardActivity.class));
+        Intent intent = new Intent(getContext(), SetUpWizardActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -104,4 +115,97 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         return true;
     }
+
+    @Override
+    public void onCardClick(int position) {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra(DetailFragment.KEY_IDENTIFIER, mAdapter.getTank(position).identifier);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onEditTankClick(int position) {
+        // TODO: 03/11/16 Edit tank details
+        final Tank.Builder builder = new Tank.Builder(mAdapter.getTank(position));
+        Intent intent = new Intent(getContext(), EditTankActivity.class);
+        intent.putExtra(EditTankActivity.TANK_BUILDER_KEY, builder);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteTankClick(int position) {
+        final Tank tank = mAdapter.getTank(position);
+        deleteTank(tank);
+        buildTankDeletedSnackBar(tank).show();
+    }
+
+    @Override
+    public void onChangePhotoClick(int position) {
+        // TODO: 03/11/16 Change Photo
+    }
+
+    private void deleteTank(Tank tank) {
+        final String where = Contract.TankEntry._ID + "=?";
+        final String[] whereArgs =
+                new String[] { String.valueOf(tank.identifier) };
+        getContext().getContentResolver().delete(Contract.TankEntry.CONTENT_URI, where, whereArgs);
+    }
+
+    private Snackbar buildTankDeletedSnackBar(final Tank tank) {
+        Snackbar snackbar = Snackbar.make(
+                getView(),
+                getString(R.string.deleted_template, tank.name),
+                Snackbar.LENGTH_LONG
+        );
+
+        snackbar.setAction(getString(R.string.undo), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().getContentResolver().insert(
+                        Contract.TankEntry.CONTENT_URI, TankUtils.toContentValues(tank)
+                );
+            }
+        });
+
+        snackbar.setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                //Action click means "Undo" was fired
+                if (event == DISMISS_EVENT_ACTION) {
+                    return;
+                }
+                final String where = Contract.ReadingEntry.COLUMN_IDENTIFIER+"=?";
+                final String[] whereArgs = new String[] { String.valueOf(tank.identifier) };
+                getContext().getContentResolver().delete(
+                        Contract.ReadingEntry.CONTENT_URI, where, whereArgs
+                );
+            }
+        });
+
+        return snackbar;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+        final String doseUnitPrefsKey = getString(R.string.pref_dosage_unit_type_key);
+        final String volUnitPrefsKey = getString(R.string.pref_volume_unit_type_key);
+
+        if(doseUnitPrefsKey.equals(s)) {
+            final @ConversionUtils.UnitType int unitType =
+                    PreferenceUtils.getDosageUnitType(getContext());
+            mAdapter.setDosageUnitType(unitType);
+        }
+
+        if(volUnitPrefsKey.equals(s)) {
+            final @PreferenceUtils.VolumeUnit int unitType =
+                    PreferenceUtils.getVolumeUnit(getContext());
+            mAdapter.setVolumeUnit(unitType);
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+
 }

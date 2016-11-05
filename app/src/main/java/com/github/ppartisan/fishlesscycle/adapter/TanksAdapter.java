@@ -1,12 +1,11 @@
 package com.github.ppartisan.fishlesscycle.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,52 +14,65 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.ppartisan.fishlesscycle.DetailActivity;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
 
 import java.util.List;
 
 public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHolder> {
 
+    private final TankCardCallbacks mCallbacks;
     private List<Tank> mTanks;
+    private @ConversionUtils.UnitType int mDosageUnit;
+    private @PreferenceUtils.VolumeUnit int mVolumeUnit;
 
-    public TanksAdapter(List<Tank> tanks) {
+    public TanksAdapter(
+            @NonNull TankCardCallbacks callbacks, List<Tank> tanks,
+            @ConversionUtils.UnitType int dosageUnit,
+            @PreferenceUtils.VolumeUnit int volumeUnit
+    ) {
+        mCallbacks = callbacks;
         mTanks = tanks;
+        mDosageUnit = dosageUnit;
+        mVolumeUnit = volumeUnit;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.tank_card_view, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(mCallbacks, v);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Tank tank = mTanks.get(position);
         final Context ctx = holder.itemView.getContext();
         final Resources res = ctx.getResources();
-        final @ConversionUtils.UnitType int type = ConversionUtils.MGL;
 
-        Picasso.with(ctx).load(R.drawable.test_card_image + 1)
+        Picasso.with(ctx).load(R.drawable.test_card_image)
                 .placeholder(R.drawable.tank_white)
                 .into(holder.image, new ImageLoadCallbacks(holder.image));
 
-        holder.title.setText(tank.name);
+        holder.title.setText(getTankNameString(ctx, tank));
         holder.options.setText(TankUtils.getTankOptionsText(ctx, tank));
-        holder.stage.setText(res.getString(R.string.fm_cycle_stage_template, TankUtils.getStageString(res)));
+
+        final String tankStatus = res.getString(
+                R.string.fm_cycle_stage_template, TankUtils.getStageString(res, tank.tankStatus)
+        );
+        holder.stage.setText(tankStatus);
+
         holder.lastUpdated.setText(res.getString(R.string.fm_last_updated_template, "20th October"));
-        holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, 3, type));
-        holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, 0, type));
-        holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, 15, type));
+        holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, 3, mDosageUnit));
+        holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, 0, mDosageUnit));
+        holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, 15, mDosageUnit));
         holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
 
     }
@@ -70,8 +82,40 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         return (mTanks == null) ? 0 : mTanks.size();
     }
 
+    public void updateTanksList(List<Tank> tanks) {
+        mTanks = tanks;
+        notifyDataSetChanged();
+    }
+
+    public void setDosageUnitType(@ConversionUtils.UnitType int unitType) {
+        mDosageUnit = unitType;
+    }
+
+    public void setVolumeUnit(@PreferenceUtils.VolumeUnit int unitType) {
+        mVolumeUnit = unitType;
+    }
+
+    private String getTankNameString(Context ctx, Tank tank) {
+
+        final String volUnitString =
+                TankUtils.getAbbreviatedVolumeUnit(ctx.getResources(), mVolumeUnit).toLowerCase();
+
+        final int volume = (int) Math.ceil(
+                TankUtils.getTankVolumeInLitresAsUserUnitPreference(
+                        tank.volumeInLitres, mVolumeUnit
+                )
+        );
+        return ctx.getString(R.string.fm_tank_name_template, tank.name, volume, volUnitString);
+    }
+
+    public Tank getTank(int index) {
+        return mTanks.get(index);
+    }
+
     static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             PopupMenu.OnMenuItemClickListener {
+
+        private final TankCardCallbacks mCallbacks;
 
         final ImageButton overflow, infoOptions, infoStages;
         final ImageView image;
@@ -79,8 +123,10 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
         final PopupMenu menu;
 
-        ViewHolder(View itemView) {
+        ViewHolder(TankCardCallbacks callbacks, View itemView) {
             super(itemView);
+
+            mCallbacks = callbacks;
 
             itemView.setOnClickListener(this);
 
@@ -113,9 +159,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
             switch (view.getId()) {
                 case R.id.tcv_parent:
-                    Context context = view.getContext();
-                    //ToDo: Launch Detail Activity *With Identifier*
-                    context.startActivity(new Intent(context, DetailActivity.class));
+                    mCallbacks.onCardClick(getAdapterPosition());
                     break;
                 case R.id.tcv_overflow:
                     menu.show();
@@ -129,13 +173,13 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
             switch (item.getItemId()) {
                 case R.id.mct_action_edit_tank:
-                    //ToDo: Update Tank table entry
+                    mCallbacks.onEditTankClick(getAdapterPosition());
                     return true;
                 case R.id.mct_action_add_change_photo:
-                    //ToDo: Launch Camera/open gallery (should probably be two options...)
+                    mCallbacks.onChangePhotoClick(getAdapterPosition());
                     return true;
                 case R.id.mct_action_delete_tank:
-                    //ToDo: Remove Tank from table
+                    mCallbacks.onDeleteTankClick(getAdapterPosition());
                     return true;
             }
 

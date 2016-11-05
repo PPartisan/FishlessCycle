@@ -1,26 +1,128 @@
 package com.github.ppartisan.fishlesscycle.util;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 import com.github.ppartisan.fishlesscycle.model.Tank;
+import com.github.ppartisan.fishlesscycle.model.Tank.PlantStatus;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.MGL;
+import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.PPM;
 
 public final class TankUtils {
 
     private TankUtils() { throw new AssertionError(); }
 
-    public static String getStageString(Resources res) {
+    public static List<Tank> getTankList(@NonNull Cursor cursor) {
+
+        final List<Tank> tanks = new ArrayList<>(cursor.getCount());
+
+        if (cursor.moveToFirst()) {
+
+            Tank.Builder builder = new Tank.Builder();
+
+            do {
+
+                final String name =
+                        cursor.getString(cursor.getColumnIndex(TankEntry.COLUMN_NAME));
+                final String image =
+                        cursor.getString(cursor.getColumnIndex(TankEntry.COLUMN_IMAGE));
+                final float volumeInLitres =
+                        cursor.getFloat(cursor.getColumnIndex(TankEntry.COLUMN_VOLUME));
+                final float dosage =
+                        cursor.getFloat(cursor.getColumnIndex(TankEntry.COLUMN_DOSAGE));
+                final float concentration =
+                        cursor.getFloat(cursor.getColumnIndex(TankEntry.COLUMN_CONCENTRATION));
+                final boolean isHeated =
+                        (cursor.getInt(cursor.getColumnIndex(TankEntry.COLUMN_IS_HEATED)) == 1);
+                final boolean isSeeded =
+                        (cursor.getInt(cursor.getColumnIndex(TankEntry.COLUMN_IS_SEEDED)) == 1);
+                final @PlantStatus int plantStatus =
+                        cursor.getInt(cursor.getColumnIndex(TankEntry.COLUMN_PLANT_STATUS));
+                final long identifier =
+                        cursor.getLong(cursor.getColumnIndex(TankEntry._ID));
+
+                builder.setName(name)
+                        .setImage(image)
+                        .setVolumeInLitres(volumeInLitres)
+                        .setAmmoniaDosage(dosage, concentration)
+                        .setIsHeated(isHeated)
+                        .setIsSeeded(isSeeded)
+                        .setPlantStatus(plantStatus)
+                        .setIdentifier(identifier);
+
+                tanks.add(builder.build());
+
+            } while (cursor.moveToNext());
+
+        }
+
+        return tanks;
+
+    }
+
+
+    public static String getStageString(Resources res, @Tank.TankStatus int tankStatus) {
 
         final String[] stages = res.getStringArray(R.array.tank_stage);
-        final int randomIndex = (int) (Math.random()*stages.length - 1);
 
-        return stages[randomIndex];
+        int index = -1;
+
+        switch (tankStatus) {
+            case Tank.NOT_STARTED:
+                index = 0;
+                break;
+            case Tank.CYCLING_AMMONIA:
+                index = 1;
+                break;
+            case Tank.CYCLING_NITRITE:
+                index = 2;
+                break;
+            case Tank.CYCLING_NITRATE:
+                index = 3;
+                break;
+            case Tank.CYCLE_COMPLETE:
+                index = 4;
+                break;
+            default:
+                throw new IllegalArgumentException("tankStatus must match constant value in " +
+                        Tank.TankStatus.class.getCanonicalName());
+        }
+
+        return stages[index];
+
+    }
+
+    public static String getAbbreviatedVolumeUnit(Resources res, @PreferenceUtils.VolumeUnit int unitType) {
+
+        final String[] options = res.getStringArray(R.array.volume_unit_options_abbr);
+        String abbrUnit = null;
+
+        switch (unitType) {
+            case PreferenceUtils.METRIC:
+                abbrUnit = options[0];
+                break;
+            case PreferenceUtils.IMPERIAL:
+            case PreferenceUtils.US:
+                abbrUnit = options[1];
+                break;
+        }
+
+        return abbrUnit;
 
     }
 
@@ -61,6 +163,44 @@ public final class TankUtils {
 
     }
 
+    public static float getTankVolumeInLitresAsUserUnitPreference(float volumeInLitres, @PreferenceUtils.VolumeUnit int unit) {
+
+        float displayVolume = 0;
+        switch (unit) {
+            case PreferenceUtils.METRIC:
+                displayVolume = volumeInLitres;
+                break;
+            case PreferenceUtils.IMPERIAL:
+                displayVolume = ConversionUtils.getLitresAsImperialGallons(volumeInLitres);
+                break;
+            case PreferenceUtils.US:
+                displayVolume = ConversionUtils.getLitresAsUsGallons(volumeInLitres);
+                break;
+        }
+
+        return displayVolume;
+    }
+
+    public static float getVolumeAsLitres(float volume, @PreferenceUtils.VolumeUnit int unit) {
+
+        float volumeInLitres = 0;
+
+        switch (unit) {
+            case PreferenceUtils.METRIC:
+                //Already in litres
+                volumeInLitres = volume;
+                break;
+            case PreferenceUtils.IMPERIAL:
+                volumeInLitres = ConversionUtils.getImperialGallonsAsLitres(volume);
+                break;
+            case PreferenceUtils.US:
+                volumeInLitres = ConversionUtils.getUsGallonsAsLitres(volume);
+                break;
+        }
+
+        return volumeInLitres;
+    }
+
     private static void addImageSpan(Context context, SpannableStringBuilder builder, String text, int resId) {
 
         final int startIndex = builder.length();
@@ -71,6 +211,78 @@ public final class TankUtils {
         builder.append(" ");
         builder.setSpan(span, startIndex, startIndex + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append(text);
+
+    }
+
+    public static ContentValues toContentValues(Tank.Builder builder) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(TankEntry.COLUMN_NAME, builder.getName());
+        cv.put(TankEntry.COLUMN_VOLUME, builder.getVolumeInLitres());
+        cv.put(TankEntry.COLUMN_CONCENTRATION, builder.getAmmoniaDosage().targetConcentration);
+        cv.put(TankEntry.COLUMN_DOSAGE, builder.getAmmoniaDosage().dosage);
+        cv.put(TankEntry.COLUMN_IS_HEATED, (builder.isHeated()) ? 1 : 0);
+        cv.put(TankEntry.COLUMN_IS_SEEDED, (builder.isSeeded()) ? 1 : 0);
+        cv.put(TankEntry.COLUMN_PLANT_STATUS, builder.getPlantStatus());
+        cv.put(TankEntry._ID, builder.getIdentifier());
+
+        return cv;
+
+    }
+
+    public static String getUserDosageUnitAsString(Resources res, @ConversionUtils.UnitType int unit) {
+
+        String unitString;
+
+        switch (unit) {
+            case MGL:
+                unitString = res.getString(R.string.unit_metric);
+                break;
+            case PPM:
+                unitString = res.getString(R.string.unit_imperial);
+                break;
+            default:
+                throw new IllegalArgumentException("'type' parameter must be of type "
+                        + ConversionUtils.UnitType.class.getCanonicalName());
+        }
+
+        return unitString;
+
+    }
+
+    public static String getUserVolumeUnitAsString(Resources res, @PreferenceUtils.VolumeUnit int unit) {
+
+        String unitString = null;
+
+        switch (unit) {
+            case PreferenceUtils.METRIC:
+                unitString = res.getString(R.string.litres);
+                break;
+            case PreferenceUtils.IMPERIAL:
+                unitString = res.getString(R.string.imperial_gallons);
+                break;
+            case PreferenceUtils.US:
+                unitString = res.getString(R.string.us_gallons);
+                break;
+        }
+
+        return unitString;
+
+    }
+
+    public static ContentValues toContentValues(Tank tank) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(TankEntry.COLUMN_NAME, tank.name);
+        cv.put(TankEntry.COLUMN_VOLUME, tank.volumeInLitres);
+        cv.put(TankEntry.COLUMN_CONCENTRATION, tank.getAmmoniaDosage().targetConcentration);
+        cv.put(TankEntry.COLUMN_DOSAGE, tank.getAmmoniaDosage().dosage);
+        cv.put(TankEntry.COLUMN_IS_HEATED, (tank.isHeated) ? 1 : 0);
+        cv.put(TankEntry.COLUMN_IS_SEEDED, (tank.isSeeded) ? 1 : 0);
+        cv.put(TankEntry.COLUMN_PLANT_STATUS, tank.plantStatus);
+        cv.put(TankEntry._ID, tank.identifier);
+
+        return cv;
 
     }
 

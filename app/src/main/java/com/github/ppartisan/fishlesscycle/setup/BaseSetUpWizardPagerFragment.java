@@ -23,7 +23,7 @@ import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.MGL;
 import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.PPM;
 
 
-public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilderObserver, TankBuilderModifier, SharedPreferences.OnSharedPreferenceChangeListener {
+public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilderObserver, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private TankBuilderSupplier mTankBuilderSupplier;
 
@@ -71,88 +71,6 @@ public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilde
             mTankBuilderSupplier = (TankBuilderSupplier) getContext();
         }
         return mTankBuilderSupplier;
-    }
-
-
-    @Override
-    public float getVolumeAsLitres(float volume, @VolumeUnit int unit) {
-
-        float volumeInLitres = 0;
-
-        switch (unit) {
-            case PreferenceUtils.METRIC:
-                //Already in litres
-                volumeInLitres = volume;
-                break;
-            case PreferenceUtils.IMPERIAL:
-                volumeInLitres = ConversionUtils.getImperialGallonsAsLitres(volume);
-                break;
-            case PreferenceUtils.US:
-                volumeInLitres = ConversionUtils.getUsGallonsAsLitres(volume);
-                break;
-        }
-
-        return volumeInLitres;
-    }
-
-    @Override
-    public float getTankVolumeInLitresAsUserUnitPreference(float volumeInLitres, @VolumeUnit int unit) {
-
-        float displayVolume = 0;
-        switch (unit) {
-            case PreferenceUtils.METRIC:
-                displayVolume = volumeInLitres;
-                break;
-            case PreferenceUtils.IMPERIAL:
-                displayVolume = ConversionUtils.getLitresAsImperialGallons(volumeInLitres);
-                break;
-            case PreferenceUtils.US:
-                displayVolume = ConversionUtils.getLitresAsUsGallons(volumeInLitres);
-                break;
-        }
-
-        return displayVolume;
-    }
-
-    @Override
-    public String getUserDosageUnitAsString(@UnitType int unit) {
-
-            String unitString;
-
-            switch (unit) {
-                case MGL:
-                    unitString = getString(R.string.unit_metric);
-                    break;
-                case PPM:
-                    unitString = getString(R.string.unit_imperial);
-                    break;
-                default:
-                    throw new IllegalArgumentException("'type' parameter must be of type "
-                            + UnitType.class.getCanonicalName());
-            }
-
-            return unitString;
-
-    }
-
-    public String getUserVolumeUnitAsString(@VolumeUnit int unit) {
-
-        String unitString = null;
-
-        switch (unit) {
-            case PreferenceUtils.METRIC:
-                unitString = getString(R.string.litres);
-                break;
-            case PreferenceUtils.IMPERIAL:
-                unitString = getString(R.string.imperial_gallons);
-                break;
-            case PreferenceUtils.US:
-                unitString = getString(R.string.us_gallons);
-                break;
-        }
-
-        return unitString;
-
     }
 
 }

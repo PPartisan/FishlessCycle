@@ -1,7 +1,9 @@
 package com.github.ppartisan.fishlesscycle.setup;
 
+import android.content.ContentValues;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -10,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListener;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListenerCallbacks;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpWizardAdapter;
 import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 import com.github.ppartisan.fishlesscycle.setup.view.DotIndicatorView;
+import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +30,7 @@ import java.util.List;
 public final class SetUpWizardActivity extends AppCompatActivity implements TankBuilderSupplier, SetUpPageChangeListenerCallbacks, AdapterSupplier {
 
     private static final String TAG = SetUpWizardActivity.class.getSimpleName();
-    private static final String TANK_BUILDER_KEY = TAG + ".TANK_BUILDER_KEY";
+    public static final String TANK_BUILDER_KEY = TAG + ".TANK_BUILDER_KEY";
 
     private ViewGroup mParent;
     private ImageView mImage;
@@ -68,11 +73,35 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
 
         // TODO: Is It best to retrieve this from database each time, or save to parcel for config?
         if (savedInstanceState == null) {
-            mTankBuilder = new Tank.Builder();
+            mTankBuilder = buildTankBuilder();
         } else {
             mTankBuilder = savedInstanceState.getParcelable(TANK_BUILDER_KEY);
         }
 
+    }
+
+    private Tank.Builder buildTankBuilder() {
+
+        final ContentValues cv = new ContentValues();
+        cv.put(Contract.TankEntry.COLUMN_NAME, getString(R.string.app_name));
+        final Uri uri = getContentResolver().insert(Contract.TankEntry.CONTENT_URI, cv);
+
+        final long identifier = Contract.TankEntry.getTankId(uri);
+        Tank.Builder builder = new Tank.Builder();
+        builder.setIdentifier(identifier);
+        builder.setName(getString(R.string.app_name));
+
+        return builder;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        final String where = TankEntry._ID + " =?";
+        final String[] whereArgs = new String[] { String.valueOf(mTankBuilder.getIdentifier()) };
+        getContentResolver().update(
+                TankEntry.CONTENT_URI, TankUtils.toContentValues(mTankBuilder), where, whereArgs
+        );
     }
 
     @Override
@@ -110,5 +139,7 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     public void setPagerToLastPage() {
         mPager.setCurrentItem(mAdapter.getCount()-1, false);
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle.setup.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -26,7 +28,14 @@ import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.text.DecimalFormat;
 
-public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
+import static com.github.ppartisan.fishlesscycle.util.TankUtils.getTankVolumeInLitresAsUserUnitPreference;
+import static com.github.ppartisan.fishlesscycle.util.TankUtils.getUserVolumeUnitAsString;
+import static com.github.ppartisan.fishlesscycle.util.TankUtils.getVolumeAsLitres;
+
+public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+
+    private static final String TAG = ConfirmationFragment.class.getSimpleName();
+    public static final String IS_VISIBLE_DEFAULT_KEY = TAG + ".IS_VISIBLE_BY_DEFAULT_KEY";
 
     private final DecimalFormat mFormat = new DecimalFormat("##.#");
 
@@ -38,10 +47,12 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     private EditText mTitle, mVolume, mAmmonia;
     private CheckBox mHeater, mSeedMaterial;
     private RadioButton mNoPlants, mLightlyPlanted, mHeavilyPlanted;
+    private Button mConfirm;
 
-    public static ConfirmationFragment newInstance() {
+    public static ConfirmationFragment newInstance(boolean isVisibleByDefault) {
 
         Bundle args = new Bundle();
+        args.putBoolean(IS_VISIBLE_DEFAULT_KEY, isVisibleByDefault);
 
         ConfirmationFragment fragment = new ConfirmationFragment();
         fragment.setArguments(args);
@@ -52,6 +63,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         volumeUnit = PreferenceUtils.getVolumeUnit(getContext());
+        isVisible = isVisibleByDefault();
     }
 
     @Override
@@ -72,6 +84,9 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
         mLightlyPlanted = (RadioButton) v.findViewById(R.id.c_suwf_radio_light_plants);
         mHeavilyPlanted = (RadioButton) v.findViewById(R.id.c_suwf_radio_heavy_plants);
 
+        mConfirm = (Button) v.findViewById(R.id.c_suwf_confirm);
+        mConfirm.setOnClickListener(this);
+
         final RadioGroup group = (RadioGroup) v.findViewById(R.id.c_suwf_planted);
         group.setOnCheckedChangeListener(this);
 
@@ -82,10 +97,14 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     public void onResume() {
         super.onResume();
 
-        mTitle.setText(getTitleText());
-        mVolumeLabel.setText(getVolumeLabelText());
-
         final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
+
+        final String title = getTitleText();
+        if (title != null) {
+            mTitle.setText(title);
+            builder.setName(title);
+        }
+        mVolumeLabel.setText(getVolumeLabelText());
 
         mVolume.setText(getVolumeText());
         mAmmonia.setText(getAmmoniaText());
@@ -104,6 +123,10 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
         mHeater.setOnCheckedChangeListener(this);
         mSeedMaterial.setOnCheckedChangeListener(this);
 
+    }
+
+    private boolean isVisibleByDefault() {
+        return getArguments().getBoolean(IS_VISIBLE_DEFAULT_KEY);
     }
 
     private String getTitleText() {
@@ -125,7 +148,10 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     }
 
     private String getVolumeLabelText() {
-        return getString(R.string.wus_fda_tank_volume_label, getUserVolumeUnitAsString(volumeUnit));
+        return getString(
+                R.string.wus_fda_tank_volume_label,
+                getUserVolumeUnitAsString(getResources(), volumeUnit)
+        );
     }
 
     private String getVolumeText() {
@@ -270,6 +296,11 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
         supplier.notifyTankBuilderUpdated();
     }
 
+    @Override
+    public void onClick(View view) {
+        getActivity().finish();
+    }
+
     private final class TitleTextWatcher implements TextWatcher {
 
         @Override
@@ -284,7 +315,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
 
             final String name = mTitle.getText().toString();
             if (!name.equals(builder.getName())) {
-                builder.name(name);
+                builder.setName(name);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
 

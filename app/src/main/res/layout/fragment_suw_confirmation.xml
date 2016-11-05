@@ -55,8 +55,8 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:text="Title"
                 android:gravity="start|center_vertical"
+                android:text="@string/wus_cf_name"
                 app:layout_gravity="fill_horizontal|center_vertical"/>
 
             <EditText
@@ -69,6 +69,8 @@
                 android:maxLength="15"
                 android:maxLines="1"
                 android:textColor="@android:color/white"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
@@ -80,7 +82,6 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:text="Volume (Litres)"
                 android:gravity="start|center_vertical"
                 app:layout_gravity="fill_horizontal|center_vertical"/>
 
@@ -225,7 +226,7 @@
             android:layout_marginBottom="@dimen/vertical_margin_default"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/c_suwf_grid"
-            android:text="Confirm"
+            android:text="@string/confirm"
             style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
     </RelativeLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:id="@+id/tea_parent"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/tea_image"
+        android:layout_width="@dimen/wus_image_dimen"
+        android:layout_height="@dimen/wus_image_dimen"
+        android:layout_marginLeft="@dimen/horizontal_margin_default"
+        android:layout_marginRight="@dimen/horizontal_margin_default"
+        android:layout_marginTop="@dimen/vertical_margin_default"
+        android:layout_marginBottom="@dimen/vertical_margin_default"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:tint="@color/primary_dark"/>
+
+</RelativeLayout>

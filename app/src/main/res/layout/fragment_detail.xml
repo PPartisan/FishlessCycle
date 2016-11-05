@@ -47,37 +47,133 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
-                android:id="@+id/fd_rv_parent_layout"
+        <LinearLayout
+            android:id="@+id/fd_rv_parent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                tools:text="Showing reading for date range 18th October to 23rd October"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Showing reading for date range 18th October to 23rd October"/>
+            <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
+                android:id="@+id/fd_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
-                    android:id="@+id/fd_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/fd_hidden_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:clickable="true"
+        android:layout_gravity="bottom">
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vertical_margin_default"
+            android:layout_marginBottom="@dimen/vertical_margin_default"
+            android:layout_marginStart="@dimen/horizontal_margin_default"
+            android:layout_marginEnd="@dimen/horizontal_margin_default"
+            app:columnCount="2">
+
+            <TextView
+                android:id="@+id/fd_hidden_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Add New Reading"
+                app:layout_columnSpan="2"/>
+
+            <TextView
+                android:id="@+id/fd_ammonia_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:text="Ammonia"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/vertical_margin_default_small"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="start|center_vertical"/>
+
+            <EditText
+                android:id="@+id/fd_ammonia_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:minEms="2"
+                android:maxLength="3"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearance"
+                android:gravity="end|center_vertical"
+                app:layout_gravity="end|center_vertical" />
+
+            <TextView
+                android:id="@+id/fd_nitrite_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:text="Nitrite"
+                android:textStyle="bold"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="start|center_vertical"/>
+
+            <EditText
+                android:id="@+id/fd_nitrite_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:minEms="2"
+                android:maxLength="3"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearance"
+                android:gravity="end|center_vertical"
+                app:layout_gravity="end|center_vertical" />
+
+            <TextView
+                android:id="@+id/fd_nitrate_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:text="Nitrate"
+                android:textStyle="bold"
+                android:gravity="start|center_vertical"
+                app:layout_gravity="start|center_vertical"/>
+
+            <EditText
+                android:id="@+id/fd_nitrate_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/list_item_small"
+                android:minEms="2"
+                android:maxLength="3"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearance"
+                android:gravity="end|center_vertical"
+                app:layout_gravity="end|center_vertical" />
+
+        </android.support.v7.widget.GridLayout>
+
+    </android.support.v7.widget.CardView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fd_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fm_margin_default"
         android:layout_marginRight="@dimen/fm_margin_default"
         android:layout_marginBottom="@dimen/fm_margin_default"
         android:src="@drawable/ic_add_white_24dp"
         app:fabSize="normal"
-        app:layout_behavior="com.github.ppartisan.fishlesscycle.view.ScrollAwareFloatingActionButtonBehavior"/>
+        app:layout_anchorGravity="top|right|end"
+        app:layout_anchor="@+id/fd_hidden_card"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

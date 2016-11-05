@@ -2,7 +2,6 @@ package com.github.ppartisan.fishlesscycle.adapter;
 
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +16,20 @@ import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.util.List;
 
-
 public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
+    private DataRowCallbacks mCallbacks;
     private List<Reading> mReading;
 
-    public DataAdapter(List<Reading> reading) {
+    public DataAdapter(DataRowCallbacks callbacks, List<Reading> reading) {
+        mCallbacks = callbacks;
         mReading = reading;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.data_row, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(mCallbacks, v);
     }
 
     @Override
@@ -64,11 +64,15 @@ public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHold
 
     static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private DataRowCallbacks mCallbacks;
+
         TextView date, ammonia, nitrite, nitrate;
         ImageButton overflow;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(DataRowCallbacks callbacks, View itemView) {
             super(itemView);
+
+            mCallbacks = callbacks;
 
             date = (TextView) itemView.findViewById(R.id.rd_date);
             ammonia = (TextView) itemView.findViewById(R.id.rd_ammonia);
@@ -82,8 +86,6 @@ public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
-            //ToDo; Show Pop-Up menu to view notes, edit or delete row
-            Log.d(getClass().getSimpleName(), view.toString() + " clicked");
             buildPopUpMenu(view).show();
         }
 
@@ -93,7 +95,17 @@ public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHold
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    Log.d(getClass().getSimpleName(), item.toString() + " clicked");
+                    switch (item.getItemId()) {
+                        case R.id.drm_action_notes:
+                            mCallbacks.onNotesClicked(getAdapterPosition());
+                            break;
+                        case R.id.drm_action_edit:
+                            mCallbacks.onEditClicked(getAdapterPosition());
+                            break;
+                        case R.id.drm_action_delete:
+                            mCallbacks.onDeleteClicked(getAdapterPosition());
+                            break;
+                    }
                     return true;
                 }
             });

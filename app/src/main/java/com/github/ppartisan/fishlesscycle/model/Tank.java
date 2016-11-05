@@ -22,42 +22,57 @@ public final class Tank implements Parcelable {
     public static final int LIGHT = 5;
     public static final int HEAVY = 6;
 
-    public final String name;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({NOT_STARTED,CYCLING_AMMONIA,CYCLING_NITRITE,CYCLING_NITRATE,CYCLE_COMPLETE})
+    public @interface TankStatus {}
+    public static final int NOT_STARTED = 0;
+    public static final int CYCLING_AMMONIA = 10;
+    public static final int CYCLING_NITRITE = 11;
+    public static final int CYCLING_NITRATE = 12;
+    public static final int CYCLE_COMPLETE = 50;
+
+    public final String name, image;
     public final float volumeInLitres;
     private final AmmoniaDosage ammoniaDosage;
     public final boolean isHeated, isSeeded;
     public final @PlantStatus int plantStatus;
+    public final @TankStatus int tankStatus;
     public final long identifier;
 
     private Tank(
             @NonNull String name,
+            String image,
             float volumeInLitres,
             @NonNull AmmoniaDosage ammoniaDosage,
             boolean isHeated,
             boolean isSeeded,
             @PlantStatus int plantStatus,
+            @TankStatus int tankStatus,
             long identifier
     ) {
 
         this.name = name;
+        this.image = image;
         this.volumeInLitres = volumeInLitres;
         this.isHeated = isHeated;
         this.isSeeded = isSeeded;
         this.plantStatus = plantStatus;
         this.identifier = identifier;
-
+        this.tankStatus = tankStatus;
         this.ammoniaDosage = ammoniaDosage;
 
     }
 
+    @SuppressWarnings("WrongConstant")
     protected Tank(Parcel in) {
         this.name = in.readString();
+        this.image = in.readString();
         this.volumeInLitres = in.readFloat();
         this.ammoniaDosage = in.readParcelable(AmmoniaDosage.class.getClassLoader());
         this.isHeated = in.readByte() != 0;
         this.isSeeded = in.readByte() != 0;
-        //noinspection WrongConstant
         this.plantStatus = in.readInt();
+        this.tankStatus = in.readInt();
         this.identifier = in.readLong();
     }
 
@@ -81,11 +96,13 @@ public final class Tank implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
+        parcel.writeString(image);
         parcel.writeFloat(volumeInLitres);
         parcel.writeParcelable(ammoniaDosage, i);
         parcel.writeByte((byte) (isHeated ? 1 : 0));
         parcel.writeByte((byte) (isSeeded ? 1 : 0));
         parcel.writeInt(plantStatus);
+        parcel.writeInt(tankStatus);
         parcel.writeLong(identifier);
     }
 
@@ -96,12 +113,13 @@ public final class Tank implements Parcelable {
 
     public final static class Builder implements Parcelable {
 
-        private String name;
+        private String name, image;
         private float volumeInLitres;
         private AmmoniaDosage ammoniaDosage;
         private boolean isHeated, isSeeded;
         private long identifier;
         private @PlantStatus int plantStatus = NONE;
+        private @TankStatus int tankStatus = NOT_STARTED;
 
         public Builder() {}
 
@@ -117,28 +135,34 @@ public final class Tank implements Parcelable {
             this.isSeeded = tank.isSeeded;
             this.identifier = tank.identifier;
             this.plantStatus = tank.plantStatus;
+            this.tankStatus = tank.tankStatus;
+            this.identifier = tank.identifier;
         }
 
+        @SuppressWarnings("WrongConstant")
         protected Builder(Parcel in) {
             name = in.readString();
+            image = in.readString();
             volumeInLitres = in.readFloat();
             ammoniaDosage = in.readParcelable(AmmoniaDosage.class.getClassLoader());
             isHeated = in.readByte() != 0;
             isSeeded = in.readByte() != 0;
             identifier = in.readLong();
-            //noinspection WrongConstant
             plantStatus = in.readInt();
+            tankStatus = in.readInt();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(name);
+            dest.writeString(image);
             dest.writeFloat(volumeInLitres);
             dest.writeParcelable(ammoniaDosage, flags);
             dest.writeByte((byte) (isHeated ? 1 : 0));
             dest.writeByte((byte) (isSeeded ? 1 : 0));
             dest.writeLong(identifier);
             dest.writeInt(plantStatus);
+            dest.writeInt(tankStatus);
         }
 
         @Override
@@ -158,8 +182,13 @@ public final class Tank implements Parcelable {
             }
         };
 
-        public Builder name(@NonNull String name) {
+        public Builder setName(@NonNull String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder setImage(String image) {
+            this.image = image;
             return this;
         }
 
@@ -178,6 +207,11 @@ public final class Tank implements Parcelable {
             return this;
         }
 
+        public Builder setTankStatus(@TankStatus int tankStatus) {
+            this.tankStatus = tankStatus;
+            return this;
+        }
+
         public Builder setVolumeInLitres(float volumeInLitres) {
             this.volumeInLitres = volumeInLitres;
             return this;
@@ -193,28 +227,34 @@ public final class Tank implements Parcelable {
             return this;
         }
 
-        public Builder identifier(long identifier) {
+        public Builder setIdentifier(long identifier) {
             this.identifier = identifier;
             return this;
         }
 
         public Tank build() {
             if(identifier < 0) {
-                throw new IllegalArgumentException("'identifier' must be non-negative integer");
+                throw new IllegalArgumentException("'setIdentifier' must be non-negative integer");
             }
             return new Tank(
                     name,
+                    image,
                     volumeInLitres,
                     ammoniaDosage,
                     isHeated,
                     isSeeded,
                     plantStatus,
+                    tankStatus,
                     identifier
             );
         }
 
         public String getName() {
             return name;
+        }
+
+        public String getImage() {
+            return image;
         }
 
         public float getVolumeInLitres() {
@@ -242,8 +282,27 @@ public final class Tank implements Parcelable {
             return identifier;
         }
 
-        public int getPlantStatus() {
+        public @PlantStatus int getPlantStatus() {
             return plantStatus;
+        }
+
+        public @TankStatus int getTankStatus() {
+            return tankStatus;
+        }
+
+        @Override
+        public String toString() {
+            return "Builder{" +
+                    "name='" + name + '\'' +
+                    ", image='" + image + '\'' +
+                    ", volumeInLitres=" + volumeInLitres +
+                    ", ammoniaDosage=" + ammoniaDosage +
+                    ", isHeated=" + isHeated +
+                    ", isSeeded=" + isSeeded +
+                    ", identifier=" + identifier +
+                    ", plantStatus=" + plantStatus +
+                    ", tankStatus=" + tankStatus +
+                    '}';
         }
     }
 

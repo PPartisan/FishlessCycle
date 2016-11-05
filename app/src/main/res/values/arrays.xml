@@ -41,7 +41,7 @@
         <item>Cycling &lt;Ammonia&gt;</item>
         <item>Cycling &lt;Nitrite&gt;</item>
         <item>Cycling &lt;Nitrate&gt;</item>
-        <item>Cycled</item>
+        <item>Cycle Complete</item>
     </string-array>
 
     <string-array name="chart_labels">
@@ -64,6 +64,11 @@
         <item>Litres</item>
         <item>Imp. Gallons</item>
         <item>US Gallons</item>
+    </string-array>
+
+    <string-array name="volume_unit_options_abbr">
+        <item>L</item>
+        <item>Gal.</item>
     </string-array>
 
     <string-array name="info_item_headers">

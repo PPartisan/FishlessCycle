@@ -24,6 +24,8 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import java.text.DecimalFormat;
 
 import static com.github.ppartisan.fishlesscycle.model.Tank.DEFAULT_TARGET_CONCENTRATION;
+import static com.github.ppartisan.fishlesscycle.util.TankUtils.getTankVolumeInLitresAsUserUnitPreference;
+import static com.github.ppartisan.fishlesscycle.util.TankUtils.getVolumeAsLitres;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.getParsedFloatFromTextWidget;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpty;
 

@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -41,12 +42,15 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
     private static final String CHART_MODE_KEY = TAG + ".CHART_MODE_KEY";
     private static final String SELECTED_ITEM_KEY = TAG + ".SELECTED_ITEM_KEY";
+    private static final String X_AXIS_KEY = TAG + ".X_AXIS_KEY";
 
     private static final float LINE_WIDTH = 2f;
     private static final float LINE_DASH_WIDTH = 10f;
 
     private final String keyAmmonia, keyNitrite, keyNitrate;
     private final int green300, red300, blue300, lineDashColor;
+
+    private float lineMinX = -1, lineMaxX = -1;
 
     private final CombinedChart mChart;
 
@@ -91,21 +95,33 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     }
 
     @Override
-    public void setData(@NonNull List<Reading> reading) {
+    public void setData(List<Reading> reading) {
+
+        if (reading == null) return;
 
         mReading = reading;
 
         switch (chartMode) {
             case LINE:
+                mLineData = null;
                 mCombinedData.setData(getLineData());
+                mCombinedData.notifyDataChanged();
                 break;
             case BAR:
+                mBarData = null;
                 mCombinedData.setData(getBarData());
+                mCombinedData.notifyDataChanged();
                 break;
         }
 
         mChart.setData(mCombinedData);
         mChart.invalidate();
+
+        if (highlight != null && highlight.dataSetIndex >= 0) {
+            Highlight h = new Highlight(highlight.x, highlight.dataSetIndex, highlight.stackIndex);
+            h.setDataIndex(highlight.dataIndex);
+            mChart.highlightValue(h);
+        }
 
     }
 
@@ -116,7 +132,8 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     @Override
     public void showLineChart() {
         chartMode = LINE;
-        mCombinedData.getBarData().clearValues();
+        final BarData barData = mCombinedData.getBarData();
+        if (barData != null) barData.clearValues();
         mCombinedData.setData(getLineData());
         mChart.setData(mCombinedData);
         mChart.invalidate();
@@ -125,7 +142,8 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     @Override
     public void showBarChat() {
         chartMode = BAR;
-        mCombinedData.getLineData().clearValues();
+        final LineData lineData = mCombinedData.getLineData();
+        if (lineData != null) lineData.clearValues();
         mCombinedData.setData(getBarData());
         mChart.setData(mCombinedData);
         mChart.invalidate();
@@ -147,6 +165,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     public void onSaveInstanceState(Bundle bundle) {
         bundle.putInt(CHART_MODE_KEY, chartMode);
         bundle.putParcelable(SELECTED_ITEM_KEY, highlight);
+        bundle.putFloatArray(X_AXIS_KEY, new float[] { lineMinX, lineMaxX });
     }
 
     @Override
@@ -156,10 +175,10 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
             switchChartType();
         }
         highlight = bundle.getParcelable(SELECTED_ITEM_KEY);
-        if (highlight != null && highlight.dataSetIndex >= 0) {
-            Highlight h = new Highlight(highlight.x, highlight.dataSetIndex, highlight.stackIndex);
-            h.setDataIndex(highlight.dataIndex);
-            mChart.highlightValue(h);
+        final float[] xAxisVals = bundle.getFloatArray(X_AXIS_KEY);
+        if (xAxisVals != null) {
+            lineMinX = xAxisVals[0];
+            lineMaxX = xAxisVals[1];
         }
     }
 
@@ -211,6 +230,12 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         if (mLineData == null || mLineData.getEntryCount() == 0) {
             Map<String, List<Entry>> entryMap = buildEntryMapFromDataList(mReading);
             mLineData = buildLineDataFromEntryMap(entryMap);
+
+            final float min = mChart.getXChartMin();
+            final float max = mChart.getXChartMax();
+
+            mChart.getXAxis().setAxisMinimum(0);
+            mChart.getXAxis().setAxisMaximum(mReading.size()-1);
         }
         return mLineData;
     }
@@ -230,7 +255,6 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
             mChart.getXAxis().setAxisMinimum(-mBarData.getBarWidth()/2);
             mChart.getXAxis().setAxisMaximum(mBarData.getEntryCount() - mBarData.getBarWidth()/2);
             mBarData.notifyDataChanged();
-
         }
         return mBarData;
     }
@@ -314,6 +338,10 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
+            final int index = (int) value;
+            if (mReading == null || mReading.isEmpty() || index < 0 || index > mReading.size()-1) {
+                return "";
+            }
             return ReadingUtils.getReadableDateString(mReading.get((int) value).date);
         }
 

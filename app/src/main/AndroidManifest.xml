@@ -30,6 +30,13 @@
             android:theme="@style/SettingsTheme"
             android:label="@string/as_label"/>
 
+        <activity android:name=".EditTankActivity" />
+
+        <provider
+            android:authorities="com.github.ppartisan.fishlesscycle"
+            android:name=".data.FishlessCycleProvider"
+            android:exported="false" />
+
     </application>
 
 </manifest>

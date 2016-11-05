@@ -1,5 +1,6 @@
 package com.github.ppartisan.fishlesscycle.util;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -12,6 +13,7 @@ import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -87,6 +89,15 @@ public final class ViewUtils {
 
         return value;
 
+    }
+
+    public static void collapseSoftInput(Activity activity) {
+        final View v = activity.getCurrentFocus();
+        if (v != null) {
+            InputMethodManager imm =
+                    (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
 }

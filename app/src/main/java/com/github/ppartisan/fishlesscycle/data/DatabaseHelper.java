@@ -37,8 +37,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 TankEntry.COLUMN_CONCENTRATION + " REAL, " +
                 TankEntry.COLUMN_IS_HEATED + " INTEGER, " +
                 TankEntry.COLUMN_IS_SEEDED + " INTEGER, " +
-                TankEntry.COLUMN_PLANT_STATUS + " INTEGER, " +
-                TankEntry.COLUMN_IDENTIFIER + " INTEGER NOT NULL" +
+                TankEntry.COLUMN_PLANT_STATUS + " INTEGER" +
                 ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_TANK_TABLE);
@@ -50,7 +49,8 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                 ReadingEntry.COLUMN_AMMONIA + " INTEGER, " +
                 ReadingEntry.COLUMN_NITRITE + " INTEGER, " +
                 ReadingEntry.COLUMN_NITRATE + " INTEGER, " +
-                ReadingEntry.COLUMN_NOTES + " TEXT" +
+                ReadingEntry.COLUMN_NOTES + " TEXT, " +
+                ReadingEntry.COLUMN_IS_CONTROL + " INTEGER" +
                 ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_READINGS_TABLE);

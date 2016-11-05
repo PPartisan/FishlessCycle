@@ -18,6 +18,11 @@
     <string name="fm_next_update_template">Next update on %1$s</string>
     <string name="fm_latest_data_title">Latest Data</string>
     <string name="fm_cycle_stage_template">Status: %1$s</string>
+    <string name="fm_tank_name_template">%1$s (%2$d%3$s)</string>
+    
+    <!-- Detail Fragment -->
+    <string name="df_add_new_entry">Add New Entry</string>
+    <string name="df_edit_entry">Edit Entry</string>
 
     <!-- Reading Names -->
     <string name="ammonia">Ammonia</string>
@@ -39,9 +44,9 @@
     <string name="md_action_switch_graph">Switch Graph Type</string>
 
     <!-- Tank Card Menu -->
-    <string name="mct_action_edit_title">Edit Title</string>
+    <string name="mct_action_edit_title">Edit Aquarium</string>
     <string name="mct_action_add_change_photo">Add/Change Photo</string>
-    <string name="mct_action_delete_tank">Delete Tank</string>
+    <string name="mct_action_delete_tank">Delete Aquarium</string>
 
     <!-- Set-Up Wizard -->
 
@@ -50,7 +55,7 @@
         This guide will help you set-up your new aquarium!\n\nThe following pages will give a list
         of recommended items to buy, provide tools to help calculate dosage amounts and configure
         extra items.\n\nIf you prefer, you may skip the guide and enter these details manually by
-        pressing the "Skip" button below. Otherwise, choose "Continue", or swipe to the right.
+        pressing the "Skip" button. Otherwise, swipe right to continue.
     </string>
     <string name="wus_intro_continue">Continue</string>
     <string name="wus_intro_skip">Skip</string>
@@ -128,6 +133,7 @@
     <string name="wus_frf_first_reading_header">First Reading (%1$s)</string>
 
     <!-- 7. Confirmation Fragment -->
+    <string name="wus_cf_name">Name</string>
     <string name="wus_cf_heater">Heater</string>
     <string name="wus_cf_seed_material">Seed Material</string>
     <string name="wus_cf_plants">Plants</string>
@@ -144,5 +150,10 @@
     <string name="mgl" translatable="false">mg/L</string>
     <string name="ppm" translatable="false">ppm</string>
     <string name="ml" translatable="false">ml</string>
-    
+
+    <!-- Misc. -->
+    <string name="undo">Undo</string>
+    <string name="confirm">Confirm</string>
+    <string name="deleted_template">%1$s deleted</string>
+
 </resources>

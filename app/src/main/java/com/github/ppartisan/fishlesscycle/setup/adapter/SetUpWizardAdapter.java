@@ -59,7 +59,7 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
                 mTankBuilderObservers.add(f);
                 return f;
             case 6:
-                f = ConfirmationFragment.newInstance();
+                f = ConfirmationFragment.newInstance(false);
                 mTankBuilderObservers.add(f);
                 return f;
         }

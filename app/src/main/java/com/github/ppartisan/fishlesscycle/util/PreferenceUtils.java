@@ -45,7 +45,7 @@ public final class PreferenceUtils {
 
     }
 
-    public static boolean isDosageMetric(Context context) {
+    public static @ConversionUtils.UnitType int getDosageUnitType(Context context) {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final String[] unitOptions =
@@ -53,7 +53,17 @@ public final class PreferenceUtils {
         final String unitString =
                 prefs.getString(context.getString(R.string.pref_dosage_unit_type_key), unitOptions[0]);
 
-        Log.d("TAG", "unityString: " + unitString);
+        return (unitString.equals(unitOptions[0])) ? ConversionUtils.MGL : ConversionUtils.PPM;
+
+    }
+
+    public static boolean isDosageMetric(Context context) {
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final String[] unitOptions =
+                context.getResources().getStringArray(R.array.pref_dosage_unit_values);
+        final String unitString =
+                prefs.getString(context.getString(R.string.pref_dosage_unit_type_key), unitOptions[0]);
 
         return unitString.equals(unitOptions[0]);
 
