@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, Contract.TankEntry.CONTENT_URI, null, null, null, null);
+        return new CursorLoader(this, Contract.TankEntry.CONTENT_URI, null, "0", null, null);
     }
 
     @Override

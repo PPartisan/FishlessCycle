@@ -2,10 +2,8 @@ package com.github.ppartisan.fishlesscycle.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.R;
 
@@ -45,7 +43,8 @@ public final class PreferenceUtils {
 
     }
 
-    public static @ConversionUtils.UnitType int getDosageUnitType(Context context) {
+    public static @ConversionUtils.DosageUnit
+    int getDosageUnitType(Context context) {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final String[] unitOptions =

@@ -12,13 +12,13 @@ public final class ConversionUtils {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({MGL, PPM})
-    public @interface UnitType {}
+    public @interface DosageUnit {}
     public static final int MGL = 0;
     public static final int PPM = 1;
 
     private ConversionUtils() { throw new AssertionError(); }
 
-    public static String getUnitFormattedString(Resources res, float value, @UnitType int type) {
+    public static String getUnitFormattedString(Resources res, float value, @DosageUnit int type) {
 
         String unit;
 
@@ -31,7 +31,7 @@ public final class ConversionUtils {
                 break;
             default:
                 throw new IllegalArgumentException("'type' parameter must be of type "
-                        + UnitType.class.getCanonicalName());
+                        + DosageUnit.class.getCanonicalName());
         }
 
         return res.getString(R.string.quantity_template, value, unit);

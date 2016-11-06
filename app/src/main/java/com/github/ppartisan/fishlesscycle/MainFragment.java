@@ -1,16 +1,12 @@
 package com.github.ppartisan.fishlesscycle;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -18,9 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -33,21 +27,17 @@ import android.view.ViewGroup;
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.data.FishlessCycleProvider;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.SetUpWizardActivity;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
-import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.ConversionUtils.DosageUnit;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public final class MainFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener, TankCardCallbacks, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -77,6 +67,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         super.onCreate(savedInstanceState);
         PreferenceManager.getDefaultSharedPreferences(getContext())
                 .registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override
@@ -96,10 +87,10 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         mRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.fm_recycler);
         mRecyclerView.setEmptyView(view.findViewById(R.id.fm_empty_view));
 
-        final @ConversionUtils.UnitType int dosUnitType =
+        final @DosageUnit int dosUnitType =
                 PreferenceUtils.getDosageUnitType(getContext());
 
-        final @PreferenceUtils.VolumeUnit int volUnitType =
+        final @VolumeUnit int volUnitType =
                 PreferenceUtils.getVolumeUnit(getContext());
 
         mAdapter = new TanksAdapter(this, null, dosUnitType, volUnitType);
@@ -155,6 +146,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     public void onCardClick(int position) {
         Intent intent = new Intent(getContext(), DetailActivity.class);
         intent.putExtra(DetailFragment.KEY_IDENTIFIER, mAdapter.getTank(position).identifier);
+        Log.e(getClass().getCanonicalName(), "Identifier? " + mAdapter.getTank(position).identifier);
         startActivity(intent);
     }
 
@@ -217,7 +209,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         snackbar.setCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
-                //Action click means "Undo" was fired
+                //Action means "Undo" was clicked
                 if (event == DISMISS_EVENT_ACTION) {
                     return;
                 }
@@ -239,13 +231,13 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         final String volUnitPrefsKey = getString(R.string.pref_volume_unit_type_key);
 
         if(doseUnitPrefsKey.equals(s)) {
-            final @ConversionUtils.UnitType int unitType =
+            final @DosageUnit int unitType =
                     PreferenceUtils.getDosageUnitType(getContext());
             mAdapter.setDosageUnitType(unitType);
         }
 
         if(volUnitPrefsKey.equals(s)) {
-            final @PreferenceUtils.VolumeUnit int unitType =
+            final @VolumeUnit int unitType =
                     PreferenceUtils.getVolumeUnit(getContext());
             mAdapter.setVolumeUnit(unitType);
         }
@@ -259,20 +251,16 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         if (resultCode != Activity.RESULT_OK) return;
 
+        final Tank tank = mAdapter.getTank(mImageCapture.adapterPosition);
+        final ContentValues cv = new ContentValues(1);
+
         switch (requestCode) {
-            case REQUEST_IMAGE_CAPTURE: {
+            case REQUEST_IMAGE_CAPTURE:
                 getActivity().sendBroadcast(AppUtils.buildAddToGalleryIntent(mImageCapture.path));
-                final String where = Contract.TankEntry._ID + "=?";
-                final String[] whereArgs =
-                        new String[]{String.valueOf(mAdapter.getTank(mImageCapture.adapterPosition).identifier)};
-                final ContentValues cv = new ContentValues(1);
                 cv.put(Contract.TankEntry.COLUMN_IMAGE, mImageCapture.path);
-                getContext().getContentResolver().update(
-                        Contract.TankEntry.CONTENT_URI, cv, where, whereArgs
-                );
-            }
+                updateWithTankId(cv, tank);
                 break;
-            case REQUEST_IMAGE_RETRIEVAL: {
+            case REQUEST_IMAGE_RETRIEVAL:
                 final Uri uri = data.getData();
                 final String[] projection = new String[]{ MediaStore.Images.Media.DATA };
 
@@ -289,21 +277,20 @@ public final class MainFragment extends Fragment implements View.OnClickListener
                     if (c!= null && !c.isClosed()) c.close();
                 }
 
-                final ContentValues cv = new ContentValues(1);
-                cv.put(Contract.TankEntry.COLUMN_IMAGE, "file:"+path);
-                final String where = Contract.TankEntry._ID+"=?";
-                final String[] whereArgs = new String[] {
-                        String.valueOf(mAdapter.getTank(mImageCapture.adapterPosition).identifier)
-                };
-
-                getContext().getContentResolver().update(
-                        Contract.TankEntry.CONTENT_URI, cv, where, whereArgs
-                );
-
-            }
+                cv.put(Contract.TankEntry.COLUMN_IMAGE, AppUtils.withFilePrefix(path));
+                updateWithTankId(cv, tank);
                 break;
         }
 
+    }
+
+    private void updateWithTankId(ContentValues cv, Tank tank) {
+        final String where = Contract.TankEntry._ID + "=?";
+        final String[] whereArgs =
+                new String[]{String.valueOf(tank.identifier)};
+        getContext().getContentResolver().update(
+                Contract.TankEntry.CONTENT_URI, cv, where, whereArgs
+        );
     }
 
 

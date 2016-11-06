@@ -10,9 +10,9 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
+import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.R;
-import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.model.Tank.PlantStatus;
@@ -22,6 +22,7 @@ import java.util.List;
 
 import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.MGL;
 import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.PPM;
+import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.getCubicInchesAsImperialGallon;
 
 public final class TankUtils {
 
@@ -55,6 +56,8 @@ public final class TankUtils {
                         cursor.getInt(cursor.getColumnIndex(TankEntry.COLUMN_PLANT_STATUS));
                 final long identifier =
                         cursor.getLong(cursor.getColumnIndex(TankEntry._ID));
+
+                Log.e("TAG", "getTankList, Identifier: " + identifier);
 
                 builder.setName(name)
                         .setImage(image)
@@ -230,7 +233,7 @@ public final class TankUtils {
 
     }
 
-    public static String getUserDosageUnitAsString(Resources res, @ConversionUtils.UnitType int unit) {
+    public static String getUserDosageUnitAsString(Resources res, @ConversionUtils.DosageUnit int unit) {
 
         String unitString;
 
@@ -243,7 +246,7 @@ public final class TankUtils {
                 break;
             default:
                 throw new IllegalArgumentException("'type' parameter must be of type "
-                        + ConversionUtils.UnitType.class.getCanonicalName());
+                        + ConversionUtils.DosageUnit.class.getCanonicalName());
         }
 
         return unitString;
@@ -272,8 +275,9 @@ public final class TankUtils {
 
     public static ContentValues toContentValues(Tank tank) {
 
-        ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues(9);
         cv.put(TankEntry.COLUMN_NAME, tank.name);
+        cv.put(TankEntry.COLUMN_IMAGE, tank.image);
         cv.put(TankEntry.COLUMN_VOLUME, tank.volumeInLitres);
         cv.put(TankEntry.COLUMN_CONCENTRATION, tank.getAmmoniaDosage().targetConcentration);
         cv.put(TankEntry.COLUMN_DOSAGE, tank.getAmmoniaDosage().dosage);

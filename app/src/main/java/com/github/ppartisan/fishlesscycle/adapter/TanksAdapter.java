@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,8 +22,7 @@ import com.bumptech.glide.request.target.Target;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
-import com.github.ppartisan.fishlesscycle.util.ConversionUtils.UnitType;
-import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.ConversionUtils.DosageUnit;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
@@ -37,12 +34,13 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
     private final TankCardCallbacks mCallbacks;
     private List<Tank> mTanks;
-    private @UnitType int mDosageUnit;
+    private @DosageUnit
+    int mDosageUnit;
     private @VolumeUnit int mVolumeUnit;
 
     public TanksAdapter(
             @NonNull TankCardCallbacks callbacks, List<Tank> tanks,
-            @UnitType int dosageUnit,
+            @DosageUnit int dosageUnit,
             @VolumeUnit int volumeUnit
     ) {
         mCallbacks = callbacks;
@@ -71,7 +69,13 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
                 .into(holder.image);
 
         holder.title.setText(getTankNameString(ctx, tank));
-        holder.options.setText(TankUtils.getTankOptionsText(ctx, tank));
+        final CharSequence tankOptionsText = TankUtils.getTankOptionsText(ctx, tank);
+        if (TextUtils.isEmpty(tankOptionsText)) {
+            holder.options.setVisibility(View.GONE);
+        } else {
+            holder.options.setVisibility(View.VISIBLE);
+            holder.options.setText(tankOptionsText);
+        }
 
         final String tankStatus = res.getString(
                 R.string.fm_cycle_stage_template, TankUtils.getStageString(res, tank.tankStatus)
@@ -96,7 +100,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void setDosageUnitType(@UnitType int unitType) {
+    public void setDosageUnitType(@DosageUnit int unitType) {
         mDosageUnit = unitType;
     }
 
@@ -126,7 +130,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
         private final TankCardCallbacks mCallbacks;
 
-        final ImageButton overflow, infoOptions, infoStages;
+        final ImageButton overflow, infoStages;
         final ImageView image;
         final TextView title, options, lastUpdated, stage, ammonia, nitrite, nitrate, nextUpdate;
 
@@ -140,17 +144,14 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             itemView.setOnClickListener(this);
 
             overflow = (ImageButton) itemView.findViewById(R.id.tcv_overflow);
-            infoOptions = (ImageButton) itemView.findViewById(R.id.tcv_options_info);
             infoStages = (ImageButton) itemView.findViewById(R.id.tcv_stage_info);
 
             overflow.setImageDrawable(new ShadowOverflowDrawable(itemView.getResources()));
-
 
             menu = ViewUtils.buildPopUpMenu(overflow, R.menu.tank_card_menu);
             menu.setOnMenuItemClickListener(this);
 
             overflow.setOnClickListener(this);
-            infoOptions.setOnClickListener(this);
             infoStages.setOnClickListener(this);
 
             image = (ImageView) itemView.findViewById(R.id.tcv_image);

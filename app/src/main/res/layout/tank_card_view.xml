@@ -51,19 +51,11 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@android:color/white"
                 android:maxLines="1"
+                android:layout_marginBottom="@dimen/line_margin_default"
                 app:layout_gravity="fill_horizontal|center_vertical"
                 app:layout_columnWeight="1"
                 app:layout_columnSpan="2"
                 tools:text="My First Tank!"/>
-
-            <!--<ImageButton-->
-                <!--android:id="@+id/tcv_edit_title"-->
-                <!--android:layout_width="@dimen/image_button_small"-->
-                <!--android:layout_height="@dimen/image_button_small"-->
-                <!--android:src="@drawable/ic_mode_edit_white_24dp"-->
-                <!--app:layout_columnWeight="0"-->
-                <!--app:layout_gravity="center_vertical"-->
-                <!--style="@style/Base.Widget.AppCompat.Button.Borderless" />-->
 
             <TextView
                 android:id="@+id/tcv_options"
@@ -71,18 +63,11 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:maxLines="1"
+                android:layout_marginBottom="@dimen/line_margin_default"
                 app:layout_gravity="fill_horizontal|center_vertical"
                 app:layout_columnWeight="1"
+                app:layout_columnSpan="2"
                 tools:text="Heated, Plants, Seeded"/>
-
-            <ImageButton
-                android:id="@+id/tcv_options_info"
-                android:layout_width="@dimen/image_button_small"
-                android:layout_height="@dimen/image_button_small"
-                android:src="@drawable/ic_info_outline_white_24dp"
-                app:layout_columnWeight="0"
-                app:layout_gravity="center_vertical"
-                style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
         </android.support.v7.widget.GridLayout>
 

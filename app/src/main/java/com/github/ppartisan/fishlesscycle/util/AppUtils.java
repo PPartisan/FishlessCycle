@@ -27,6 +27,8 @@ public final class AppUtils {
     private static final String AUTHORITY = "com.github.ppartisan.fishlesscycle.fileprovider";
     private static final SimpleDateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
 
+    private static final String FILE_PREFIX = "file:";
+
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -72,7 +74,7 @@ public final class AppUtils {
 
         final Uri photoUri = FileProvider.getUriForFile(activity, AUTHORITY, file);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        takePictureIntent.putExtra(FILE_PATH_EXTRA, "file:" + file.getAbsolutePath());
+        takePictureIntent.putExtra(FILE_PATH_EXTRA, withFilePrefix(file.getAbsolutePath()));
         return takePictureIntent;
     }
 
@@ -93,5 +95,8 @@ public final class AppUtils {
         return  mediaScanIntent;
     }
 
+    public static String withFilePrefix(String path) {
+        return FILE_PREFIX + path.trim();
+    }
 
 }
