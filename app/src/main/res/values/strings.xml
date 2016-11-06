@@ -23,6 +23,7 @@
     <!-- Detail Fragment -->
     <string name="df_add_new_entry">Add New Entry</string>
     <string name="df_edit_entry">Edit Entry</string>
+    <string name="df_notes_title">Add Note</string>
 
     <!-- Reading Names -->
     <string name="ammonia">Ammonia</string>
@@ -45,7 +46,8 @@
 
     <!-- Tank Card Menu -->
     <string name="mct_action_edit_title">Edit Aquarium</string>
-    <string name="mct_action_add_change_photo">Add/Change Photo</string>
+    <string name="mct_action_change_photo_camera">Change Photo (Camera)</string>
+    <string name="mct_action_change_photo_gallery">Change Photo (Gallery)</string>
     <string name="mct_action_delete_tank">Delete Aquarium</string>
 
     <!-- Set-Up Wizard -->
@@ -154,6 +156,7 @@
     <!-- Misc. -->
     <string name="undo">Undo</string>
     <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
     <string name="deleted_template">%1$s deleted</string>
 
 </resources>

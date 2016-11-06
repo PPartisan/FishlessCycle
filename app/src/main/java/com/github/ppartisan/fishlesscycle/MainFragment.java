@@ -1,16 +1,30 @@
 package com.github.ppartisan.fishlesscycle;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +35,26 @@ import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.SetUpWizardActivity;
+import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public final class MainFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener, TankCardCallbacks, SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_RETRIEVAL = 2;
+
+    ImageCapture mImageCapture = new ImageCapture();
 
     private EmptyRecyclerView mRecyclerView;
     private TanksAdapter mAdapter;
@@ -82,8 +107,18 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        if (savedInstanceState != null) {
+            mImageCapture = savedInstanceState.getParcelable(ImageCapture.KEY);
+        }
+
         return view;
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(ImageCapture.KEY, mImageCapture);
     }
 
     @Override
@@ -125,7 +160,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onEditTankClick(int position) {
-        // TODO: 03/11/16 Edit tank details
         final Tank.Builder builder = new Tank.Builder(mAdapter.getTank(position));
         Intent intent = new Intent(getContext(), EditTankActivity.class);
         intent.putExtra(EditTankActivity.TANK_BUILDER_KEY, builder);
@@ -140,8 +174,21 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onChangePhotoClick(int position) {
-        // TODO: 03/11/16 Change Photo
+    public void onChangePhotoCameraClick(int position) {
+        AppUtils.checkStoragePermissions(getActivity());
+        final Intent photoIntent = AppUtils.buildTakePictureIntent(getActivity());
+        if (photoIntent != null) {
+            mImageCapture.path = photoIntent.getStringExtra(AppUtils.FILE_PATH_EXTRA);
+            mImageCapture.adapterPosition = position;
+            startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onChangePhotoGalleryClick(int position) {
+        mImageCapture.adapterPosition = position;
+        final Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, REQUEST_IMAGE_RETRIEVAL);
     }
 
     private void deleteTank(Tank tank) {
@@ -207,5 +254,95 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode != Activity.RESULT_OK) return;
+
+        switch (requestCode) {
+            case REQUEST_IMAGE_CAPTURE: {
+                getActivity().sendBroadcast(AppUtils.buildAddToGalleryIntent(mImageCapture.path));
+                final String where = Contract.TankEntry._ID + "=?";
+                final String[] whereArgs =
+                        new String[]{String.valueOf(mAdapter.getTank(mImageCapture.adapterPosition).identifier)};
+                final ContentValues cv = new ContentValues(1);
+                cv.put(Contract.TankEntry.COLUMN_IMAGE, mImageCapture.path);
+                getContext().getContentResolver().update(
+                        Contract.TankEntry.CONTENT_URI, cv, where, whereArgs
+                );
+            }
+                break;
+            case REQUEST_IMAGE_RETRIEVAL: {
+                final Uri uri = data.getData();
+                final String[] projection = new String[]{ MediaStore.Images.Media.DATA };
+
+                Cursor c = null;
+                String path = null;
+
+                try {
+                    c = getContext().getContentResolver().query(uri, projection, null, null, null);
+
+                    if (c != null && c.moveToFirst()) {
+                        path = c.getString(c.getColumnIndex(projection[0]));
+                    }
+                } finally {
+                    if (c!= null && !c.isClosed()) c.close();
+                }
+
+                final ContentValues cv = new ContentValues(1);
+                cv.put(Contract.TankEntry.COLUMN_IMAGE, "file:"+path);
+                final String where = Contract.TankEntry._ID+"=?";
+                final String[] whereArgs = new String[] {
+                        String.valueOf(mAdapter.getTank(mImageCapture.adapterPosition).identifier)
+                };
+
+                getContext().getContentResolver().update(
+                        Contract.TankEntry.CONTENT_URI, cv, where, whereArgs
+                );
+
+            }
+                break;
+        }
+
+    }
+
+
+    private static final class ImageCapture implements Parcelable {
+
+        static final String KEY = ImageCapture.class.getSimpleName() + ".KEY";
+
+        String path;
+        int adapterPosition;
+
+        ImageCapture(){}
+
+        ImageCapture(Parcel in) {
+            path = in.readString();
+            adapterPosition = in.readInt();
+        }
+
+        public static final Creator<ImageCapture> CREATOR = new Creator<ImageCapture>() {
+            @Override
+            public ImageCapture createFromParcel(Parcel in) {
+                return new ImageCapture(in);
+            }
+
+            @Override
+            public ImageCapture[] newArray(int size) {
+                return new ImageCapture[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(path);
+            parcel.writeInt(adapterPosition);
+        }
+    }
 
 }

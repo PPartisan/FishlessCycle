@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,13 +12,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,6 @@ import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.setup.view.HiddenViewManager;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
-import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
     public static final String KEY_IDENTIFIER = TAG + ".KEY_IDENTIFIER";
     private static final String FAB_ROTATION_TAG = TAG + ".FAB_ROTATION_TAG";
 
-    private int green500, red500;
+    private int green300, red300;
 
     private EditModel mEditModel = new EditModel(false, -1);
 
@@ -82,8 +82,8 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        green500 = ContextCompat.getColor(getContext(), R.color.green_500);
-        red500 = ContextCompat.getColor(getContext(), R.color.red_500);
+        green300 = ContextCompat.getColor(getContext(), R.color.green_300);
+        red300 = ContextCompat.getColor(getContext(), android.R.color.white);
 
         mCoordinator = (CoordinatorLayout) view.findViewById(R.id.fd_coordinator);
 
@@ -197,7 +197,9 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onExpanded() {}
+    public void onExpanded() {
+        if(!mFab.isShown()) mFab.show();
+    }
 
     @Override
     public void onCollapsed() {
@@ -251,17 +253,15 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
     }
 
     private void setLabelTextColorActivated(TextView view, boolean isActivated) {
-        final int color = (isActivated) ? green500 : red500;
-        Log.d(getClass().getCanonicalName(), "Set Color Activated");
+        final int color = (isActivated) ? green300 : red300;
         if (view.getCurrentTextColor() != color) {
-            Log.d(getClass().getCanonicalName(), "Setting Color to: " + color);
             view.setTextColor(color);
         }
     }
 
     @Override
     public void onNotesClicked(int position) {
-
+        buildNotesDialog(position).show();
     }
 
     @Override
@@ -273,10 +273,10 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         final Reading reading = mAdapter.getDataItem(position);
 
         mHiddenTitle.setText(getString(R.string.df_edit_entry));
+        mAmmonia.setText(String.valueOf((int)reading.ammonia));
+        mNitrite.setText(String.valueOf((int)reading.nitrite));
+        mNitrate.setText(String.valueOf((int)reading.nitrate));
         mHiddenViewManager.animateIn();
-        mAmmonia.setText(String.valueOf(reading.ammonia));
-        mNitrite.setText(String.valueOf(reading.nitrite));
-        mNitrate.setText(String.valueOf(reading.nitrate));
 
     }
 
@@ -312,6 +312,41 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         });
 
         return snackbar;
+    }
+
+    private AlertDialog buildNotesDialog(final int index) {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.NoteDialogTheme);
+        final LayoutInflater inflater = LayoutInflater.from(getContext());
+        final View view = inflater.inflate(R.layout.alert_dialog_notes, null);
+        builder.setView(view);
+
+        final Reading reading = mAdapter.getDataItem(index);
+        final EditText input = (EditText) view.findViewById(R.id.nda_input);
+        input.setText(reading.getNote());
+
+        builder.setTitle(R.string.df_notes_title);
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                final String note = input.getText().toString();
+                reading.setNote(note);
+
+                final ContentValues cv = new ContentValues(1);
+                cv.put(Contract.ReadingEntry.COLUMN_NOTES, note);
+                final String where = Contract.ReadingEntry.COLUMN_DATE+"=?";
+                final String[] whereArgs = new String[] { String.valueOf(reading.date) };
+
+                getContext().getContentResolver().update(
+                        Contract.ReadingEntry.CONTENT_URI, cv, where, whereArgs
+                );
+            }
+        });
+        builder.setNegativeButton(R.string.dismiss, null);
+
+        return builder.create();
+
     }
 
     private static class EditModel implements Parcelable {

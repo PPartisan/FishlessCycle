@@ -4,24 +4,32 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
+import com.github.ppartisan.fishlesscycle.util.ConversionUtils.UnitType;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.github.ppartisan.fishlesscycle.view.ShadowOverflowDrawable;
 
 import java.util.List;
 
@@ -29,13 +37,13 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
     private final TankCardCallbacks mCallbacks;
     private List<Tank> mTanks;
-    private @ConversionUtils.UnitType int mDosageUnit;
-    private @PreferenceUtils.VolumeUnit int mVolumeUnit;
+    private @UnitType int mDosageUnit;
+    private @VolumeUnit int mVolumeUnit;
 
     public TanksAdapter(
             @NonNull TankCardCallbacks callbacks, List<Tank> tanks,
-            @ConversionUtils.UnitType int dosageUnit,
-            @PreferenceUtils.VolumeUnit int volumeUnit
+            @UnitType int dosageUnit,
+            @VolumeUnit int volumeUnit
     ) {
         mCallbacks = callbacks;
         mTanks = tanks;
@@ -57,9 +65,10 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         final Context ctx = holder.itemView.getContext();
         final Resources res = ctx.getResources();
 
-        Picasso.with(ctx).load(R.drawable.test_card_image)
+        Glide.with(ctx).load(tank.image)
+                .listener(new ImageLoadCallbacks(holder.image, tank.image))
                 .placeholder(R.drawable.tank_white)
-                .into(holder.image, new ImageLoadCallbacks(holder.image));
+                .into(holder.image);
 
         holder.title.setText(getTankNameString(ctx, tank));
         holder.options.setText(TankUtils.getTankOptionsText(ctx, tank));
@@ -87,11 +96,11 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void setDosageUnitType(@ConversionUtils.UnitType int unitType) {
+    public void setDosageUnitType(@UnitType int unitType) {
         mDosageUnit = unitType;
     }
 
-    public void setVolumeUnit(@PreferenceUtils.VolumeUnit int unitType) {
+    public void setVolumeUnit(@VolumeUnit int unitType) {
         mVolumeUnit = unitType;
     }
 
@@ -134,6 +143,9 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             infoOptions = (ImageButton) itemView.findViewById(R.id.tcv_options_info);
             infoStages = (ImageButton) itemView.findViewById(R.id.tcv_stage_info);
 
+            overflow.setImageDrawable(new ShadowOverflowDrawable(itemView.getResources()));
+
+
             menu = ViewUtils.buildPopUpMenu(overflow, R.menu.tank_card_menu);
             menu.setOnMenuItemClickListener(this);
 
@@ -175,8 +187,11 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
                 case R.id.mct_action_edit_tank:
                     mCallbacks.onEditTankClick(getAdapterPosition());
                     return true;
-                case R.id.mct_action_add_change_photo:
-                    mCallbacks.onChangePhotoClick(getAdapterPosition());
+                case R.id.mct_action_change_photo_camera:
+                    mCallbacks.onChangePhotoCameraClick(getAdapterPosition());
+                    return true;
+                case R.id.mct_action_change_photo_gallery:
+                    mCallbacks.onChangePhotoGalleryClick(getAdapterPosition());
                     return true;
                 case R.id.mct_action_delete_tank:
                     mCallbacks.onDeleteTankClick(getAdapterPosition());
@@ -187,27 +202,36 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         }
     }
 
-    private static final class ImageLoadCallbacks implements Callback {
+    private static final class ImageLoadCallbacks implements RequestListener<String, GlideDrawable> {
 
         private final ImageView mImage;
+        private final String mPath;
 
-        private ImageLoadCallbacks(ImageView imageView) {
-            mImage = imageView;
+        private ImageLoadCallbacks(ImageView image, String path) {
+            mImage = image;
+            mPath = path;
         }
 
         @Override
-        public void onSuccess() {
+        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+            Glide.clear(mImage);
+            mImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            final Context context = mImage.getContext();
+            mImage.setBackgroundColor(ContextCompat.getColor(context, R.color.red_500));
+            mImage.setColorFilter(ContextCompat.getColor(context, R.color.red_700));
+            return false;
+        }
+
+        @Override
+        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
             mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             mImage.clearColorFilter();
+            if (isFirstResource) {
+                //When loading for the first time images will not correctly fit imageview dimens.
+                Glide.with(mImage.getContext()).load(mPath).into(mImage);
+            }
+            return false;
         }
-
-        @Override
-        public void onError() {
-            mImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            mImage.setBackgroundColor(ContextCompat.getColor(mImage.getContext(), R.color.red_500));
-            mImage.setColorFilter(ContextCompat.getColor(mImage.getContext(), R.color.red_700));
-        }
-
     }
 
 }

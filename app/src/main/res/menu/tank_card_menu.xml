@@ -7,9 +7,14 @@
         android:icon="@drawable/ic_mode_edit_white_24dp" />
 
     <item
-        android:id="@+id/mct_action_add_change_photo"
-        android:title="@string/mct_action_add_change_photo"
+        android:id="@+id/mct_action_change_photo_camera"
+        android:title="@string/mct_action_change_photo_camera"
         android:icon="@drawable/ic_photo_camera_white_24dp" />
+
+    <item
+        android:id="@+id/mct_action_change_photo_gallery"
+        android:title="@string/mct_action_change_photo_gallery"
+        android:icon="@drawable/ic_photo_white_24dp"/>
 
     <item
         android:id="@+id/mct_action_delete_tank"
