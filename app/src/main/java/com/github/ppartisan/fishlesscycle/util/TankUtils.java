@@ -13,7 +13,10 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.model.Tank.PlantStatus;
 
@@ -22,7 +25,6 @@ import java.util.List;
 
 import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.MGL;
 import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.PPM;
-import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.getCubicInchesAsImperialGallon;
 
 public final class TankUtils {
 
@@ -57,12 +59,22 @@ public final class TankUtils {
                 final long identifier =
                         cursor.getLong(cursor.getColumnIndex(TankEntry._ID));
 
-                Log.e("TAG", "getTankList, Identifier: " + identifier);
+                final long date =
+                        cursor.getLong(cursor.getColumnIndex(ReadingEntry.COLUMN_DATE));
+                final int ammonia =
+                        cursor.getInt(cursor.getColumnIndex(ReadingEntry.COLUMN_AMMONIA));
+                final int nitrite =
+                        cursor.getInt(cursor.getColumnIndex(ReadingEntry.COLUMN_NITRITE));
+                final int nitrate =
+                        cursor.getInt(cursor.getColumnIndex(ReadingEntry.COLUMN_NITRATE));
+                final Reading lastReading =
+                        new Reading(identifier, date, ammonia, nitrite, nitrate, false);
 
                 builder.setName(name)
                         .setImage(image)
                         .setVolumeInLitres(volumeInLitres)
                         .setAmmoniaDosage(dosage, concentration)
+                        .setLastReading(lastReading)
                         .setIsHeated(isHeated)
                         .setIsSeeded(isSeeded)
                         .setPlantStatus(plantStatus)

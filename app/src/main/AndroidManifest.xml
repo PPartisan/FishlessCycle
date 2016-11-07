@@ -36,7 +36,7 @@
 
         <provider
             android:authorities="com.github.ppartisan.fishlesscycle"
-            android:name=".data.FishlessCycleProvider"
+            android:name=".data.Provider"
             android:exported="false" />
 
         <provider

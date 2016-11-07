@@ -1,10 +1,13 @@
 package com.github.ppartisan.fishlesscycle.setup;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
+import android.content.OperationApplicationException;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,14 +16,13 @@ import android.widget.ImageView;
 
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
-import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListener;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListenerCallbacks;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpWizardAdapter;
 import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 import com.github.ppartisan.fishlesscycle.setup.view.DotIndicatorView;
-import com.github.ppartisan.fishlesscycle.util.TankUtils;
+import com.github.ppartisan.fishlesscycle.util.DataUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.squareup.picasso.Picasso;
 
@@ -97,11 +99,16 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     @Override
     protected void onPause() {
         super.onPause();
-        final String where = TankEntry._ID + " =?";
-        final String[] whereArgs = new String[] { String.valueOf(mTankBuilder.getIdentifier()) };
-        getContentResolver().update(
-                TankEntry.CONTENT_URI, TankUtils.toContentValues(mTankBuilder), where, whereArgs
-        );
+
+        final ArrayList<ContentProviderOperation> ops =
+                DataUtils.tankBuilderToBatchList(mTankBuilder);
+
+        try {
+            getContentResolver().applyBatch(Contract.CONTENT_AUTHORITY, ops);
+        } catch (RemoteException | OperationApplicationException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

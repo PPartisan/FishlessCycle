@@ -20,6 +20,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils.DosageUnit;
@@ -28,9 +29,14 @@ import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.ShadowOverflowDrawable;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHolder> {
+
+    private final SimpleDateFormat mUpdateFormat =
+            new SimpleDateFormat("d MMMM", Locale.getDefault());
 
     private final TankCardCallbacks mCallbacks;
     private List<Tank> mTanks;
@@ -82,10 +88,31 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         );
         holder.stage.setText(tankStatus);
 
-        holder.lastUpdated.setText(res.getString(R.string.fm_last_updated_template, "20th October"));
-        holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, 3, mDosageUnit));
-        holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, 0, mDosageUnit));
-        holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, 15, mDosageUnit));
+        final Reading lastReading = tank.getLastReading();
+//        final String lastReadingString = (lastReading == null)
+//                ? "No Readings"
+//                : mUpdateFormat.format(lastReading.date);
+
+        String lastReadingString;
+        int ammonia, nitrite, nitrate;
+
+        if (lastReading == null) {
+            lastReadingString = "No Readings";
+            ammonia = nitrite = nitrate = 0;
+        } else {
+            lastReadingString = res.getString(
+                    R.string.fm_last_updated_template,
+                    mUpdateFormat.format(lastReading.date)
+            );
+            ammonia = (int)lastReading.ammonia;
+            nitrite = (int)lastReading.nitrite;
+            nitrate = (int)lastReading.nitrate;
+        }
+
+        holder.lastUpdated.setText(lastReadingString);
+        holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, ammonia, mDosageUnit));
+        holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, nitrite, mDosageUnit));
+        holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, nitrate, mDosageUnit));
         holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
 
     }

@@ -6,16 +6,14 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresPermission;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
-import com.github.ppartisan.fishlesscycle.model.Reading;
 
-public final class FishlessCycleProvider extends ContentProvider {
+public final class Provider extends ContentProvider {
 
     static final int TANKS = 100;
     static final int READINGS = 101;
@@ -88,6 +86,9 @@ public final class FishlessCycleProvider extends ContentProvider {
                 break;
             case READINGS:
                 result = insertReading(cv);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(TankEntry.CONTENT_URI, null);
+                }
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
@@ -113,6 +114,9 @@ public final class FishlessCycleProvider extends ContentProvider {
                 break;
             case READINGS:
                 table = ReadingEntry.TABLE_NAME;
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(TankEntry.CONTENT_URI, null);
+                }
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
@@ -138,6 +142,9 @@ public final class FishlessCycleProvider extends ContentProvider {
                 break;
             case READINGS:
                 table = ReadingEntry.TABLE_NAME;
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(TankEntry.CONTENT_URI, null);
+                }
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
@@ -183,7 +190,9 @@ public final class FishlessCycleProvider extends ContentProvider {
     }
 
     private Uri insertReading(ContentValues cv) {
-        final long id = db.getWritableDatabase().insert(ReadingEntry.TABLE_NAME, null, cv);
+        final long id = db.getWritableDatabase().insertWithOnConflict(
+                ReadingEntry.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE
+        );
         return (id >= 0) ? ReadingEntry.buildReadingUri(id) : null;
     }
 

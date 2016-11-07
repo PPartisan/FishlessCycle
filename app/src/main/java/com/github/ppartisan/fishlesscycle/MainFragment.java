@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
-import com.github.ppartisan.fishlesscycle.data.FishlessCycleProvider;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.SetUpWizardActivity;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
