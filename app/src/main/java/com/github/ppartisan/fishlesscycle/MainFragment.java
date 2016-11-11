@@ -173,14 +173,14 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         intent.putExtra(DetailFragment.KEY_IDENTIFIER, tank.identifier);
         intent.putExtra(DetailFragment.KEY_NAME, vh.title.getText());
 
-        Pair<View,String> p1 = Pair.create((View)vh.image, ViewCompat.getTransitionName(vh.image));
         Pair<View,String> p2 = Pair.create((View)vh.title, ViewCompat.getTransitionName(vh.title));
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                getActivity(), p1, p2
+                getActivity(), p2
         );
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+
     }
 
     @Override

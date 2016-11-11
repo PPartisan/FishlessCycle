@@ -30,6 +30,7 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.ShadowOverflowDrawable;
+import com.google.android.gms.ads.AdView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -37,9 +38,7 @@ import java.util.Locale;
 
 public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHolder> {
 
-    public static final String TRANSITION_IMAGE_BASE = "trans_image_";
     public static final String TRANSITION_NAME_BASE = "trans_name_";
-
     private final SimpleDateFormat mUpdateFormat =
             new SimpleDateFormat("d MMMM", Locale.getDefault());
 
@@ -62,8 +61,9 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.tank_card_view, parent, false);
+
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View v = inflater.inflate(R.layout.tank_card_view, parent, false);
         return new ViewHolder(mCallbacks, v);
     }
 
@@ -111,10 +111,6 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, nitrite, mDosageUnit));
         holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, nitrate, mDosageUnit));
         holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
-
-
-        final String transImage = TRANSITION_IMAGE_BASE + tank.identifier;
-        ViewCompat.setTransitionName(holder.image, transImage);
 
         final String transName = TRANSITION_NAME_BASE + tank.identifier;
         ViewCompat.setTransitionName(holder.title, transName);

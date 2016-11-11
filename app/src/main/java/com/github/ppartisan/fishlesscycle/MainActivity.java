@@ -13,6 +13,8 @@ import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 
@@ -21,14 +23,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final int LOADER_ID = 4;
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        if(getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {
+        mAdView = (AdView) findViewById(R.id.ma_ad_view);
+        final AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("C07A980181A0030AB61A20553A00CD1E")
+                .build();
+        mAdView.loadAd(request);
+
+        if(getSupportFragmentManager().findFragmentById(R.id.ma_container) == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(android.R.id.content, MainFragment.newInstance())
+                    .add(R.id.ma_container, MainFragment.newInstance())
                     .commit();
         }
 
@@ -44,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         final MainFragment fragment =
-                (MainFragment) getSupportFragmentManager().findFragmentById(android.R.id.content);
+                (MainFragment) getSupportFragmentManager().findFragmentById(R.id.ma_container);
         fragment.updateTankList(TankUtils.getTankList(data));
     }
 

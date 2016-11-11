@@ -33,6 +33,9 @@ import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 import com.github.ppartisan.fishlesscycle.setup.view.DotIndicatorView;
 import com.github.ppartisan.fishlesscycle.util.DataUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,6 +61,15 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_wizard);
+
+        MobileAds.initialize(getApplicationContext(), getString(R.string.test_banner_ad_unit_id));
+
+        final AdView adView = (AdView) findViewById(R.id.wusa_ad_view);
+        final AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("C07A980181A0030AB61A20553A00CD1E")
+                .build();
+        adView.loadAd(request);
 
         mParent = (ViewGroup) findViewById(R.id.wusa_parent);
         mImage = (ImageView) findViewById(R.id.wusa_image);

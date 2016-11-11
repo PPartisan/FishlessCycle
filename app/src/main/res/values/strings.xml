@@ -142,6 +142,9 @@
     <string name="wus_cf_plants">Plants</string>
     <string name="wus_cf_name_template">Aquarium (%1$d)</string>
 
+    <!-- AdMob -->
+    <string name="test_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>
     <string name="units_description_template_double">Currently showing %1$s and %2$s</string>
