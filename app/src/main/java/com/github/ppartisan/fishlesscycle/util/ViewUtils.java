@@ -9,9 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -21,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
+
+import java.lang.reflect.Field;
 
 public final class ViewUtils {
 
@@ -101,6 +105,21 @@ public final class ViewUtils {
                     (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
+    }
+
+    @Nullable
+    public static TextView getToolbarTitleTextView(Toolbar toolbar) {
+        try {
+            Class<?> toolbarClass = Toolbar.class;
+            Field titleTextViewField = toolbarClass.getDeclaredField("mTitleTextView");
+            titleTextViewField.setAccessible(true);
+
+            return (TextView) titleTextViewField.get(toolbar);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }

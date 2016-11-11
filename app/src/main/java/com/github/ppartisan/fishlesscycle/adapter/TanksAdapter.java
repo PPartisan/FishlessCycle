@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +36,9 @@ import java.util.List;
 import java.util.Locale;
 
 public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHolder> {
+
+    public static final String TRANSITION_IMAGE_BASE = "trans_image_";
+    public static final String TRANSITION_NAME_BASE = "trans_name_";
 
     private final SimpleDateFormat mUpdateFormat =
             new SimpleDateFormat("d MMMM", Locale.getDefault());
@@ -107,6 +112,12 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, nitrate, mDosageUnit));
         holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
 
+
+        final String transImage = TRANSITION_IMAGE_BASE + tank.identifier;
+        ViewCompat.setTransitionName(holder.image, transImage);
+
+        final String transName = TRANSITION_NAME_BASE + tank.identifier;
+        ViewCompat.setTransitionName(holder.title, transName);
     }
 
     @Override
@@ -144,14 +155,15 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         return mTanks.get(index);
     }
 
-    static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+    public static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             PopupMenu.OnMenuItemClickListener {
 
         private final TankCardCallbacks mCallbacks;
 
         final ImageButton overflow;
-        final ImageView image;
-        final TextView title, options, lastUpdated, ammonia, nitrite, nitrate, nextUpdate;
+        public final ImageView image;
+        public final TextView title;
+        final TextView options, lastUpdated, ammonia, nitrite, nitrate, nextUpdate;
 
         final PopupMenu menu;
 
@@ -188,7 +200,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
             switch (view.getId()) {
                 case R.id.tcv_parent:
-                    mCallbacks.onCardClick(getAdapterPosition());
+                    mCallbacks.onCardClick(this, getAdapterPosition());
                     break;
                 case R.id.tcv_overflow:
                     menu.show();

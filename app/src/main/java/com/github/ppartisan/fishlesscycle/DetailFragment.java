@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -20,7 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +29,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.ppartisan.fishlesscycle.adapter.ReadingsAdapter;
 import com.github.ppartisan.fishlesscycle.adapter.DataRowCallbacks;
+import com.github.ppartisan.fishlesscycle.adapter.ReadingsAdapter;
+import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapterImpl;
 import com.github.ppartisan.fishlesscycle.data.Contract;
@@ -47,6 +47,7 @@ import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpt
 public final class DetailFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener,ViewTreeObserver.OnGlobalLayoutListener, HiddenViewManager.AnimationCallbacks, TextWatcher, DataRowCallbacks {
     private static final String TAG = DetailFragment.class.getCanonicalName();
     public static final String KEY_IDENTIFIER = TAG + ".KEY_IDENTIFIER";
+    public static final String KEY_NAME = TAG + ".KEY_NAME";
     private static final String FAB_ROTATION_TAG = TAG + ".FAB_ROTATION_TAG";
 
     private static final float RECYCLER_ELEVATION = 4f;
@@ -63,16 +64,15 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
     private FloatingActionButton mFab;
 
-    private RecyclerView mRecyclerView;
     private ReadingsAdapter mAdapter;
 
-    private CombinedChart mChart;
     private ChartAdapter mChartAdapter;
 
-    public static DetailFragment newInstance(long identifier) {
+    public static DetailFragment newInstance(String name, long identifier) {
 
         Bundle args = new Bundle();
         args.putLong(KEY_IDENTIFIER, identifier);
+        args.putString(KEY_NAME, name);
 
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
@@ -82,7 +82,9 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_detail, container, false);
+
+        final String projTransName = TanksAdapter.TRANSITION_NAME_BASE + getIdentifier();
 
         green300 = ContextCompat.getColor(getContext(), R.color.green_300);
         red300 = ContextCompat.getColor(getContext(), android.R.color.white);
@@ -111,24 +113,26 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+                ActivityCompat.finishAfterTransition(getActivity());
             }
         });
+        toolbar.setTitle(getName());
+        ViewCompat.setTransitionName(ViewUtils.getToolbarTitleTextView(toolbar), projTransName);
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fd_fab);
         mFab.setOnClickListener(this);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.fd_recycler_view);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.fd_recycler_view);
         mAdapter = new ReadingsAdapter(this, null);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setNestedScrollingEnabled(true);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setNestedScrollingEnabled(true);
 
-        ViewCompat.setElevation(mRecyclerView, RECYCLER_ELEVATION);
+        ViewCompat.setElevation(recyclerView, RECYCLER_ELEVATION);
 
-        mChart = (CombinedChart) view.findViewById(R.id.fd_chart);
-        mChartAdapter = new ChartAdapterImpl(mChart);
+        CombinedChart chart = (CombinedChart) view.findViewById(R.id.fd_chart);
+        mChartAdapter = new ChartAdapterImpl(chart);
         mChartAdapter.setData(null);
 
         if (savedInstanceState != null) {
@@ -138,6 +142,14 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
             ViewCompat.setRotation(mFab, savedInstanceState.getFloat(FAB_ROTATION_TAG, 0));
         }
 
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                ActivityCompat.startPostponedEnterTransition(getActivity());
+                return true;
+            }
+        });
         return view;
     }
 
@@ -175,6 +187,10 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
     private long getIdentifier() {
         return getArguments().getLong(KEY_IDENTIFIER);
+    }
+
+    private String getName() {
+        return getArguments().getString(KEY_NAME);
     }
 
     public void updateReadings(List<Reading> readings) {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,15 +15,22 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
@@ -141,12 +149,22 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void onCardClick(int position) {
+    public void onCardClick(TanksAdapter.ViewHolder vh, int position) {
+        final Tank tank = mAdapter.getTank(position);
         Intent intent = new Intent(getContext(), DetailActivity.class);
-        intent.putExtra(DetailFragment.KEY_IDENTIFIER, mAdapter.getTank(position).identifier);
-        Log.e(getClass().getCanonicalName(), "Identifier? " + mAdapter.getTank(position).identifier);
-        startActivity(intent);
+        intent.putExtra(DetailFragment.KEY_IDENTIFIER, tank.identifier);
+        intent.putExtra(DetailFragment.KEY_NAME, vh.title.getText());
+
+        Pair<View,String> p1 = Pair.create((View)vh.image, ViewCompat.getTransitionName(vh.image));
+        Pair<View,String> p2 = Pair.create((View)vh.title, ViewCompat.getTransitionName(vh.title));
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                getActivity(), p1, p2
+        );
+
+        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
 
     @Override
