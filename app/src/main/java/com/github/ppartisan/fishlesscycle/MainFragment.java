@@ -25,6 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import com.github.ppartisan.fishlesscycle.util.ConversionUtils.DosageUnit;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
+import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
 
 import java.util.List;
@@ -133,7 +135,21 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(getContext(), SetUpWizardActivity.class);
-        startActivity(intent);
+        final int cx = view.getWidth()/2;
+        final int cy = view.getHeight()/2;
+        final DisplayMetrics metrics = ViewUtils.getScreenMetrics();
+        final View root = getView();
+        int tHeight, tWidth;
+        if(root == null) {
+            tHeight = metrics.heightPixels;
+            tWidth = metrics.widthPixels;
+        } else {
+            tHeight = root.getHeight();
+            tWidth = root.getWidth();
+        }
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeClipRevealAnimation(view, cx, cy, tWidth, tHeight);
+        ActivityCompat.startActivity(getContext(), intent, options.toBundle());
     }
 
     @Override

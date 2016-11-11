@@ -122,4 +122,8 @@ public final class ViewUtils {
         return null;
     }
 
+    public static DisplayMetrics getScreenMetrics() {
+        return Resources.getSystem().getDisplayMetrics();
+    }
+
 }
