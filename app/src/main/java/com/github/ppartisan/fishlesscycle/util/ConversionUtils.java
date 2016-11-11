@@ -18,7 +18,7 @@ public final class ConversionUtils {
 
     private ConversionUtils() { throw new AssertionError(); }
 
-    public static String getUnitFormattedString(Resources res, float value, @DosageUnit int type) {
+    public static String getUnitFormattedString(Resources res, int value, @DosageUnit int type) {
 
         String unit;
 
@@ -34,7 +34,7 @@ public final class ConversionUtils {
                         + DosageUnit.class.getCanonicalName());
         }
 
-        return res.getString(R.string.quantity_template, value, unit);
+        return res.getString(R.string.quantity_template, (int)value, unit);
 
     }
 

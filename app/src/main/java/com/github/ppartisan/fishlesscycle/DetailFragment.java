@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.github.ppartisan.fishlesscycle.adapter.DataAdapter;
+import com.github.ppartisan.fishlesscycle.adapter.ReadingsAdapter;
 import com.github.ppartisan.fishlesscycle.adapter.DataRowCallbacks;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapterImpl;
@@ -43,10 +45,11 @@ import java.util.List;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpty;
 
 public final class DetailFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener,ViewTreeObserver.OnGlobalLayoutListener, HiddenViewManager.AnimationCallbacks, TextWatcher, DataRowCallbacks {
-
     private static final String TAG = DetailFragment.class.getCanonicalName();
     public static final String KEY_IDENTIFIER = TAG + ".KEY_IDENTIFIER";
     private static final String FAB_ROTATION_TAG = TAG + ".FAB_ROTATION_TAG";
+
+    private static final float RECYCLER_ELEVATION = 4f;
 
     private int green300, red300;
 
@@ -58,11 +61,10 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
     private EditText mAmmonia, mNitrite, mNitrate;
     private CoordinatorLayout mCoordinator;
 
-    private Toolbar mToolbar;
     private FloatingActionButton mFab;
 
     private RecyclerView mRecyclerView;
-    private DataAdapter mAdapter;
+    private ReadingsAdapter mAdapter;
 
     private CombinedChart mChart;
     private ChartAdapter mChartAdapter;
@@ -102,11 +104,11 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         mNitrite = (EditText) view.findViewById(R.id.fd_nitrite_entry);
         mNitrate = (EditText) view.findViewById(R.id.fd_nitrate_entry);
 
-        mToolbar = (Toolbar) view.findViewById(R.id.fd_toolbar);
-        mToolbar.inflateMenu(R.menu.detail_menu);
-        mToolbar.setOnMenuItemClickListener(this);
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.fd_toolbar);
+        toolbar.inflateMenu(R.menu.detail_menu);
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().onBackPressed();
@@ -117,11 +119,13 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         mFab.setOnClickListener(this);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.fd_recycler_view);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new DataAdapter(this, null);
+        mAdapter = new ReadingsAdapter(this, null);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setNestedScrollingEnabled(true);
+
+        ViewCompat.setElevation(mRecyclerView, RECYCLER_ELEVATION);
 
         mChart = (CombinedChart) view.findViewById(R.id.fd_chart);
         mChartAdapter = new ChartAdapterImpl(mChart);

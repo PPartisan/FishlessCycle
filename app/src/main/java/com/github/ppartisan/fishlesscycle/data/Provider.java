@@ -51,8 +51,6 @@ public final class Provider extends ContentProvider {
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
         }
 
-        DatabaseUtils.dumpCursor(cursor);
-
         return cursor;
 
     }

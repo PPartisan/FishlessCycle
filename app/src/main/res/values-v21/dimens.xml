@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Detail Fragment -->
+    <dimen name="fd_card_padding">-6dp</dimen>
+</resources>

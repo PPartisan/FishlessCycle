@@ -16,60 +16,99 @@ import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.util.List;
 
-public final class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
+public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int VIEW_TYPE_HEADER = 0;
+    private static final int VIEW_TYPE_CONTENT = 1;
 
     private DataRowCallbacks mCallbacks;
-    private List<Reading> mReading;
+    private List<Reading> mReadings;
 
-    public DataAdapter(DataRowCallbacks callbacks, List<Reading> reading) {
+    public ReadingsAdapter(DataRowCallbacks callbacks, List<Reading> readings) {
         mCallbacks = callbacks;
-        mReading = reading;
+        mReadings = readings;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.data_row, parent, false);
-        return new ViewHolder(mCallbacks, v);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+        int layoutId = 0;
+        View v;
+        RecyclerView.ViewHolder vh = null;
+
+        switch (viewType) {
+            case VIEW_TYPE_HEADER:
+                layoutId = R.layout.data_row_heading;
+                v = inflater.inflate(layoutId, parent, false);
+                vh = new HeadingViewHolder(v);
+                break;
+            case VIEW_TYPE_CONTENT:
+                layoutId = R.layout.data_row;
+                v = inflater.inflate(layoutId, parent, false);
+                vh = new ViewHolder(mCallbacks, v);
+                break;
+        }
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder h, int position) {
 
-        final Reading item = mReading.get(position);
+        if (h.getAdapterPosition() == 0) {
+            return;
+        }
+
+        final ReadingsAdapter.ViewHolder holder = (ViewHolder) h;
+
+        final Reading item = mReadings.get(--position);
 
         holder.date.setText(ReadingUtils.getReadableDateString(item.date));
-        holder.ammonia.setText(ReadingUtils.toOneDecimalPlace(item.ammonia));
-        holder.nitrite.setText(ReadingUtils.toOneDecimalPlace(item.nitrite));
-        holder.nitrate.setText(ReadingUtils.toOneDecimalPlace(item.nitrate));
+        holder.ammonia.setText(String.valueOf((int)item.ammonia));
+        holder.nitrite.setText(String.valueOf((int)item.nitrite));
+        holder.nitrate.setText(String.valueOf((int)item.nitrate));
 
     }
 
     @Override
     public int getItemCount() {
-        return mReading == null ? 0 : mReading.size();
+        return mReadings == null ? 0 : mReadings.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == 0) ? VIEW_TYPE_HEADER : VIEW_TYPE_CONTENT;
     }
 
     public void setDataItems(List<Reading> items) {
-        mReading = items;
+        mReadings = items;
     }
 
     public void addDataItem(Reading item) {
-        mReading.add(item);
-        notifyItemInserted(mReading.size());
+        mReadings.add(item);
+        notifyItemInserted(mReadings.size());
     }
 
     public Reading getDataItem(int index) {
-        return mReading.get(index);
+        return mReadings.get(index);
     }
 
-    static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private static final class HeadingViewHolder extends RecyclerView.ViewHolder {
+
+        HeadingViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    private static final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private DataRowCallbacks mCallbacks;
 
         TextView date, ammonia, nitrite, nitrate;
         ImageButton overflow;
 
-        public ViewHolder(DataRowCallbacks callbacks, View itemView) {
+        ViewHolder(DataRowCallbacks callbacks, View itemView) {
             super(itemView);
 
             mCallbacks = callbacks;

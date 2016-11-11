@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_small"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:columnCount="5">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="@string/fm_date_title"
+        android:textColor="@android:color/white"
+        android:layout_margin="@dimen/horizontal_margin_default_small_half"
+        android:background="@drawable/capsule_default"
+        app:layout_columnWeight="1"
+        tools:text="Date"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="@string/ammonia"
+        android:textColor="@android:color/white"
+        android:layout_margin="@dimen/horizontal_margin_default_small_half"
+        android:background="@drawable/capsule_ammonia"
+        app:layout_columnWeight="1"
+        tools:text="Ammonia"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="@string/nitrite"
+        android:textColor="@android:color/white"
+        android:layout_margin="@dimen/horizontal_margin_default_small_half"
+        android:background="@drawable/capsule_nitrite"
+        app:layout_columnWeight="1"
+        tools:text="Nitrite"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="@string/nitrate"
+        android:textColor="@android:color/white"
+        android:layout_margin="@dimen/horizontal_margin_default_small_half"
+        android:background="@drawable/capsule_nitrate"
+        app:layout_columnWeight="1"
+        tools:text="Nitrate"/>
+
+    <View
+        android:layout_width="@dimen/image_button_default"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/horizontal_margin_default_small_half"
+        android:background="@drawable/capsule_default"
+        android:layout_weight="0"
+        app:layout_columnWeight="0"/>
+
+</android.support.v7.widget.GridLayout>

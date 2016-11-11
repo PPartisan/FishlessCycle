@@ -65,5 +65,9 @@
 
     <color name="indigo_700">#303F9F</color>
     <color name="light_green_700">#689F38</color>
+    <color name="blue_grey_100">#CFD8DC</color>
+
+    <color name="amber_100">#FFECB3</color>
+    <color name="teal_300">#4DB6AC</color>
 
 </resources>

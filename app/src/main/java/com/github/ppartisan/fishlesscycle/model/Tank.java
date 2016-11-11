@@ -23,13 +23,13 @@ public final class Tank {
     public static final int HEAVY = 6;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({NOT_STARTED,CYCLING_AMMONIA,CYCLING_NITRITE,CYCLING_NITRATE,CYCLE_COMPLETE})
+    @IntDef({NOT_STARTED, STARTED, CYCLING_AMMONIA, CYCLING_NITRITE,CYCLE_COMPLETE})
     public @interface TankStatus {}
-    public static final int NOT_STARTED = 0;
-    public static final int CYCLING_AMMONIA = 10;
-    public static final int CYCLING_NITRITE = 11;
-    public static final int CYCLING_NITRATE = 12;
-    public static final int CYCLE_COMPLETE = 50;
+    public static final int NOT_STARTED = 10;
+    public static final int STARTED = 12;
+    public static final int CYCLING_AMMONIA = 13;
+    public static final int CYCLING_NITRITE = 14;
+    public static final int CYCLE_COMPLETE = 15;
 
     public final String name, image;
     public final float volumeInLitres;
@@ -37,7 +37,6 @@ public final class Tank {
     private final Reading mLastReading;
     public final boolean isHeated, isSeeded;
     public final @PlantStatus int plantStatus;
-    public final @TankStatus int tankStatus;
     public final long identifier;
 
     private Tank(
@@ -48,7 +47,6 @@ public final class Tank {
             boolean isHeated,
             boolean isSeeded,
             @PlantStatus int plantStatus,
-            @TankStatus int tankStatus,
             Reading lastReading,
             long identifier
     ) {
@@ -60,7 +58,6 @@ public final class Tank {
         this.isSeeded = isSeeded;
         this.plantStatus = plantStatus;
         this.identifier = identifier;
-        this.tankStatus = tankStatus;
         this.mAmmoniaDosage = mAmmoniaDosage;
         this.mLastReading = lastReading;
     }
@@ -84,7 +81,6 @@ public final class Tank {
         private boolean isHeated, isSeeded;
         private long identifier;
         private @PlantStatus int plantStatus = NONE;
-        private @TankStatus int tankStatus = NOT_STARTED;
 
         public Builder() {}
 
@@ -102,7 +98,6 @@ public final class Tank {
             this.isSeeded = tank.isSeeded;
             this.identifier = tank.identifier;
             this.plantStatus = tank.plantStatus;
-            this.tankStatus = tank.tankStatus;
             this.identifier = tank.identifier;
         }
 
@@ -118,7 +113,6 @@ public final class Tank {
             isSeeded = in.readByte() != 0;
             identifier = in.readLong();
             plantStatus = in.readInt();
-            tankStatus = in.readInt();
         }
 
         @Override
@@ -133,7 +127,6 @@ public final class Tank {
             dest.writeByte((byte) (isSeeded ? 1 : 0));
             dest.writeLong(identifier);
             dest.writeInt(plantStatus);
-            dest.writeInt(tankStatus);
         }
 
         @Override
@@ -175,11 +168,6 @@ public final class Tank {
 
         public Builder setPlantStatus(@PlantStatus int plantStatus) {
             this.plantStatus = plantStatus;
-            return this;
-        }
-
-        public Builder setTankStatus(@TankStatus int tankStatus) {
-            this.tankStatus = tankStatus;
             return this;
         }
 
@@ -225,7 +213,6 @@ public final class Tank {
                     isHeated,
                     isSeeded,
                     plantStatus,
-                    tankStatus,
                     lastReading,
                     identifier
             );
@@ -267,10 +254,6 @@ public final class Tank {
 
         public @PlantStatus int getPlantStatus() {
             return plantStatus;
-        }
-
-        public @TankStatus int getTankStatus() {
-            return tankStatus;
         }
 
         @Nullable

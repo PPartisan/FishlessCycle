@@ -51,8 +51,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_columnWeight="1"
                 app:theme="@style/AmmoniaTextTheme">
 
@@ -72,8 +72,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_columnWeight="1"
                 app:theme="@style/NitriteTextTheme">
 
@@ -93,8 +93,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_columnWeight="1"
                 app:theme="@style/NitrateTextTheme">
 
@@ -127,8 +127,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_columnWeight="1"
                 app:theme="@style/AmmoniaTextTheme">
 
@@ -148,8 +148,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_columnWeight="1"
                 app:theme="@style/NitriteTextTheme">
 
@@ -169,8 +169,8 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/horizontral_margin_default_small"
-                android:layout_marginRight="@dimen/horizontral_margin_default_small"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_columnWeight="1"
                 app:theme="@style/NitrateTextTheme">
 

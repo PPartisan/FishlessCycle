@@ -10,10 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.R;
-import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 import com.github.ppartisan.fishlesscycle.model.Reading;
@@ -101,13 +99,13 @@ public final class TankUtils {
             case Tank.NOT_STARTED:
                 index = 0;
                 break;
-            case Tank.CYCLING_AMMONIA:
+            case Tank.STARTED:
                 index = 1;
                 break;
-            case Tank.CYCLING_NITRITE:
+            case Tank.CYCLING_AMMONIA:
                 index = 2;
                 break;
-            case Tank.CYCLING_NITRATE:
+            case Tank.CYCLING_NITRITE:
                 index = 3;
                 break;
             case Tank.CYCLE_COMPLETE:

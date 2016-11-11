@@ -83,21 +83,13 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             holder.options.setText(tankOptionsText);
         }
 
-        final String tankStatus = res.getString(
-                R.string.fm_cycle_stage_template, TankUtils.getStageString(res, tank.tankStatus)
-        );
-        holder.stage.setText(tankStatus);
-
         final Reading lastReading = tank.getLastReading();
-//        final String lastReadingString = (lastReading == null)
-//                ? "No Readings"
-//                : mUpdateFormat.format(lastReading.date);
 
         String lastReadingString;
         int ammonia, nitrite, nitrate;
 
         if (lastReading == null) {
-            lastReadingString = "No Readings";
+            lastReadingString = res.getString(R.string.fm_tank_last_updated_no_reading);
             ammonia = nitrite = nitrate = 0;
         } else {
             lastReadingString = res.getString(
@@ -157,9 +149,9 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
         private final TankCardCallbacks mCallbacks;
 
-        final ImageButton overflow, infoStages;
+        final ImageButton overflow;
         final ImageView image;
-        final TextView title, options, lastUpdated, stage, ammonia, nitrite, nitrate, nextUpdate;
+        final TextView title, options, lastUpdated, ammonia, nitrite, nitrate, nextUpdate;
 
         final PopupMenu menu;
 
@@ -171,7 +163,6 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             itemView.setOnClickListener(this);
 
             overflow = (ImageButton) itemView.findViewById(R.id.tcv_overflow);
-            infoStages = (ImageButton) itemView.findViewById(R.id.tcv_stage_info);
 
             overflow.setImageDrawable(new ShadowOverflowDrawable(itemView.getResources()));
 
@@ -179,14 +170,12 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             menu.setOnMenuItemClickListener(this);
 
             overflow.setOnClickListener(this);
-            infoStages.setOnClickListener(this);
 
             image = (ImageView) itemView.findViewById(R.id.tcv_image);
 
             title = (TextView) itemView.findViewById(R.id.tcv_title);
             options = (TextView) itemView.findViewById(R.id.tcv_options);
             lastUpdated = (TextView) itemView.findViewById(R.id.tcv_last_updated);
-            stage = (TextView) itemView.findViewById(R.id.tcv_stage);
             ammonia = (TextView) itemView.findViewById(R.id.tcv_ammonia);
             nitrite = (TextView) itemView.findViewById(R.id.tcv_nitrite);
             nitrate = (TextView) itemView.findViewById(R.id.tcv_nitrate);

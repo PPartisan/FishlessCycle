@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fd_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -26,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="?attr/actionBarSize"
-                android:layout_marginBottom="@dimen/line_margin_top_small"
                 app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
@@ -41,31 +39,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/fd_nested_scroll_view"
+    <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
+        android:id="@+id/fd_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:id="@+id/fd_rv_parent_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Showing reading for date range 18th October to 23rd October"/>
-
-            <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
-                android:id="@+id/fd_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.v7.widget.CardView
         android:id="@+id/fd_hidden_card"
@@ -74,7 +53,7 @@
         android:visibility="gone"
         android:clickable="true"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/fd_hidden_card_bottom_padding"
+        android:layout_marginBottom="@dimen/fd_card_padding"
         app:cardUseCompatPadding="true"
         app:cardBackgroundColor="@color/primary">
 
@@ -94,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Add New Reading"
+                android:text="@string/df_add_new_entry"
                 android:textColor="@android:color/white"
                 app:layout_columnSpan="2"/>
 
@@ -102,7 +81,7 @@
                 android:id="@+id/fd_ammonia_label"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/list_item_small"
-                android:text="Ammonia"
+                android:text="@string/ammonia"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/vertical_margin_default_small"
                 android:gravity="start|center_vertical"
@@ -128,7 +107,7 @@
                 android:id="@+id/fd_nitrite_label"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/list_item_small"
-                android:text="Nitrite"
+                android:text="@string/nitrite"
                 android:textStyle="bold"
                 android:gravity="start|center_vertical"
                 android:textColor="@android:color/white"
@@ -153,7 +132,7 @@
                 android:id="@+id/fd_nitrate_label"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/list_item_small"
-                android:text="Nitrate"
+                android:text="@string/nitrate"
                 android:textStyle="bold"
                 android:gravity="start|center_vertical"
                 android:textColor="@android:color/white"

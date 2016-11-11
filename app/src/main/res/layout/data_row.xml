@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_small"
-    android:layout_marginStart="@dimen/horizontal_margin_default"
-    android:layout_marginLeft="@dimen/horizontal_margin_default">
+    android:layout_height="@dimen/list_item_small">
 
     <TextView
         android:id="@+id/rd_date"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         android:textStyle="bold"
+        android:layout_marginLeft="@dimen/horizontal_margin_default_small_half"
+        android:layout_marginRight="@dimen/horizontal_margin_default_small_half"
         tools:text="18/08"/>
 
     <TextView
@@ -21,7 +21,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/horizontal_margin_default_small_half"
+        android:layout_marginRight="@dimen/horizontal_margin_default_small_half"
         tools:text="2"/>
 
     <TextView
@@ -29,7 +31,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/horizontal_margin_default_small_half"
+        android:layout_marginRight="@dimen/horizontal_margin_default_small_half"
         tools:text="0"/>
 
     <TextView
@@ -37,7 +41,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/horizontal_margin_default_small_half"
+        android:layout_marginRight="@dimen/horizontal_margin_default_small_half"
         tools:text="0"/>
 
     <ImageButton
