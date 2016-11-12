@@ -93,7 +93,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         String lastReadingString;
         int ammonia, nitrite, nitrate;
 
-        if (lastReading == null) {
+        if (lastReading.date == 0) {
             lastReadingString = res.getString(R.string.fm_tank_last_updated_no_reading);
             ammonia = nitrite = nitrate = 0;
         } else {

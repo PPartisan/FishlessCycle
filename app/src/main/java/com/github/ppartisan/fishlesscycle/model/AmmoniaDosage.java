@@ -66,7 +66,5 @@ public final class AmmoniaDosage implements Parcelable {
         parcel.writeFloat(targetConcentration);
     }
 
-
-
 }
 

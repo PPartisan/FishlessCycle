@@ -67,4 +67,30 @@ public final class Reading implements Parcelable {
         return note;
     }
 
+    @Override
+    public int hashCode() {
+        int result = 5;
+        result = 31 * result + (int) (id^(id>>>32));
+        result = 31 * result + (int) (date^(date>>>32));
+        result = 31 * result + Float.floatToIntBits(ammonia);
+        result = 31 * result + Float.floatToIntBits(nitrite);
+        result = 31 * result + Float.floatToIntBits(nitrate);
+        result = 31 * result + note.hashCode();
+        result = 31 * result + (isControl ? 1 : 0);
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==this)return true;
+        if(!(obj instanceof Reading))return false;
+        final Reading other = (Reading) obj;
+        return this.id == other.id &&
+                this.date == other.date &&
+                this.ammonia == other.ammonia &&
+                this.nitrite == other.nitrite &&
+                this.nitrate == other.nitrate &&
+                this.note.equals(other.note) &&
+                this.isControl == other.isControl;
+    }
 }

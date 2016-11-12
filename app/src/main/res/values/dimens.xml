@@ -30,5 +30,6 @@
     <dimen name="list_item_small">48dp</dimen>
     <dimen name="list_item_small_padded">52dp</dimen>
     <dimen name="list_item_default">72dp</dimen>
+    <dimen name="fab_margin_anchored">0dp</dimen>
 
 </resources>

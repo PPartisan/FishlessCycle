@@ -24,6 +24,8 @@ import android.view.Window;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public final class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -45,6 +47,13 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        final AdView adView = (AdView) findViewById(R.id.da_ad_view);
+        final AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("C07A980181A0030AB61A20553A00CD1E")
+                .build();
+        adView.loadAd(request);
 
         if (getSupportFragmentManager().findFragmentById(R.id.da_container) == null) {
 

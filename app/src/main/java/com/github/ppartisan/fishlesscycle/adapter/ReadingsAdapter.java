@@ -136,13 +136,13 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.drm_action_notes:
-                            mCallbacks.onNotesClicked(getAdapterPosition());
+                            mCallbacks.onNotesClicked(getAdapterPosition()-1);
                             break;
                         case R.id.drm_action_edit:
-                            mCallbacks.onEditClicked(getAdapterPosition());
+                            mCallbacks.onEditClicked(getAdapterPosition()-1);
                             break;
                         case R.id.drm_action_delete:
-                            mCallbacks.onDeleteClicked(getAdapterPosition());
+                            mCallbacks.onDeleteClicked(getAdapterPosition()-1);
                             break;
                     }
                     return true;
@@ -153,7 +153,11 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
+
+
     }
+
+
 
 
 }

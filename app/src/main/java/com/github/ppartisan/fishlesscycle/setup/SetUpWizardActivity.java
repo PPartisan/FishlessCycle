@@ -94,7 +94,6 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         mIndicator = (DotIndicatorView) findViewById(R.id.wusa_indicator);
         mIndicator.attachToViewPager(mPager);
 
-        // TODO: Is It best to retrieve this from database each time, or save to parcel for config?
         if (savedInstanceState == null) {
             mTankBuilder = buildTankBuilder();
         } else {

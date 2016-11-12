@@ -2,4 +2,5 @@
 <resources>
     <!-- Detail Fragment -->
     <dimen name="fd_card_padding">-6dp</dimen>
+    <dimen name="fab_margin_anchored">16dp</dimen>
 </resources>

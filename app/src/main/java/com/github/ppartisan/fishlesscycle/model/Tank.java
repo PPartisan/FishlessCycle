@@ -266,6 +266,38 @@ public final class Tank {
             return controlReading;
         }
 
+        @Override
+        public int hashCode() {
+            int result = 19;
+            result = 31 * result + name.hashCode();
+            result = 31 * result + image.hashCode();
+            result = 31 * result + Float.floatToIntBits(volumeInLitres);
+            result = 31 * result + ammoniaDosage.hashCode();
+            result = 31 * result + lastReading.hashCode();
+            result = 31 * result + controlReading.hashCode();
+            result = 31 * result + (isHeated ? 1 : 0);
+            result = 31 * result + (isSeeded ? 1 : 0);
+            result = 31 * result + (int) (identifier^(identifier>>>32));
+            result = 31 * result + plantStatus;
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj == this) return true;
+            if(!(obj instanceof Tank.Builder)) return false;
+            final Tank.Builder other = (Tank.Builder) obj;
+            return this.name.equals(other.name) &&
+                    this.image.equals(other.image) &&
+                    this.volumeInLitres == other.volumeInLitres &&
+                    this.ammoniaDosage.equals(other.ammoniaDosage) &&
+                    this.lastReading.equals(other.lastReading) &&
+                    this.controlReading.equals(other.controlReading) &&
+                    this.isHeated == other.isHeated &&
+                    this.isSeeded == other.isSeeded &&
+                    this.identifier == other.identifier &&
+                    this.plantStatus == other.plantStatus;
+        }
     }
 
 }

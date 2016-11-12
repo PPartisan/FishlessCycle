@@ -13,9 +13,10 @@
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/ma_ad_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@android:color/background_dark"
         ads:adSize="BANNER"
         ads:adUnitId="@string/test_banner_ad_unit_id"/>
 
