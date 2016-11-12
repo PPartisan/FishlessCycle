@@ -14,6 +14,7 @@ import android.text.style.ImageSpan;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
+import com.github.ppartisan.fishlesscycle.model.AmmoniaDosage;
 import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.model.Tank.PlantStatus;
@@ -298,6 +299,10 @@ public final class TankUtils {
 
         return cv;
 
+    }
+
+    public static boolean equals(AmmoniaDosage a1, AmmoniaDosage a2) {
+        return a1 == a2 || a1 != null && a2 != null && a1.equals(a2);
     }
 
 }

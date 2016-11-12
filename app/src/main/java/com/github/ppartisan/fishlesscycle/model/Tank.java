@@ -5,6 +5,10 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
+import com.github.ppartisan.fishlesscycle.util.TankUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -232,11 +236,9 @@ public final class Tank {
 
         @NonNull
         public AmmoniaDosage getAmmoniaDosage() {
-
             if (ammoniaDosage == null) {
                 ammoniaDosage = new AmmoniaDosage(0, DEFAULT_TARGET_CONCENTRATION);
             }
-
             return ammoniaDosage;
         }
 
@@ -287,17 +289,47 @@ public final class Tank {
             if(obj == this) return true;
             if(!(obj instanceof Tank.Builder)) return false;
             final Tank.Builder other = (Tank.Builder) obj;
-            return this.name.equals(other.name) &&
-                    this.image.equals(other.image) &&
+            return TextUtils.equals(this.image, other.image) &&
+                    TextUtils.equals(this.image, other.image) &&
                     this.volumeInLitres == other.volumeInLitres &&
-                    this.ammoniaDosage.equals(other.ammoniaDosage) &&
-                    this.lastReading.equals(other.lastReading) &&
-                    this.controlReading.equals(other.controlReading) &&
+                    TankUtils.equals(this.ammoniaDosage, other.ammoniaDosage) &&
+                    ReadingUtils.equals(this.lastReading, other.lastReading) &&
+                    ReadingUtils.equals(this.controlReading, other.controlReading) &&
                     this.isHeated == other.isHeated &&
                     this.isSeeded == other.isSeeded &&
                     this.identifier == other.identifier &&
                     this.plantStatus == other.plantStatus;
         }
+
+        @Override
+        public String toString() {
+            return "Builder{" +
+                    "name='" + name + '\'' +
+                    ", image='" + image + '\'' +
+                    ", volumeInLitres=" + volumeInLitres +
+                    ", ammoniaDosage=" + ammoniaDosage +
+                    ", lastReading=" + lastReading +
+                    ", controlReading=" + controlReading +
+                    ", isHeated=" + isHeated +
+                    ", isSeeded=" + isSeeded +
+                    ", identifier=" + identifier +
+                    ", plantStatus=" + plantStatus +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "Tank{" +
+                "name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", volumeInLitres=" + volumeInLitres +
+                ", mAmmoniaDosage=" + mAmmoniaDosage +
+                ", mLastReading=" + mLastReading +
+                ", isHeated=" + isHeated +
+                ", isSeeded=" + isSeeded +
+                ", plantStatus=" + plantStatus +
+                ", identifier=" + identifier +
+                '}';
+    }
 }

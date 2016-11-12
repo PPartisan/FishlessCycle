@@ -94,7 +94,7 @@ public final class FirstReadingFragment extends BaseSetUpWizardPagerFragment {
         if (getTankBuilderSupplier() == null) return null;
 
         final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
-        final AmmoniaDosage ammoniaDose = builder.getAmmoniaDosage();
+        AmmoniaDosage ammoniaDose = builder.getAmmoniaDosage();
 
         final int templateResId = R.string.wus_frf_content;
 

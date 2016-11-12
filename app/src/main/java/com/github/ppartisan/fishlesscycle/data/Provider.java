@@ -183,7 +183,9 @@ public final class Provider extends ContentProvider {
     }
 
     private Uri insertTank(ContentValues cv) {
-        final long id = db.getWritableDatabase().insert(TankEntry.TABLE_NAME, null, cv);
+        final long id = db.getWritableDatabase().insertWithOnConflict(
+                TankEntry.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE
+        );
         return  (id >= 0) ? TankEntry.buildTankUri(id) : null;
     }
 

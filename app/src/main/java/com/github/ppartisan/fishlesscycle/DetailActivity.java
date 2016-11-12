@@ -39,6 +39,7 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
             final Transition slide = new Explode();
             slide.excludeTarget(android.R.id.statusBarBackground, true);
             slide.excludeTarget(R.id.fd_fab, true);
+            slide.excludeTarget(R.id.da_ad_view, true);
             slide.excludeTarget(getAnimTargetName(), true);
             getWindow().setEnterTransition(slide);
         }

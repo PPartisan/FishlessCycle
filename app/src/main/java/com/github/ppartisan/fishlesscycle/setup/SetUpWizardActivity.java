@@ -18,6 +18,7 @@ import android.transition.Explode;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -94,9 +95,7 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         mIndicator = (DotIndicatorView) findViewById(R.id.wusa_indicator);
         mIndicator.attachToViewPager(mPager);
 
-        if (savedInstanceState == null) {
-            mTankBuilder = buildTankBuilder();
-        } else {
+        if (savedInstanceState != null) {
             mTankBuilder = savedInstanceState.getParcelable(TANK_BUILDER_KEY);
         }
 
@@ -120,6 +119,10 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     protected void onPause() {
         super.onPause();
 
+        if(mTankBuilder == null) {
+            return;
+        }
+
         final ArrayList<ContentProviderOperation> ops =
                 DataUtils.tankBuilderToBatchList(mTankBuilder);
 
@@ -139,6 +142,9 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
 
     @Override
     public Tank.Builder getTankBuilder() {
+        if (mTankBuilder == null) {
+            mTankBuilder = buildTankBuilder();
+        }
         return mTankBuilder;
     }
 

@@ -3,6 +3,7 @@ package com.github.ppartisan.fishlesscycle.util;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.model.Reading;
@@ -78,6 +79,10 @@ public final class ReadingUtils {
 
         return cv;
 
+    }
+
+    public static boolean equals(Reading r1, Reading r2) {
+        return r1 == r2 || r1 != null && r2 != null && r1.equals(r2);
     }
 
 }
