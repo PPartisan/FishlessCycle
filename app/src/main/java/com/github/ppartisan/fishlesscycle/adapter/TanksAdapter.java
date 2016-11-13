@@ -8,7 +8,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -110,7 +109,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, ammonia, mDosageUnit));
         holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, nitrite, mDosageUnit));
         holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, nitrate, mDosageUnit));
-        holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
+        //holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
 
         final String transName = TRANSITION_NAME_BASE + tank.identifier;
         ViewCompat.setTransitionName(holder.title, transName);
@@ -159,7 +158,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         final ImageButton overflow;
         public final ImageView image;
         public final TextView title;
-        final TextView options, lastUpdated, ammonia, nitrite, nitrate, nextUpdate;
+        final TextView options, lastUpdated, ammonia, nitrite, nitrate;
 
         final PopupMenu menu;
 
@@ -187,7 +186,6 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             ammonia = (TextView) itemView.findViewById(R.id.tcv_ammonia);
             nitrite = (TextView) itemView.findViewById(R.id.tcv_nitrite);
             nitrate = (TextView) itemView.findViewById(R.id.tcv_nitrate);
-            nextUpdate = (TextView) itemView.findViewById(R.id.tcv_next_update);
 
         }
 

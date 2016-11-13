@@ -180,7 +180,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         );
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-
     }
 
     @Override
@@ -211,6 +210,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onChangePhotoGalleryClick(int position) {
+        AppUtils.checkStoragePermissions(getActivity());
         mImageCapture.adapterPosition = position;
         final Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, REQUEST_IMAGE_RETRIEVAL);

@@ -3,10 +3,18 @@
     <string name="app_name" translatable="false">Fishless Cycle</string>
 
     <!-- Preferences -->
+    <string name="pref_units_title">Units</string>
+    <string name="pref_reminders_title">Reminders</string>
     <string name="pref_volume_unit_type_key">volume_unit_type_key</string>
     <string name="pref_volume_unit_type_title">Volume and Measurement Units</string>
     <string name="pref_dosage_unit_type_key">dosage_unit_type_key</string>
     <string name="pref_dosage_unit_type_title">Dosage Units</string>
+    <string name="pref_include_reminder_key">include_reminder_key</string>
+    <string name="pref_include_reminder_title">Include Reminders</string>
+    <string name="pref_reminder_time_key">reminder_time_key</string>
+    <string name="pref_reminder_time_title">Set Reminder Time</string>
+    <string name="pref_reminder_interval_key">reminder_interval_key</string>
+    <string name="pref_reminder_interval_title">Set Reminder Intervals</string>
 
     <!-- Settings Activity -->
     <string name="as_label">Settings</string>
@@ -25,6 +33,7 @@
     <string name="df_add_new_entry">Add New Entry</string>
     <string name="df_edit_entry">Edit Entry</string>
     <string name="df_notes_title">Add Note</string>
+    <string name="df_control">Control</string>
 
     <!-- Reading Names -->
     <string name="ammonia">Ammonia</string>
@@ -162,5 +171,7 @@
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>
     <string name="deleted_template">%1$s deleted</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

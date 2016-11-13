@@ -3,6 +3,7 @@ package com.github.ppartisan.fishlesscycle.util;
 import android.content.ContentProviderOperation;
 
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 
 import java.util.ArrayList;
@@ -28,13 +29,18 @@ public final class DataUtils {
 
         ops.add(op);
 
-        if (builder.getControlReading() != null) {
-            op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)
-                    .withValues(ReadingUtils.toContentValues(builder.getControlReading()))
-                    .build();
-
-            ops.add(op);
+        if(builder.getControlReading() == null) {
+            final Reading control =
+                    new Reading(builder.getIdentifier(), Reading.CONTROL_DATE, 0, 0, 0, true);
+            builder.setControlReading(control);
         }
+
+        op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)
+                .withValues(ReadingUtils.toContentValues(builder.getControlReading()))
+                .build();
+
+        ops.add(op);
+
 
         if (builder.getLastReading() != null) {
             op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)

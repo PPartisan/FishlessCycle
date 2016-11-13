@@ -8,7 +8,7 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -34,6 +34,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListener {
@@ -95,11 +96,14 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     }
 
     @Override
-    public void setData(List<Reading> reading) {
+    public void setData(List<Reading> readings) {
 
-        if (reading == null) return;
+        if (readings == null) return;
 
-        mReading = reading;
+        final List<Reading> readingsCopy = new ArrayList<>(readings);
+        removeControlReading(readingsCopy);
+
+        mReading = readingsCopy;
 
         switch (chartMode) {
             case LINE:
@@ -126,8 +130,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
     }
 
     @Override
-    public void addDataItem(Reading item) {
-    }
+    public void addDataItem(Reading item) {}
 
     @Override
     public void showLineChart() {
@@ -231,9 +234,6 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
             Map<String, List<Entry>> entryMap = buildEntryMapFromDataList(mReading);
             mLineData = buildLineDataFromEntryMap(entryMap);
 
-            final float min = mChart.getXChartMin();
-            final float max = mChart.getXChartMax();
-
             mChart.getXAxis().setAxisMinimum(0);
             mChart.getXAxis().setAxisMaximum(mReading.size()-1);
         }
@@ -332,6 +332,17 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         set.enableDashedHighlightLine(LINE_DASH_WIDTH, LINE_DASH_WIDTH, 0f);
         set.setDrawValues(false);
 
+    }
+
+    private void removeControlReading(List<Reading> readings){
+        final ListIterator<Reading> iterator = readings.listIterator();
+        while (iterator.hasNext()) {
+            Reading next = iterator.next();
+            if(next.isControl) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 
     private final class XAxisFormatter implements IAxisValueFormatter {

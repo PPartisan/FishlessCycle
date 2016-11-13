@@ -26,6 +26,7 @@ import android.widget.ImageView;
 
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListener;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListenerCallbacks;

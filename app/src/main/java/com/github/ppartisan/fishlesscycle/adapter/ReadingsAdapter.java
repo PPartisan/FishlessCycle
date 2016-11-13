@@ -2,7 +2,9 @@ package com.github.ppartisan.fishlesscycle.adapter;
 
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +66,14 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         final Reading item = mReadings.get(--position);
 
-        holder.date.setText(ReadingUtils.getReadableDateString(item.date));
+        String dateText;
+        if(item.date == Reading.CONTROL_DATE) {
+            dateText = holder.itemView.getResources().getString(R.string.df_control);
+        } else {
+            dateText = ReadingUtils.getReadableDateString(item.date);
+        }
+
+        holder.date.setText(dateText);
         holder.ammonia.setText(String.valueOf((int)item.ammonia));
         holder.nitrite.setText(String.valueOf((int)item.nitrite));
         holder.nitrate.setText(String.valueOf((int)item.nitrate));
@@ -125,7 +134,12 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         @Override
         public void onClick(View view) {
-            buildPopUpMenu(view).show();
+            final PopupMenu menu = buildPopUpMenu(view);
+            if(date.getText().equals(view.getResources().getString(R.string.df_control))) {
+                menu.getMenu().removeItem(R.id.drm_action_delete);
+                menu.getMenu().removeItem(R.id.drm_action_notes);
+            }
+            menu.show();
         }
 
         private PopupMenu buildPopUpMenu(View target) {

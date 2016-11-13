@@ -6,15 +6,16 @@ import android.os.Parcelable;
 public final class Reading implements Parcelable {
 
     public static final int NO_ID = -1;
+    public static final long CONTROL_DATE = Long.MIN_VALUE;
 
     public final long id, date;
     public final float ammonia, nitrite, nitrate;
     private String note;
-    public boolean isControl;
+    public final boolean isControl;
 
     public Reading(long id, long date, float ammonia, float nitrite, float nitrate, boolean isControl) {
         this.id = id;
-        this.date = date;
+        this.date = (isControl) ? CONTROL_DATE : date;
         this.ammonia = ammonia;
         this.nitrite = nitrite;
         this.nitrate = nitrate;
