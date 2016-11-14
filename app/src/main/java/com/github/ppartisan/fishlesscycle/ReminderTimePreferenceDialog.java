@@ -8,6 +8,14 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
+import com.github.ppartisan.fishlesscycle.reminder.ReminderReceiver;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+
+import java.util.Calendar;
+
+/*
+ * Adapted From: http://stackoverflow.com/a/5533295/1219389
+ */
 public final class ReminderTimePreferenceDialog extends DialogPreference {
 
     private int lastHour=0;
@@ -59,6 +67,10 @@ public final class ReminderTimePreferenceDialog extends DialogPreference {
 
             if (callChangeListener(time)) {
                 persistString(time);
+                final Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY, lastHour);
+                c.set(Calendar.MINUTE, lastMinute);
+                ReminderReceiver.updateReminderAlarm(getContext(), c);
             }
         }
     }

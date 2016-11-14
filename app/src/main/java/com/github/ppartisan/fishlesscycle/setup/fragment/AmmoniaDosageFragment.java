@@ -93,6 +93,10 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
         mAmmoniaPercentEntry.setText(mFormat.format(DEFAULT_AMMONIA_PERCENTAGE));
         mTargetConcentrationEntry.setText(mFormat.format(getAmmoniaDosage().targetConcentration));
         mOutput.setText(mFormat.format(getAmmoniaDosage().dosage));
+        if (getTankBuilderSupplier() != null) {
+            final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
+            mTankVolume.setText(getConvertedTankVolumeStringFromBuilder(builder));
+        }
 
         mSettingsDescription.setText(getSettingsDescriptionText());
         mTankVolumeLabel.setText(getTankVolumeLabel());

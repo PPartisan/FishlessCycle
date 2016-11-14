@@ -52,6 +52,8 @@
 
         </provider>
 
+        <receiver android:name=".reminder.ReminderReceiver" />
+
     </application>
 
 </manifest>

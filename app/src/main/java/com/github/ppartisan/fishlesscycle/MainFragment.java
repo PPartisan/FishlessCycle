@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
@@ -135,21 +136,9 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(getContext(), SetUpWizardActivity.class);
-        final int cx = view.getWidth()/2;
-        final int cy = view.getHeight()/2;
-        final DisplayMetrics metrics = ViewUtils.getScreenMetrics();
-        final View root = getView();
-        int tHeight, tWidth;
-        if(root == null) {
-            tHeight = metrics.heightPixels;
-            tWidth = metrics.widthPixels;
-        } else {
-            tHeight = root.getHeight();
-            tWidth = root.getWidth();
-        }
-        ActivityOptionsCompat options =
-                ActivityOptionsCompat.makeClipRevealAnimation(view, cx, cy, tWidth, tHeight);
-        ActivityCompat.startActivity(getContext(), intent, options.toBundle());
+        final ActivityOptionsCompat reveal =
+                ViewUtils.buildCircleRevealActivityTransition(view, getView());
+        ActivityCompat.startActivity(getContext(), intent, reveal.toBundle());
     }
 
     @Override
@@ -158,7 +147,10 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         switch (item.getItemId()) {
             case R.id.mm_action_settings:
                 Intent settingsIntent = new Intent(getContext(), SettingsActivity.class);
-                startActivity(settingsIntent);
+                final View overflow = mToolbar.getChildAt(mToolbar.getChildCount()-1);
+                final ActivityOptionsCompat reveal =
+                        ViewUtils.buildCircleRevealActivityTransition(overflow, getView());
+                ActivityCompat.startActivity(getContext(), settingsIntent, reveal.toBundle());
                 break;
         }
 
@@ -308,6 +300,14 @@ public final class MainFragment extends Fragment implements View.OnClickListener
                     }
                 } finally {
                     if (c!= null && !c.isClosed()) c.close();
+                }
+
+                if(path == null) {
+                    Log.i(getClass().getSimpleName(), "No path to image");
+                    Toast.makeText(
+                            getContext(), getString(R.string.e_no_image_path), Toast.LENGTH_SHORT
+                    ).show();
+                    return;
                 }
 
                 cv.put(Contract.TankEntry.COLUMN_IMAGE, AppUtils.withFilePrefix(path));

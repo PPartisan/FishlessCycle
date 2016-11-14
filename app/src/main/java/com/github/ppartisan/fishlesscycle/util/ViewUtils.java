@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.PopupMenu;
@@ -124,6 +125,26 @@ public final class ViewUtils {
 
     public static DisplayMetrics getScreenMetrics() {
         return Resources.getSystem().getDisplayMetrics();
+    }
+
+    public static ActivityOptionsCompat buildCircleRevealActivityTransition(int cx, int cy, View view, @Nullable View root) {
+        final DisplayMetrics metrics = ViewUtils.getScreenMetrics();
+        int tHeight, tWidth;
+        if(root == null) {
+            tHeight = metrics.heightPixels;
+            tWidth = metrics.widthPixels;
+        } else {
+            tHeight = root.getHeight();
+            tWidth = root.getWidth();
+        }
+
+        return ActivityOptionsCompat.makeClipRevealAnimation(view, cx, cy, tWidth, tHeight);
+    }
+
+    public static ActivityOptionsCompat buildCircleRevealActivityTransition(View view, @Nullable View root){
+        final int cx = view.getWidth()/2;
+        final int cy = view.getHeight()/2;
+        return buildCircleRevealActivityTransition(cx, cy, view, root);
     }
 
 }

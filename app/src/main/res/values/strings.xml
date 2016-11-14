@@ -165,6 +165,9 @@
     <string name="mgl" translatable="false">mg/L</string>
     <string name="ppm" translatable="false">ppm</string>
     <string name="ml" translatable="false">ml</string>
+    
+    <!-- Error -->
+    <string name="e_no_image_path">Cannot retrieve image.</string>
 
     <!-- Misc. -->
     <string name="undo">Undo</string>
