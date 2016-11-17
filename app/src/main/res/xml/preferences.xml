@@ -44,4 +44,13 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="Widget">
+
+        <ListPreference
+            android:key="@string/pref_widget_image_path_key"
+            android:title="@string/pref_widget_image_path_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -172,8 +172,8 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
 
-        PreferenceUtils.setWidgetImagePath(getContext(), tank.image);
-        WidgetProvider.updateWidget(getContext(), tank.image);
+        //PreferenceUtils.setWidgetImagePath(getContext(), tank.image);
+        //WidgetProvider.updateWidget(getContext(), tank.image);
 
     }
 

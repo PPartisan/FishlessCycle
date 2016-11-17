@@ -15,6 +15,9 @@ import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 
 public final class Provider extends ContentProvider {
 
+    public static final String[] IMAGES_PROJECTION =
+            { TankEntry.COLUMN_NAME, TankEntry.COLUMN_IMAGE };
+
     static final int TANKS = 100;
     static final int READINGS = 101;
     static final int TANK = 500;
@@ -31,13 +34,13 @@ public final class Provider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(@NonNull Uri uri, String[] strings, String s, String[] strings1, String s1) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String s1) {
 
         Cursor cursor;
 
         switch (MATCHER.match(uri)) {
             case TANKS:
-                cursor = getTanks();
+                cursor = getTanks(projection);
                 break;
             case READING:
                 final long identifier = ReadingEntry.getReadingId(uri);
@@ -171,6 +174,14 @@ public final class Provider extends ContentProvider {
 
     private Cursor getTanks() {
         return db.getReadableDatabase().rawQuery(TANK_QUERY, null);
+    }
+
+    private Cursor getTanks(String[] projection) {
+        if (projection == null) {
+            return getTanks();
+        }
+        return db.getReadableDatabase().query(TankEntry.TABLE_NAME,
+                projection, null, null, null, null, null);
     }
 
     private Cursor getReading(long identifier) {

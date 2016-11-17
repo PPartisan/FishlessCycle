@@ -2,12 +2,16 @@ package com.github.ppartisan.fishlesscycle.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.model.ImagePack;
 import com.github.ppartisan.fishlesscycle.reminder.ReminderReceiver;
 
 import java.lang.annotation.Retention;
@@ -141,5 +145,32 @@ public final class PreferenceUtils {
         c.setTimeInMillis(Long.MIN_VALUE);
         return c;
     }
+
+    public static ImagePack buildImagePack(Cursor cursor) {
+
+        if(cursor == null || cursor.getCount() == 0) {
+            return new ImagePack(new CharSequence[0], new CharSequence[0]);
+        }
+
+        final int count = cursor.getCount();
+        final CharSequence[] titles = new CharSequence[count];
+        final CharSequence[] paths = new CharSequence[count];
+
+        int counter = 0;
+        cursor.moveToFirst();
+
+        do {
+            String title = cursor.getString(cursor.getColumnIndex(Contract.TankEntry.COLUMN_NAME));
+            String path = cursor.getString(cursor.getColumnIndex(Contract.TankEntry.COLUMN_IMAGE));
+            //PreferenceFragment can't handle null values
+            titles[counter] = (title == null) ? "" : title;
+            paths[counter] = (path == null) ? "" : path;
+            counter++;
+        } while (cursor.moveToNext());
+
+        return new ImagePack(titles, paths);
+
+    }
+
 
 }

@@ -26,8 +26,7 @@ public final class WidgetProvider extends AppWidgetProvider {
     private static final String TAG = WidgetProvider.class.getSimpleName();
     private static final String IMAGE_KEY = TAG + ".IMAGE";
 
-    private final SimpleDateFormat mFormat =
-            new SimpleDateFormat("EEE, MMMM dd, 'at' h:mm a", Locale.getDefault());
+    private SimpleDateFormat mFormat = null;
 
     private String mImagePath;
 
@@ -66,6 +65,7 @@ public final class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         mImagePath = intent.getStringExtra(IMAGE_KEY);
+        if(mImagePath == null) mImagePath = PreferenceUtils.getWidgetImagePath(context);
         super.onReceive(context, intent);
     }
 
@@ -97,7 +97,16 @@ public final class WidgetProvider extends AppWidgetProvider {
         Log.e(TAG, "Time: " + time);
         return (time == PreferenceUtils.NO_TIME.getTimeInMillis())
                 ? context.getString(R.string.w_no_reminder)
-                : context.getString(R.string.fm_next_update_template, mFormat.format(time));
+                : context.getString(
+                R.string.fm_next_update_template, getFormat(context.getResources()).format(time)
+        );
+    }
+
+    private SimpleDateFormat getFormat(Resources res) {
+        if (mFormat == null) {
+            mFormat = new SimpleDateFormat(res.getString(R.string.w_date_format), Locale.getDefault());
+        }
+        return mFormat;
     }
 
     public static void updateWidget(Context context, String image) {
