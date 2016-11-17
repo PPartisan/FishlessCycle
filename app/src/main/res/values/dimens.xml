@@ -23,7 +23,7 @@
 
     <!-- Widget -->
     <dimen name="w_min_width">180dp</dimen>
-    <dimen name="w_min_height">56dp</dimen>
+    <dimen name="w_min_height">64dp</dimen>
 
     <!-- Misc. -->
     <dimen name="image_button_small">36dp</dimen>

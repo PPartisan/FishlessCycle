@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import com.github.ppartisan.fishlesscycle.MainActivity;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
 
 import java.util.Calendar;
 
@@ -56,6 +57,10 @@ public final class ReminderReceiver extends BroadcastReceiver {
 
     public static void updateReminderAlarm(Context ctx, Calendar calendar) {
 
+        if(calendar.getTimeInMillis() == PreferenceUtils.NO_TIME.getTimeInMillis()) {
+            return;
+        }
+
         final Intent intent = new Intent(ctx, ReminderReceiver.class);
         final PendingIntent pIntent =
                 PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -66,6 +71,8 @@ public final class ReminderReceiver extends BroadcastReceiver {
             am.setExact(AlarmManager.RTC, calendar.getTimeInMillis(), pIntent);
         }
 
+        WidgetProvider.updateWidget(ctx);
+
     }
 
     public static void cancelReminderAlarm(Context ctx) {
@@ -74,6 +81,9 @@ public final class ReminderReceiver extends BroadcastReceiver {
                 PendingIntent.getBroadcast(ctx, 0, intent, 0);
         final AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pIntent);
+
+        WidgetProvider.updateWidget(ctx);
+
     }
 
 }

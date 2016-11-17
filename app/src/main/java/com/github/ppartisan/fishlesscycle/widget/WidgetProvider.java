@@ -10,19 +10,25 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.github.ppartisan.fishlesscycle.MainActivity;
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public final class WidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = WidgetProvider.class.getSimpleName();
-    private static final String TEXT_KEY = TAG + ".TEXT";
     private static final String IMAGE_KEY = TAG + ".IMAGE";
 
-    private String mContent;
+    private final SimpleDateFormat mFormat =
+            new SimpleDateFormat("EEE, MMMM dd, 'at' h:mm a", Locale.getDefault());
+
     private String mImagePath;
 
     private Rect mBounds = new Rect();
@@ -40,13 +46,17 @@ public final class WidgetProvider extends AppWidgetProvider {
 
             setImageBounds(context.getResources(), options);
 
-            final Bitmap image = ViewUtils.getSizedBitmapFromPath(
-                    mImagePath, mBounds.height(), mBounds.width()
-            );
+            if (mImagePath == null) {
+                views.setImageViewResource(R.id.w_image, R.drawable.capsule_default);
+            } else {
+                final Bitmap image = ViewUtils.getSizedBitmapFromPath(
+                        mImagePath, mBounds.height(), mBounds.width()
+                );
+                views.setImageViewBitmap(R.id.w_image, image);
+            }
 
-            views.setTextViewText(R.id.w_content, mContent);
+            views.setTextViewText(R.id.w_content, getContentText(context));
             views.setOnClickPendingIntent(R.id.w_parent, pIntent);
-            views.setImageViewBitmap(R.id.w_image, image);
 
             pushWidgetUpdate(context, views);
         }
@@ -55,12 +65,14 @@ public final class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        mContent = intent.getStringExtra(TEXT_KEY);
         mImagePath = intent.getStringExtra(IMAGE_KEY);
-
         super.onReceive(context, intent);
+    }
 
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+        mImagePath = PreferenceUtils.getWidgetImagePath(context);
     }
 
     private void setImageBounds(Resources res, Bundle options) {
@@ -80,18 +92,30 @@ public final class WidgetProvider extends AppWidgetProvider {
 
     }
 
-    public static void updateWidget(Context context, String content, String image) {
+    private String getContentText(Context context) {
+        final long time = PreferenceUtils.getReminderTime(context).getTimeInMillis();
+        Log.e(TAG, "Time: " + time);
+        return (time == PreferenceUtils.NO_TIME.getTimeInMillis())
+                ? context.getString(R.string.w_no_reminder)
+                : context.getString(R.string.fm_next_update_template, mFormat.format(time));
+    }
+
+    public static void updateWidget(Context context, String image) {
 
         final Intent intent = new Intent(context, WidgetProvider.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 
         final int[] ids = new int[] { R.xml.widget_provider };
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        intent.putExtra(TEXT_KEY, content);
         intent.putExtra(IMAGE_KEY, image);
 
         context.sendBroadcast(intent);
 
+    }
+
+    public static void updateWidget(Context context) {
+        String path = PreferenceUtils.getWidgetImagePath(context);
+        updateWidget(context, path);
     }
 
     private static void pushWidgetUpdate(Context context, RemoteViews views) {

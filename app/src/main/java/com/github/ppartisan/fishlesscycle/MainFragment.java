@@ -132,6 +132,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(getContext(), SetUpWizardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         final ActivityOptionsCompat reveal =
                 ViewUtils.buildCircleRevealActivityTransition(view, getView());
         ActivityCompat.startActivity(getContext(), intent, reveal.toBundle());
@@ -159,6 +160,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         final Tank tank = mAdapter.getTank(position);
         Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(DetailFragment.KEY_IDENTIFIER, tank.identifier);
         intent.putExtra(DetailFragment.KEY_NAME, vh.title.getText());
 
@@ -170,7 +172,8 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
 
-        WidgetProvider.updateWidget(getContext(), tank.name, tank.image);
+        PreferenceUtils.setWidgetImagePath(getContext(), tank.image);
+        WidgetProvider.updateWidget(getContext(), tank.image);
 
     }
 

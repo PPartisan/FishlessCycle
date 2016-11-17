@@ -5,14 +5,20 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.Nullable;
 
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.reminder.ReminderReceiver;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Calendar;
+import java.util.Date;
 
 public final class PreferenceUtils {
+
+    public static final Calendar NO_TIME = buildNoTimeCalendar();
+    private static final String NO_TIME_VALUE = "99:99";
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({METRIC,IMPERIAL,US})
@@ -73,9 +79,14 @@ public final class PreferenceUtils {
     public static Calendar getReminderTime(Context context) {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final String[] times =
-                prefs.getString(context.getString(R.string.pref_reminder_time_key), "00:00")
-                        .split(":");
+        final String time =
+                prefs.getString(context.getString(R.string.pref_reminder_time_key), NO_TIME_VALUE);
+
+        if(time.equals(NO_TIME_VALUE)) {
+            return NO_TIME;
+        }
+
+        final String [] times = time.split(":");
         final int hour = Integer.parseInt(times[0]);
         final int mins = Integer.parseInt(times[1]);
 
@@ -93,6 +104,12 @@ public final class PreferenceUtils {
 
     }
 
+    public static void clearReminderTime(Context context) {
+        final String key = context.getString(R.string.pref_reminder_time_key);
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putString(key, NO_TIME_VALUE).apply();
+    }
+
     public static int getReminderIntervalInDays(Context context) {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -103,6 +120,26 @@ public final class PreferenceUtils {
                 );
         return Integer.parseInt(interval);
 
+    }
+
+    @Nullable
+    public static String getWidgetImagePath(Context context) {
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final String key = context.getString(R.string.pref_widget_image_path_key);
+        return prefs.getString(key, null);
+
+    }
+
+    public static void setWidgetImagePath(Context context, String path) {
+        final String key = context.getString(R.string.pref_widget_image_path_key);
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(key, path).apply();
+    }
+
+    private static Calendar buildNoTimeCalendar() {
+        final Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(Long.MIN_VALUE);
+        return c;
     }
 
 }

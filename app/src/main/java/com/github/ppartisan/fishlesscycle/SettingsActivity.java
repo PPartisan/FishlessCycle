@@ -61,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 final Calendar c = PreferenceUtils.getReminderTime(this);
                 ReminderReceiver.updateReminderAlarm(this, c);
             } else {
+                PreferenceUtils.clearReminderTime(this);
                 ReminderReceiver.cancelReminderAlarm(this);
             }
 

@@ -15,6 +15,7 @@
     <string name="pref_reminder_time_title">Set Reminder Time</string>
     <string name="pref_reminder_interval_key">reminder_interval_key</string>
     <string name="pref_reminder_interval_title">Set Reminder Intervals</string>
+    <string name="pref_widget_image_path_key">widget_image_path_key</string>
 
     <!-- Settings Activity -->
     <string name="as_label">Settings</string>
@@ -150,6 +151,9 @@
     <string name="wus_cf_seed_material">Seed Material</string>
     <string name="wus_cf_plants">Plants</string>
     <string name="wus_cf_name_template">Aquarium (%1$d)</string>
+
+    <!-- Widget -->
+    <string name="w_no_reminder">&lt;No Reminder Set&gt;</string>
 
     <!-- AdMob -->
     <string name="test_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
