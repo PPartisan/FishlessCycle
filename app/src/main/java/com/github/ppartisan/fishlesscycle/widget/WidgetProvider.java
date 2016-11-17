@@ -46,12 +46,16 @@ public final class WidgetProvider extends AppWidgetProvider {
             setImageBounds(context.getResources(), options);
 
             if (mImagePath == null) {
-                views.setImageViewResource(R.id.w_image, R.drawable.capsule_default);
+                setDefaultImage(views);
             } else {
                 final Bitmap image = ViewUtils.getSizedBitmapFromPath(
                         mImagePath, mBounds.height(), mBounds.width()
                 );
-                views.setImageViewBitmap(R.id.w_image, image);
+                if (image == null) {
+                    setDefaultImage(views);
+                } else {
+                    views.setImageViewBitmap(R.id.w_image, image);
+                }
             }
 
             views.setTextViewText(R.id.w_content, getContentText(context));
@@ -90,6 +94,11 @@ public final class WidgetProvider extends AppWidgetProvider {
 
         mBounds.set(0,0,width,height);
 
+    }
+
+    //todo Replace with a default image
+    private void setDefaultImage(RemoteViews views) {
+        views.setImageViewResource(R.id.w_image, R.drawable.capsule_default);
     }
 
     private String getContentText(Context context) {

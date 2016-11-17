@@ -144,6 +144,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         switch (item.getItemId()) {
             case R.id.mm_action_settings:
                 Intent settingsIntent = new Intent(getContext(), SettingsActivity.class);
+                settingsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 final View overflow = mToolbar.getChildAt(mToolbar.getChildCount()-1);
                 final ActivityOptionsCompat reveal =
                         ViewUtils.buildCircleRevealActivityTransition(overflow, getView());
@@ -171,16 +172,13 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         );
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-
-        //PreferenceUtils.setWidgetImagePath(getContext(), tank.image);
-        //WidgetProvider.updateWidget(getContext(), tank.image);
-
     }
 
     @Override
     public void onEditTankClick(View v, int position) {
         final Tank.Builder builder = new Tank.Builder(mAdapter.getTank(position));
         Intent intent = new Intent(getContext(), EditTankActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(EditTankActivity.TANK_BUILDER_KEY, builder);
 
         ActivityOptionsCompat optionsCompat =

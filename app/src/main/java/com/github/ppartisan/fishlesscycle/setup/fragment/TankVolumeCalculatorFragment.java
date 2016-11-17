@@ -276,6 +276,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
     @Override
     public void onClick(View view) {
         final Intent settings = new Intent(getContext(), SettingsActivity.class);
+        settings.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         final ActivityOptionsCompat options =
                 ViewUtils.buildCircleRevealActivityTransition(view, getView());
         ActivityCompat.startActivity(getContext(), settings, options.toBundle());
