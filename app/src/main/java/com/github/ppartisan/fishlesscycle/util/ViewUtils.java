@@ -17,6 +17,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -145,6 +146,36 @@ public final class ViewUtils {
         final int cx = view.getWidth()/2;
         final int cy = view.getHeight()/2;
         return buildCircleRevealActivityTransition(cx, cy, view, root);
+    }
+
+    @Nullable
+    public static Bitmap getSizedBitmapFromPath(String filePath, int newHeight, int newWidth) {
+
+        if(filePath == null) return null;
+
+        filePath = removeFilePrefixFromPath(filePath);
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        int scaleFactor = Math.min(photoW/newWidth, photoH/newHeight);
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        return BitmapFactory.decodeFile(filePath, bmOptions);
+
+    }
+
+    private static String removeFilePrefixFromPath(String path) {
+        if(path.startsWith("file:")) {
+            return path.substring(5);
+        }
+        return path;
     }
 
 }

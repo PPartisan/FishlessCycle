@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +23,7 @@ import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.text.DecimalFormat;
 
@@ -272,7 +275,10 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(getContext(), SettingsActivity.class));
+        final Intent settings = new Intent(getContext(), SettingsActivity.class);
+        final ActivityOptionsCompat options =
+                ViewUtils.buildCircleRevealActivityTransition(view, getView());
+        ActivityCompat.startActivity(getContext(), settings, options.toBundle());
     }
 
     private final class OutputTextWatcher implements TextWatcher {

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -23,15 +22,11 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
@@ -46,6 +41,7 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
+import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
 
 import java.util.List;
 
@@ -160,6 +156,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     @SuppressWarnings("unchecked")
     @Override
     public void onCardClick(TanksAdapter.ViewHolder vh, int position) {
+
         final Tank tank = mAdapter.getTank(position);
         Intent intent = new Intent(getContext(), DetailActivity.class);
         intent.putExtra(DetailFragment.KEY_IDENTIFIER, tank.identifier);
@@ -172,14 +169,21 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         );
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+
+        WidgetProvider.updateWidget(getContext(), tank.name, tank.image);
+
     }
 
     @Override
-    public void onEditTankClick(int position) {
+    public void onEditTankClick(View v, int position) {
         final Tank.Builder builder = new Tank.Builder(mAdapter.getTank(position));
         Intent intent = new Intent(getContext(), EditTankActivity.class);
         intent.putExtra(EditTankActivity.TANK_BUILDER_KEY, builder);
-        startActivity(intent);
+
+        ActivityOptionsCompat optionsCompat =
+                ViewUtils.buildCircleRevealActivityTransition(v, null);
+
+        ActivityCompat.startActivity(getContext(), intent, optionsCompat.toBundle());
     }
 
     @Override
@@ -259,15 +263,16 @@ public final class MainFragment extends Fragment implements View.OnClickListener
             final @DosageUnit int unitType =
                     PreferenceUtils.getDosageUnitType(getContext());
             mAdapter.setDosageUnitType(unitType);
+            mAdapter.notifyDataSetChanged();
         }
 
         if(volUnitPrefsKey.equals(s)) {
             final @VolumeUnit int unitType =
                     PreferenceUtils.getVolumeUnit(getContext());
             mAdapter.setVolumeUnit(unitType);
+            mAdapter.notifyDataSetChanged();
         }
 
-        mAdapter.notifyDataSetChanged();
 
     }
 

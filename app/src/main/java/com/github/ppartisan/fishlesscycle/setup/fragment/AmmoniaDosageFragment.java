@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +22,7 @@ import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 
 import java.text.DecimalFormat;
 
@@ -189,20 +192,6 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
 
     }
 
-    private String getConvertedTankVolumeString() {
-
-        if(getTankBuilderSupplier() == null) {
-            return null;
-        }
-
-        final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
-        final float volumeInLitres = builder.getVolumeInLitres();
-        final float displayVolume = getTankVolumeInLitresAsUserUnitPreference(volumeInLitres, volumeUnit);
-
-        return mFormat.format(displayVolume);
-
-    }
-
     private String getConvertedTankVolumeStringFromBuilder(Tank.Builder builder) {
         final float volumeInLitres = builder.getVolumeInLitres();
         final float displayVolume = getTankVolumeInLitresAsUserUnitPreference(volumeInLitres, volumeUnit);
@@ -282,7 +271,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
 
             final AmmoniaDosage currentDosage = getTankBuilderSupplier().getTankBuilder().getAmmoniaDosage();
 
-            if (currentDosage == null || !currentDosage.equalsValues(ammoniaDosage, targetConcentration)) {
+            if (!currentDosage.equalsValues(ammoniaDosage, targetConcentration)) {
                 getTankBuilderSupplier().getTankBuilder().setAmmoniaDosage(ammoniaDosage, targetConcentration);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }
@@ -292,7 +281,10 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(getContext(), SettingsActivity.class));
+        final Intent settings = new Intent(getContext(), SettingsActivity.class);
+        final ActivityOptionsCompat options =
+                ViewUtils.buildCircleRevealActivityTransition(view, getView());
+        ActivityCompat.startActivity(getContext(), settings, options.toBundle());
     }
 
 }

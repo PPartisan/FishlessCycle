@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -109,7 +110,6 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         holder.ammonia.setText(ConversionUtils.getUnitFormattedString(res, ammonia, mDosageUnit));
         holder.nitrite.setText(ConversionUtils.getUnitFormattedString(res, nitrite, mDosageUnit));
         holder.nitrate.setText(ConversionUtils.getUnitFormattedString(res, nitrate, mDosageUnit));
-        //holder.nextUpdate.setText(res.getString(R.string.fm_next_update_template, "22nd October"));
 
         final String transName = TRANSITION_NAME_BASE + tank.identifier;
         ViewCompat.setTransitionName(holder.title, transName);
@@ -208,7 +208,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
             switch (item.getItemId()) {
                 case R.id.mct_action_edit_tank:
-                    mCallbacks.onEditTankClick(getAdapterPosition());
+                    mCallbacks.onEditTankClick(overflow, getAdapterPosition());
                     return true;
                 case R.id.mct_action_change_photo_camera:
                     mCallbacks.onChangePhotoCameraClick(getAdapterPosition());

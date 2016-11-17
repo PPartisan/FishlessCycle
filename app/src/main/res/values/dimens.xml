@@ -21,6 +21,10 @@
     <dimen name="wus_image_dimen">168dp</dimen>
     <dimen name="wus_margin_top_half_button_height">24dp</dimen>
 
+    <!-- Widget -->
+    <dimen name="w_min_width">180dp</dimen>
+    <dimen name="w_min_height">56dp</dimen>
+
     <!-- Misc. -->
     <dimen name="image_button_small">36dp</dimen>
     <dimen name="image_button_default">48dp</dimen>
