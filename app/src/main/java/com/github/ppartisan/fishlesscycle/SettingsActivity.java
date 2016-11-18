@@ -1,6 +1,8 @@
 package com.github.ppartisan.fishlesscycle;
 
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -10,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,6 +21,9 @@ import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.data.Provider;
 import com.github.ppartisan.fishlesscycle.model.ImagePack;
 import com.github.ppartisan.fishlesscycle.reminder.ReminderReceiver;
+import com.github.ppartisan.fishlesscycle.service.LoadImagePackReceiver;
+import com.github.ppartisan.fishlesscycle.service.LoadImagePackReceiver.OnImagePackReadyListener;
+import com.github.ppartisan.fishlesscycle.service.LoadImagePackService;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
@@ -25,10 +31,12 @@ import com.google.android.gms.analytics.Tracker;
 
 import java.util.Calendar;
 
-public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class SettingsActivity extends AppCompatActivity implements
+        OnSharedPreferenceChangeListener, OnImagePackReadyListener {
 
     private Tracker mTracker;
-    private static final int IMAGES_LOADER_ID = 50;
+
+    private LoadImagePackReceiver mReceiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +44,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
         AppUtils.checkInternetPermissions(this);
         mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
+
+        mReceiver = new LoadImagePackReceiver(this);
 
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -47,21 +57,30 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                     .commit();
         }
 
-        getSupportLoaderManager().initLoader(IMAGES_LOADER_ID, null, this);
-
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AppUtils.sendTrackerHit(mTracker, getClass());
-    }
 
     @Override
     protected void onStart() {
         super.onStart();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppUtils.sendTrackerHit(mTracker, getClass());
+        final IntentFilter filter = new IntentFilter(LoadImagePackService.ACTION_COMPLETE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filter);
+        LoadImagePackService.launchLoadImagePackService(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -71,9 +90,6 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    /*
-    The "interval" value is only used when
-     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String s) {
 
@@ -110,26 +126,13 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                this, Contract.TankEntry.CONTENT_URI, Provider.IMAGES_PROJECTION, null, null, null
-        );
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        final Preferences frag = 
+    public void onImagePackReady(ImagePack pack) {
+        final Preferences frag =
                 (Preferences) getFragmentManager().findFragmentById(android.R.id.content);
         if (frag != null) {
-            final ImagePack pack = PreferenceUtils.buildImagePack(data);
             frag.setWidgetImageListEntries(pack.getTitles());
             frag.setWidgetImageListValues(pack.getPaths());
         }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 
     public static class Preferences extends PreferenceFragment {

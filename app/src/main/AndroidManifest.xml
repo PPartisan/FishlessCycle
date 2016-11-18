@@ -42,6 +42,8 @@
 
         <activity android:name=".EditTankActivity" />
 
+        <service android:name=".service.LoadImagePackService" />
+
         <provider
             android:authorities="com.github.ppartisan.fishlesscycle"
             android:name=".data.Provider"
@@ -58,6 +60,8 @@
                 android:resource="@xml/file_paths" />
 
         </provider>
+
+        <receiver android:name=".service.LoadImagePackReceiver" />
 
         <receiver android:name=".reminder.ReminderReceiver" />
 

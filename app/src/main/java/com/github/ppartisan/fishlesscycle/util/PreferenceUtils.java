@@ -149,12 +149,12 @@ public final class PreferenceUtils {
     public static ImagePack buildImagePack(Cursor cursor) {
 
         if(cursor == null || cursor.getCount() == 0) {
-            return new ImagePack(new CharSequence[0], new CharSequence[0]);
+            return new ImagePack(new String[0], new String[0]);
         }
 
         final int count = cursor.getCount();
-        final CharSequence[] titles = new CharSequence[count];
-        final CharSequence[] paths = new CharSequence[count];
+        final String[] titles = new String[count];
+        final String[] paths = new String[count];
 
         int counter = 0;
         cursor.moveToFirst();

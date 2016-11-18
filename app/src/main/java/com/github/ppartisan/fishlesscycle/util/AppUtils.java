@@ -130,7 +130,7 @@ public final class AppUtils {
 
     public static void sendTrackerHit(Tracker tracker, Class c) {
         final String name = c.getSimpleName();
-        Log.i(name, "Analytics. Setting Screen: " + name);
+        Log.i("Analytics", "Setting Screen: " + name);
         tracker.setScreenName(name);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
