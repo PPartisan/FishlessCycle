@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle;
+package com.github.ppartisan.fishlesscycle.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
+
+import com.github.ppartisan.fishlesscycle.R;
 
 /*
  * Adapted From: http://stackoverflow.com/a/5533295/1219389

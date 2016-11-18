@@ -10,6 +10,7 @@ public final class LoadImagePackReceiver extends BroadcastReceiver {
 
     private OnImagePackReadyListener mListener;
 
+    @SuppressWarnings("unused")
     public LoadImagePackReceiver() {}
 
     public LoadImagePackReceiver(OnImagePackReadyListener listener) {

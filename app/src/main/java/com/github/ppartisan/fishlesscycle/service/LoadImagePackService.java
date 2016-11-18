@@ -17,6 +17,7 @@ public final class LoadImagePackService extends IntentService {
     public static final String ACTION_COMPLETE = TAG + ".ACTION_COMPLETE";
     public static final String IMAGE_PACK_EXTRA = TAG + ".IMAGE_PACK_EXTRA";
 
+    @SuppressWarnings("unused")
     public LoadImagePackService(){
         this(TAG);
     }

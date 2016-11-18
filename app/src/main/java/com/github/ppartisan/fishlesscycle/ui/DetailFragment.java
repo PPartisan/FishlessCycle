@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle;
+package com.github.ppartisan.fishlesscycle.ui;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.adapter.DataRowCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.ReadingsAdapter;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;

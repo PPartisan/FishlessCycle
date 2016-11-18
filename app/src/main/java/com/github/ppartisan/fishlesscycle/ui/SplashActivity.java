@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle;
+package com.github.ppartisan.fishlesscycle.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

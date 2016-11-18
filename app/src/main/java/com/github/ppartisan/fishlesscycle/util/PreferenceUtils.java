@@ -5,24 +5,20 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.ImagePack;
-import com.github.ppartisan.fishlesscycle.reminder.ReminderReceiver;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Calendar;
-import java.util.Date;
 
 public final class PreferenceUtils {
 
     public static final Calendar NO_TIME = buildNoTimeCalendar();
-    private static final String NO_TIME_VALUE = "99:99";
+    private static final String NO_TIME_VALUE = "99:59";
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({METRIC,IMPERIAL,US})

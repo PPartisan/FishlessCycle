@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle;
+package com.github.ppartisan.fishlesscycle.ui;
 
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -17,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
+import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.data.Provider;
 import com.github.ppartisan.fishlesscycle.model.ImagePack;

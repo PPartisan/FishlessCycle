@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle;
+package com.github.ppartisan.fishlesscycle.ui;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
@@ -43,7 +44,6 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 

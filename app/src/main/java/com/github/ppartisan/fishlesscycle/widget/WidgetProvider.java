@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.github.ppartisan.fishlesscycle.MainActivity;
+import com.github.ppartisan.fishlesscycle.ui.MainActivity;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;

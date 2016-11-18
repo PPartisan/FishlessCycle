@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,11 +24,11 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".DetailActivity"
+            android:name=".ui.DetailActivity"
             android:theme="@style/DetailTheme"/>
 
         <activity
@@ -36,11 +36,11 @@
             android:theme="@style/SetUpTheme" />
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:theme="@style/SettingsTheme"
             android:label="@string/as_label"/>
 
-        <activity android:name=".EditTankActivity" />
+        <activity android:name=".ui.EditTankActivity" />
 
         <service android:name=".service.LoadImagePackService" />
 

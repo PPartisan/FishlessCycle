@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.ppartisan.fishlesscycle.R;
-import com.github.ppartisan.fishlesscycle.SettingsActivity;
+import com.github.ppartisan.fishlesscycle.ui.SettingsActivity;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.BaseSetUpWizardPagerFragment;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;

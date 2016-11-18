@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle;
+package com.github.ppartisan.fishlesscycle.ui;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,17 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.transition.AutoTransition;
 import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.Window;
 
+import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
+import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
