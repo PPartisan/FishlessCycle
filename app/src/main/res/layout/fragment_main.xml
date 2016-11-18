@@ -13,13 +13,13 @@
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/fm_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:title="@string/app_name"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fm_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="@string/app_name"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -29,15 +29,35 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/fm_empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fm_empty_view"
-        android:gravity="center_horizontal|top"
-        android:layout_margin="@dimen/fm_margin_default"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/fm_empty_view_text"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/vertical_margin_default"
+        android:layout_marginBottom="@dimen/vertical_margin_default"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/secondary_text"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/fm_empty_view_text"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/fm_empty_view_image"
+            android:gravity="center"
+            android:layout_margin="@dimen/fm_margin_default"
+            android:alpha="0.6"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fm_fab"

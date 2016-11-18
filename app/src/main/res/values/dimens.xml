@@ -6,10 +6,12 @@
     <dimen name="vertical_margin_default">16dp</dimen>
     <dimen name="vertical_margin_default_small">8dp</dimen>
     <dimen name="horizontal_margin_default_small_half">4dp</dimen>
+
     <!-- Main Fragment -->
     <dimen name="fm_margin_default">16dp</dimen>
     <dimen name="fm_card_image_height">168dp</dimen>
     <dimen name="fm_title_margin_top">12dp</dimen>
+    <dimen name="dm_empty_margin_bottom">64dp</dimen>
 
     <!-- Detail Fragment -->
     <dimen name="fd_app_bar_height">360dp</dimen>

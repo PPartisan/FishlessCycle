@@ -5,4 +5,5 @@
     android:updatePeriodMillis="0"
     android:initialLayout="@layout/widget"
     android:resizeMode="vertical"
+    android:previewImage="@drawable/widget_preview"
     xmlns:android="http://schemas.android.com/apk/res/android" />

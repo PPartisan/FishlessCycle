@@ -27,8 +27,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.github.ppartisan.fishlesscycle.adapter.TankCardCallbacks;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
@@ -41,7 +43,6 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
-import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
 
 import java.util.List;
 
@@ -89,6 +90,9 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fm_fab);
         mFab.setOnClickListener(this);
+
+        final ImageView emptyImageView = (ImageView) view.findViewById(R.id.fm_empty_view_image);
+        Glide.with(getContext()).load(R.drawable.f_cycle_grey).into(emptyImageView);
 
         mRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.fm_recycler);
         mRecyclerView.setEmptyView(view.findViewById(R.id.fm_empty_view));

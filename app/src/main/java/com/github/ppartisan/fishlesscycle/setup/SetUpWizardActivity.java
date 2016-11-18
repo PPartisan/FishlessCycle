@@ -6,27 +6,17 @@ import android.content.OperationApplicationException;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
-import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListener;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListenerCallbacks;
@@ -38,7 +28,6 @@ import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +66,7 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         mImage = (ImageView) findViewById(R.id.wusa_image);
         mImage.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
-        Picasso.with(this).load(R.drawable.tank_white).into(mImage);
+        Glide.with(this).load(R.drawable.tank_white).into(mImage);
 
         mColors = new ArrayList<>();
         mColors.add(ColorPack.buildFromId(this, R.color.cyan_700, R.color.cyan_900));

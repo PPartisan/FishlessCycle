@@ -98,7 +98,7 @@ public final class WidgetProvider extends AppWidgetProvider {
 
     //todo Replace with a default image
     private void setDefaultImage(RemoteViews views) {
-        views.setImageViewResource(R.id.w_image, R.drawable.capsule_default);
+        views.setImageViewResource(R.id.w_image, R.drawable.splash);
     }
 
     private String getContentText(Context context) {
