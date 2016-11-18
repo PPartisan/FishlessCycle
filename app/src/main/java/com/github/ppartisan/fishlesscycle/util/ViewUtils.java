@@ -149,6 +149,27 @@ public final class ViewUtils {
         return buildCircleRevealActivityTransition(cx, cy, view, root);
     }
 
+    public static Bitmap getSizedBitmapForNotification(Resources res, int resId) {
+
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        final int width = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
+        final int height = res.getDimensionPixelOffset(android.R.dimen.notification_large_icon_height);
+
+        int scaleFactor = Math.min(photoW/width, photoH/height);
+
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        return BitmapFactory.decodeResource(res, resId, bmOptions);
+
+    }
+
     @Nullable
     public static Bitmap getSizedBitmapFromPath(String filePath, int newHeight, int newWidth) {
 

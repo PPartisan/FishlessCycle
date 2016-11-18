@@ -61,6 +61,7 @@
                 android:layout_width="@dimen/image_button_default"
                 android:layout_height="@dimen/image_button_default"
                 android:src="@drawable/ic_settings_white_24dp"
+                android:contentDescription="@string/wus_fcvt_acc_open_settings"
                 app:layout_gravity="end|center_vertical"
                 style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
@@ -125,6 +126,7 @@
                 android:inputType="numberDecimal"
                 android:maxLines="1"
                 android:layout_marginTop="@dimen/line_margin_top_small"
+                android:contentDescription="@string/wus_fda_percent_ammonia_label"
                 app:layout_gravity="center_vertical"/>
 
             <TextView
@@ -176,6 +178,7 @@
                 android:maxLines="1"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:contentDescription="@string/wus_fda_output_label"
                 app:layout_gravity="center_vertical|end"/>
 
         </android.support.v7.widget.GridLayout>

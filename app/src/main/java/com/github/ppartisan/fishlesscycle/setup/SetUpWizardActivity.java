@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle.setup;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 

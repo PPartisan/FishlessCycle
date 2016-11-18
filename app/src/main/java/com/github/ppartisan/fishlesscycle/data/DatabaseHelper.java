@@ -45,7 +45,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_READINGS_TABLE = "CREATE TABLE " + ReadingEntry.TABLE_NAME + " (" +
                 ReadingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ReadingEntry.COLUMN_IDENTIFIER + " INTEGER NOT NULL, " +
-                ReadingEntry.COLUMN_DATE + " INTEGER, " +
+                ReadingEntry.COLUMN_DATE + " INTEGER UNIQUE, " +
                 ReadingEntry.COLUMN_AMMONIA + " INTEGER, " +
                 ReadingEntry.COLUMN_NITRITE + " INTEGER, " +
                 ReadingEntry.COLUMN_NITRATE + " INTEGER, " +

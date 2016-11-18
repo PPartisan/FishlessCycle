@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:gravity="center_vertical"
+                android:contentDescription="@string/wus_fust_acc_has_heater"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
@@ -86,6 +87,7 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/white"
+                android:contentDescription="@string/wus_fust_acc_has_seed"
                 app:layout_gravity="end|center_vertical" />
 
             <TextView

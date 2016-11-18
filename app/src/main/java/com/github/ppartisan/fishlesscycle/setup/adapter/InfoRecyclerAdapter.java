@@ -136,6 +136,7 @@ public final class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecycler
             mListener = listener;
 
             expand = (ImageButton) itemView.findViewById(R.id.iwus_row_expand);
+            expand.setContentDescription(itemView.getContext().getString(R.string.wus_pl_acc_expand));
             expand.setOnClickListener(this);
         }
 

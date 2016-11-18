@@ -226,7 +226,7 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
     @Override
     public void onTankModified(Tank.Builder builder) {
 
-        if(builder == null) return;
+        if(builder == null || mOutput == null) return;
 
         final float volumeInLitres = builder.getVolumeInLitres();
         final float outputVolumeInLitres = getOutputTextAsMetricLitres();

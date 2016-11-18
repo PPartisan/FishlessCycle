@@ -31,12 +31,21 @@
     <string name="fm_tank_name_template">%1$s (%2$d%3$s)</string>
     <string name="fm_tank_last_updated_no_reading">No Reading</string>
     <string name="fm_date_title">Date</string>
+    <string name="fm_acc_fab">Add New Aquarium</string>
+    <string name="fm_acc_no_tanks_image">No Tanks Image</string>
+
+    <!-- Tank Card -->
+    <string name="ct_acc_menu">Menu</string>
     
     <!-- Detail Fragment -->
     <string name="df_add_new_entry">Add New Entry</string>
     <string name="df_edit_entry">Edit Entry</string>
     <string name="df_notes_title">Add Note</string>
     <string name="df_control">Control</string>
+    <string name="df_acc_enter_ammonia">Enter Ammonia</string>
+    <string name="df_acc_enter_nitrite">Enter Nitrite</string>
+    <string name="df_acc_enter_nitrate">Enter Nitrate</string>
+    <string name="df_acc_nav_up">Navigate Up</string>
 
     <!-- Reading Names -->
     <string name="ammonia">Ammonia</string>
@@ -83,6 +92,7 @@
     </string>
     <string name="wus_pl_essential_title">Essential</string>
     <string name="wus_pl_optional_title">Optional</string>
+    <string name="wus_pl_acc_expand">Expand</string>
 
     <!-- 3. Tank Volume Calculator Fragment -->
     <string name="wus_fcvt_content">
@@ -99,6 +109,12 @@
     <string name="wus_fcvt_switch_label">Change unit types</string>
     <string name="wus_fcvt_description_metric">Currently showing centimetres and litres</string>
     <string name="wus_fcvt_decription_imperial">Currently showing inches and gallons</string>
+    <string name="wus_fcvt_acc_open_settings">Open Settings</string>
+    <string name="wus_fcvt_acc_height_edit_text">Enter Height</string>
+    <string name="wus_fcvt_acc_width_edit_text">Enter Width</string>
+    <string name="wus_fcvt_acc_length_edit_text">Enter Length</string>
+    <string name="wus_fcvt_acc_volume_edit_text">Confirm Volume</string>
+
 
     <!-- 4.Ammonia Dosage Fragment -->
     <string name="wus_fda_content">
@@ -133,6 +149,8 @@
     <string name="wus_fust_no_plants_label">No Plants</string>
     <string name="wus_fust_light_plants_label">Lightly Planted</string>
     <string name="wus_fust_heavy_plants_label">Heavily Planted</string>
+    <string name="wus_fust_acc_has_heater">Has A Heater</string>
+    <string name="wus_fust_acc_has_seed">Has Seed Material</string>
 
     <!-- 6. First Readings Fragment -->
     <string name="wus_frf_content">
@@ -146,6 +164,13 @@
     <string name="wus_frf_content_and_heater">and heater</string>
     <string name="wus_frf_control_header">Control Reading (%1$s)</string>
     <string name="wus_frf_first_reading_header">First Reading (%1$s)</string>
+    <string name="wus_frf_acc_control_ammonia">Enter Ammonia Control Reading</string>
+    <string name="wus_frf_acc_control_nitrite">Enter Nitrite Control Reading</string>
+    <string name="wus_frf_acc_control_nitrate">Enter Nitrate Control Reading</string>
+    <string name="wus_frf_acc_first_ammonia">Enter Ammonia First Reading</string>
+    <string name="wus_frf_acc_first_nitrite">Enter Nitrite First Reading</string>
+    <string name="wus_frf_acc_first_nitrate">Enter Nitrate First Reading</string>
+
 
     <!-- 7. Confirmation Fragment -->
     <string name="wus_cf_name">Name</string>
@@ -153,10 +178,14 @@
     <string name="wus_cf_seed_material">Seed Material</string>
     <string name="wus_cf_plants">Plants</string>
     <string name="wus_cf_name_template">Aquarium (%1$d)</string>
+    <string name="wus_cf_acc_tank_volume">Confirm Tank Volume</string>
 
     <!-- Widget -->
     <string name="w_no_reminder">&lt;No Reminder Set&gt;</string>
     <string name="w_date_format">EEE, MMMM dd \'at\' h:mm a</string>
+
+    <!-- Reminder -->
+    <string name="r_content">Time to dose your aquarium!</string>
 
     <!-- AdMob -->
     <string name="test_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>

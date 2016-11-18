@@ -168,13 +168,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     private String getAmmoniaText() {
 
         if (getTankBuilderSupplier() == null) return null;
-
         final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
-
-        if (builder.getAmmoniaDosage() == null) {
-            return mFormat.format(0);
-        }
-
         return mFormat.format(builder.getAmmoniaDosage().dosage);
 
     }
@@ -182,26 +176,30 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     @Override
     public void onTankModified(Tank.Builder builder) {
 
-        if (builder.getName() != null && !mTitle.getText().toString().equals(builder.getName())) {
+        if (builder.getName() != null && mTitle!= null && !mTitle.getText().toString().equals(builder.getName())) {
             mTitle.setText(getTitleText());
         }
 
         final String volume = getVolumeText();
-        if (!mVolume.getText().toString().equals(volume)) {
+        if (mVolume != null && !mVolume.getText().toString().equals(volume)) {
             mVolume.setText(volume);
         }
 
         final String ammonia = getAmmoniaText();
-        if (!mAmmonia.getText().toString().equals(ammonia)) {
+        if (mAmmonia != null && !mAmmonia.getText().toString().equals(ammonia)) {
             mAmmonia.setText(ammonia);
         }
 
-        if (mHeater.isChecked() != builder.isHeated()) {
+        if (mHeater != null && mHeater.isChecked() != builder.isHeated()) {
             mHeater.setChecked(builder.isHeated());
         }
 
-        if (mSeedMaterial.isChecked() != builder.isSeeded()) {
+        if (mSeedMaterial != null && mSeedMaterial.isChecked() != builder.isSeeded()) {
             mSeedMaterial.setChecked(builder.isSeeded());
+        }
+
+        if(mNoPlants == null || mLightlyPlanted == null || mHeavilyPlanted == null){
+            return;
         }
 
         final @Tank.PlantStatus int plantStatus = builder.getPlantStatus();

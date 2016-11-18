@@ -111,6 +111,7 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         toolbar.inflateMenu(R.menu.detail_menu);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationContentDescription(R.string.df_acc_nav_up);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

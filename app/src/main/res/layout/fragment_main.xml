@@ -55,7 +55,8 @@
             android:gravity="center"
             android:layout_margin="@dimen/fm_margin_default"
             android:alpha="0.6"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:contentDescription="@string/fm_acc_no_tanks_image" />
 
     </LinearLayout>
 
@@ -67,6 +68,7 @@
         android:layout_marginEnd="@dimen/fm_margin_default"
         android:layout_marginRight="@dimen/fm_margin_default"
         android:layout_marginBottom="@dimen/fm_margin_default"
+        android:contentDescription="@string/fm_acc_fab"
         app:srcCompat="@drawable/ic_add_white_24dp"
         app:fabSize="normal" />
 

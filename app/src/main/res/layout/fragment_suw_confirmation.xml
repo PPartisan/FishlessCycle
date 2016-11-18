@@ -20,16 +20,6 @@
         android:paddingBottom="@dimen/vertical_margin_default"
         android:gravity="center">
 
-        <!--<TextView-->
-            <!--android:id="@+id/ust_suwf_content"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/vertical_margin_default"-->
-            <!--android:layout_marginBottom="@dimen/vertical_margin_default"-->
-            <!--android:gravity="center"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:text="@string/wus_fust_content"/>-->
-
         <android.support.v7.widget.GridLayout
             android:id="@+id/c_suwf_grid"
             android:layout_width="match_parent"
@@ -71,6 +61,7 @@
                 android:textColor="@android:color/white"
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
+                android:contentDescription="@string/wus_cf_name"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
@@ -95,6 +86,7 @@
                 android:maxLength="4"
                 android:inputType="number"
                 android:textColor="@android:color/white"
+                android:contentDescription="@string/wus_cf_acc_tank_volume"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
@@ -120,6 +112,7 @@
                 android:maxLength="4"
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/white"
+                android:contentDescription="@string/wus_fda_output_label"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
@@ -140,6 +133,7 @@
                 android:layout_height="@dimen/list_item_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:gravity="center_vertical"
+                android:contentDescription="@string/wus_cf_heater"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
@@ -161,6 +155,7 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/white"
+                android:contentDescription="@string/wus_cf_seed_material"
                 app:layout_gravity="end|center_vertical" />
 
             <TextView

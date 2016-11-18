@@ -112,7 +112,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
 
     @Override
     public void onTankModified(Tank.Builder builder) {
-        if(builder == null) return;
+        if(builder == null || mTankVolume == null) return;
 
         mTankVolume.setText(getConvertedTankVolumeStringFromBuilder(builder));
         updateOutput();
@@ -223,6 +223,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
                     getTankVolumeInLitresAsUserUnitPreference(tankVolumeInLitres, volumeUnit);
             mTankVolume.setText(mFormat.format(convertedVolume));
             mTankVolumeLabel.setText(getTankVolumeLabel());
+            mTankVolume.setContentDescription(getTankVolumeLabel());
             mSettingsDescription.setText(getSettingsDescriptionText());
             updateOutput();
         }
@@ -232,6 +233,7 @@ public final class AmmoniaDosageFragment extends BaseSetUpWizardPagerFragment im
             isDosageMetric = PreferenceUtils.isDosageMetric(getContext());
             mSettingsDescription.setText(getSettingsDescriptionText());
             mTargetConcentrationLabel.setText(getTargetConcentrationLabel());
+            mTargetConcentrationEntry.setContentDescription(getTargetConcentrationLabel());
 
         }
 

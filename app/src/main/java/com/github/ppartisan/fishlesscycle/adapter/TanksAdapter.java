@@ -170,7 +170,6 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             itemView.setOnClickListener(this);
 
             overflow = (ImageButton) itemView.findViewById(R.id.tcv_overflow);
-
             overflow.setImageDrawable(new ShadowOverflowDrawable(itemView.getResources()));
 
             menu = ViewUtils.buildPopUpMenu(overflow, R.menu.tank_card_menu);

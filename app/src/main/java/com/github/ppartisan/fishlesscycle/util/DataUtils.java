@@ -1,6 +1,7 @@
 package com.github.ppartisan.fishlesscycle.util;
 
 import android.content.ContentProviderOperation;
+import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Reading;
@@ -31,31 +32,21 @@ public final class DataUtils {
 
 
         Reading control = builder.getControlReading();
-
         if(control == null) {
             control =
                     new Reading(builder.getIdentifier(), Reading.CONTROL_DATE, 0, 0, 0, true);
             builder.setControlReading(control);
-
-            op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)
-                    .withValues(ReadingUtils.toContentValues(builder.getControlReading()))
-                    .build();
-        } else {
-
-            where = Contract.ReadingEntry.COLUMN_IS_CONTROL + "=? AND "
-                    + Contract.ReadingEntry.COLUMN_IDENTIFIER + "=?";
-            whereArgs = new String[] { String.valueOf(1), String.valueOf(id) };
-
-            op = ContentProviderOperation.newUpdate(Contract.ReadingEntry.CONTENT_URI)
-                    .withSelection(where, whereArgs)
-                    .withValues(ReadingUtils.toContentValues(builder.getControlReading()))
-                    .build();
         }
+
+        op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)
+                .withValues(ReadingUtils.toContentValues(builder.getControlReading()))
+                .build();
 
         ops.add(op);
 
 
-        if (builder.getLastReading() != null) {
+        final Reading last = builder.getLastReading();
+        if (last != null) {
             op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)
                     .withValues(ReadingUtils.toContentValues(builder.getLastReading()))
                     .build();

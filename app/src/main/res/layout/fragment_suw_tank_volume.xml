@@ -51,6 +51,7 @@
                     android:id="@+id/vt_suwf_switch_units"
                     android:layout_width="@dimen/image_button_default"
                     android:layout_height="@dimen/image_button_default"
+                    android:contentDescription="@string/wus_fcvt_acc_open_settings"
                     android:src="@drawable/ic_settings_white_24dp"
                     style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
@@ -87,6 +88,7 @@
                     android:inputType="numberDecimal"
                     android:gravity="center"
                     android:hint="@string/wus_fcvt_hint_height"
+                    android:contentDescription="@string/wus_fcvt_acc_height_edit_text"
                     tools:hint="Height"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -110,6 +112,7 @@
                     android:inputType="numberDecimal"
                     android:gravity="center"
                     android:hint="@string/wus_fcvt_hint_width"
+                    android:contentDescription="@string/wus_fcvt_acc_width_edit_text"
                     tools:hint="Width"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -133,6 +136,7 @@
                     android:inputType="numberDecimal"
                     android:gravity="center"
                     android:hint="@string/wus_fcvt_hint_length"
+                    android:contentDescription="@string/wus_fcvt_acc_length_edit_text"
                     tools:hint="Length"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -150,6 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/wus_fcvt_hint_output"
+                android:contentDescription="@string/wus_fcvt_acc_volume_edit_text"
                 android:gravity="center"
                 android:minEms="4"
                 android:inputType="numberDecimal"/>

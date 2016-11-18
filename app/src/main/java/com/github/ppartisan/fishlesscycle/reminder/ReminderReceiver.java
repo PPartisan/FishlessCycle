@@ -6,14 +6,17 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.widget.RemoteViews;
 
 import com.github.ppartisan.fishlesscycle.ui.MainActivity;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
+import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
 
 import java.util.Calendar;
@@ -33,9 +36,16 @@ public final class ReminderReceiver extends BroadcastReceiver {
                         context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT
                 );
 
+        final Bitmap largeIcon =
+                ViewUtils.getSizedBitmapForNotification(
+                        context.getResources(), R.drawable.f_cycle_color
+                );
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        builder.setLargeIcon(largeIcon);
         builder.setSmallIcon(R.drawable.tank_white);
         builder.setContentTitle(context.getString(R.string.app_name));
+        builder.setContentText(context.getString(R.string.r_content));
         builder.setColor(ContextCompat.getColor(context, R.color.primary));
         builder.setWhen(System.currentTimeMillis());
         builder.setContentIntent(pIntent);

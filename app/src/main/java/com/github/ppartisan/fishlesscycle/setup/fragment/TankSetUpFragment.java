@@ -154,13 +154,17 @@ public final class TankSetUpFragment extends BaseSetUpWizardPagerFragment implem
         if (builder == null) return;
 
         final boolean isHeated = builder.isHeated();
-        if (isHeated != mHeater.isChecked()) {
+        if (mHeater != null && isHeated != mHeater.isChecked()) {
             mHeater.setChecked(builder.isHeated());
         }
 
         final boolean isSeeded = builder.isSeeded();
-        if (isSeeded != mSeedMaterial.isChecked()) {
+        if (mSeedMaterial != null && isSeeded != mSeedMaterial.isChecked()) {
             mSeedMaterial.setChecked(builder.isSeeded());
+        }
+
+        if(mNoPlants == null || mLightPlants == null || mHeavyPlants == null) {
+            return;
         }
 
         final @PlantStatus int plantStatus = builder.getPlantStatus();

@@ -101,6 +101,7 @@
                 android:gravity="end|center_vertical"
                 android:textColor="@android:color/white"
                 android:theme="@style/NoteEditText"
+                android:contentDescription="@string/df_acc_enter_ammonia"
                 app:layout_gravity="end|center_vertical" />
 
             <TextView
@@ -126,6 +127,7 @@
                 android:gravity="end|center_vertical"
                 android:textColor="@android:color/white"
                 android:theme="@style/NoteEditText"
+                android:contentDescription="@string/df_acc_enter_nitrite"
                 app:layout_gravity="end|center_vertical" />
 
             <TextView
@@ -151,6 +153,7 @@
                 android:gravity="end|center_vertical"
                 android:textColor="@android:color/white"
                 android:theme="@style/NoteEditText"
+                android:contentDescription="@string/df_acc_enter_nitrate"
                 app:layout_gravity="end|center_vertical" />
 
         </android.support.v7.widget.GridLayout>
@@ -165,6 +168,7 @@
         android:layout_marginEnd="@dimen/fab_margin_anchored"
         android:layout_marginRight="@dimen/fab_margin_anchored"
         android:layout_marginBottom="@dimen/fab_margin_anchored"
+        android:contentDescription="@string/df_add_new_entry"
         app:useCompatPadding="false"
         app:fabSize="normal"
         app:layout_anchorGravity="top|right|end"
