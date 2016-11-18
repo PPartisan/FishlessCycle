@@ -34,8 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
             android:layout_below="@+id/vt_suwf_content"
+            android:gravity="center_vertical"
             android:baselineAligned="false">
 
                 <TextView
@@ -45,6 +45,7 @@
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
+                    android:gravity="start"
                     android:text="@string/wus_fcvt_switch_label"/>
 
                 <ImageButton

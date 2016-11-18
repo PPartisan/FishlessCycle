@@ -48,7 +48,7 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
@@ -57,7 +57,8 @@
                 android:textStyle="bold"
                 android:text="@string/wus_fust_heated_label"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_gravity="center_vertical"
+                app:layout_columnWeight="1"/>
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/ust_suwf_heated"
@@ -69,7 +70,7 @@
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
@@ -78,7 +79,8 @@
                 android:textStyle="bold"
                 android:text="@string/wus_fust_seeded_label"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_gravity="center_vertical"
+                app:layout_columnWeight="1"/>
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/ust_suwf_seeded"
@@ -100,7 +102,7 @@
                 android:textStyle="bold"
                 android:text="@string/wus_fust_planted_label"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_gravity="start|fill_horizontal|center_vertical"
                 app:layout_columnSpan="2"/>
 
             <TextView
@@ -113,7 +115,7 @@
                 android:textStyle="italic"
                 android:text="@string/wus_fust_planted_description"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"
+                app:layout_gravity="start|fill_horizontal|center_vertical"
                 app:layout_columnSpan="2"/>
 
             <RadioGroup

@@ -53,7 +53,7 @@
                 android:textStyle="bold"
                 android:text="@string/wus_fcvt_switch_label"
                 android:maxLines="1"
-                android:gravity="center_vertical"
+                android:gravity="start|center_vertical"
                 app:layout_columnWeight="1"/>
 
             <ImageButton
@@ -75,18 +75,19 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:maxLines="1"
                 app:layout_columnSpan="2"
+                app:layout_gravity="start|fill_horizontal|center_vertical"
                 tools:text="@string/wus_fcvt_description_metric"/>
 
             <TextView
                 android:id="@+id/da_suwf_tank_volume_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/list_item_small"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="@dimen/line_margin_top_small"
-                android:gravity="center_vertical"
+                android:gravity="start|center_vertical"
                 android:maxLines="1"
-                app:layout_gravity="fill"
+                app:layout_columnWeight="1"
                 tools:text="Tank Volume" />
 
             <TextView
@@ -104,15 +105,15 @@
 
             <TextView
                 android:id="@+id/da_suwf_per_ammonia_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/list_item_small"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:text="@string/wus_fda_percent_ammonia_label"
-                android:gravity="center_vertical"
+                android:gravity="start|center_vertical"
                 android:maxLines="1"
-                app:layout_gravity="fill"
+                app:layout_columnWeight="1"
                 tools:text="Ammonia Concentration (%)" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -127,7 +128,7 @@
                 android:maxLines="1"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:contentDescription="@string/wus_fda_percent_ammonia_label"
-                app:layout_gravity="center_vertical"/>
+                app:layout_gravity="center_vertical|end"/>
 
             <TextView
                 android:id="@+id/da_suwf_target_dose_label"
@@ -136,9 +137,9 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="start|center_vertical"
                 android:maxLines="1"
-                app:layout_gravity="fill"
+                app:layout_columnWeight="1"
                 tools:text="Target Dosage" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -152,7 +153,7 @@
                 android:inputType="number"
                 android:maxLines="1"
                 android:layout_marginTop="@dimen/line_margin_top_small"
-                app:layout_gravity="center_vertical"/>
+                app:layout_gravity="center_vertical|end"/>
 
             <TextView
                 android:id="@+id/da_suwf_output_label"
@@ -162,9 +163,9 @@
                 android:layout_weight="1"
                 android:text="@string/wus_fda_output_label"
                 android:textStyle="bold"
-                android:gravity="center_vertical"
+                android:gravity="start|center_vertical"
                 android:maxLines="1"
-                app:layout_gravity="fill"
+                app:layout_columnWeight="1"
                 tools:text="Target Dosage" />
 
             <TextView
@@ -179,7 +180,8 @@
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:contentDescription="@string/wus_fda_output_label"
-                app:layout_gravity="center_vertical|end"/>
+                app:layout_gravity="center_vertical|end"
+                android:minEms="3" />
 
         </android.support.v7.widget.GridLayout>
 

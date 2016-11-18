@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
     android:clickable="true"
+    android:focusable="true"
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -93,6 +94,8 @@
             android:layout_below="@+id/tcv_last_updated"
             android:layout_marginStart="@dimen/horizontal_margin_default"
             android:layout_marginLeft="@dimen/horizontal_margin_default"
+            android:layout_marginRight="@dimen/horizontal_margin_default_small"
+            android:layout_marginEnd="@dimen/horizontal_margin_default_small"
             app:columnCount="2"
             app:rowCount="4">
 
@@ -103,7 +106,7 @@
                 android:textStyle="bold"
                 android:text="@string/fm_latest_data_title"
                 app:layout_columnSpan="2"
-                app:layout_gravity="fill"
+                app:layout_gravity="start|fill"
                 app:layout_columnWeight="1"/>
 
             <View
@@ -111,32 +114,38 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray"
                 android:layout_marginBottom="@dimen/line_margin_top_small"
-                android:layout_marginEnd="@dimen/horizontal_margin_default_small"
-                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_gravity="fill"
                 app:layout_columnSpan="2"
                 app:layout_columnWeight="1" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/ammonia"/>
+                android:text="@string/ammonia"
+                android:paddingEnd="@dimen/horizontal_margin_default_small"
+                android:paddingRight="@dimen/horizontal_margin_default_small"
+                android:gravity="start"
+                app:layout_gravity="center_vertical"
+                app:layout_columnWeight="1"/>
 
             <TextView
                 android:id="@+id/tcv_ammonia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_marginEnd="@dimen/horizontal_margin_default_small"
-                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_gravity="end|center_vertical"
                 tools:text="2 mg/L"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/line_margin_top_smallest"
-                android:text="@string/nitrite"/>
+                android:text="@string/nitrite"
+                android:paddingEnd="@dimen/horizontal_margin_default_small"
+                android:paddingRight="@dimen/horizontal_margin_default_small"
+                android:gravity="start"
+                app:layout_gravity="center_vertical"
+                app:layout_columnWeight="1"/>
 
             <TextView
                 android:id="@+id/tcv_nitrite"
@@ -144,16 +153,19 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/line_margin_top_smallest"
-                android:layout_marginEnd="@dimen/horizontal_margin_default_small"
-                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_gravity="end|center_vertical"
                 tools:text="0 mg/L" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/line_margin_top_smallest"
-                android:text="@string/nitrate"/>
+                android:text="@string/nitrate"
+                android:paddingEnd="@dimen/horizontal_margin_default_small"
+                android:paddingRight="@dimen/horizontal_margin_default_small"
+                android:gravity="start"
+                app:layout_gravity="center_vertical"
+                app:layout_columnWeight="1"/>
 
             <TextView
                 android:id="@+id/tcv_nitrate"
@@ -161,8 +173,6 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/line_margin_top_smallest"
-                android:layout_marginEnd="@dimen/horizontal_margin_default_small"
-                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_gravity="end|center_vertical"
                 tools:text="16 mg/L" />
 
@@ -172,8 +182,6 @@
                 android:background="@android:color/darker_gray"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:layout_marginBottom="@dimen/vertical_margin_default_small"
-                android:layout_marginEnd="@dimen/horizontal_margin_default_small"
-                android:layout_marginRight="@dimen/horizontal_margin_default_small"
                 app:layout_gravity="fill"
                 app:layout_columnSpan="2"
                 app:layout_columnWeight="1" />

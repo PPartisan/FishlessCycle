@@ -38,7 +38,7 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/list_item_small"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
@@ -47,7 +47,7 @@
                 android:textStyle="bold"
                 android:gravity="start|center_vertical"
                 android:text="@string/wus_cf_name"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_columnWeight="1"/>
 
             <EditText
                 android:id="@+id/c_suwf_title_entry"
@@ -62,19 +62,20 @@
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:contentDescription="@string/wus_cf_name"
+                android:inputType="textCapWords"
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
                 android:id="@+id/c_suwf_volume_label"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/list_item_small"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_columnWeight="1"/>
 
             <EditText
                 android:id="@+id/c_suwf_volume_entry"
@@ -91,7 +92,7 @@
 
             <TextView
                 android:id="@+id/c_suwf_dosage_label"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/list_item_small"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
@@ -100,7 +101,7 @@
                 android:textStyle="bold"
                 android:text="@string/wus_fda_output_label"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_columnWeight="1"/>
 
             <EditText
                 android:id="@+id/c_suwf_dosage_entry"
@@ -116,7 +117,7 @@
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/list_item_small"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
@@ -125,7 +126,7 @@
                 android:textStyle="bold"
                 android:text="@string/wus_cf_heater"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_columnWeight="1"/>
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/c_suwf_heated"
@@ -137,8 +138,8 @@
                 app:layout_gravity="end|center_vertical"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/list_item_small"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
                 android:layout_marginLeft="@dimen/horizontal_margin_default_small"
                 android:layout_marginStart="@dimen/horizontal_margin_default_small"
                 android:layout_marginTop="@dimen/line_margin_top_small"
@@ -146,7 +147,7 @@
                 android:textStyle="bold"
                 android:text="@string/wus_cf_seed_material"
                 android:gravity="start|center_vertical"
-                app:layout_gravity="fill_horizontal|center_vertical"/>
+                app:layout_columnWeight="1"/>
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/c_suwf_seeded"
