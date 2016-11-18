@@ -43,6 +43,7 @@ import com.github.ppartisan.fishlesscycle.util.PreferenceUtils.VolumeUnit;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_RETRIEVAL = 2;
 
-    ImageCapture mImageCapture = new ImageCapture();
+    private ImageCapture mImageCapture = new ImageCapture();
 
     private EmptyRecyclerView mRecyclerView;
     private TanksAdapter mAdapter;

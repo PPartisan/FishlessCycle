@@ -18,18 +18,24 @@ import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.data.Provider;
 import com.github.ppartisan.fishlesscycle.model.ImagePack;
 import com.github.ppartisan.fishlesscycle.reminder.ReminderReceiver;
+import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.Calendar;
 
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener, LoaderManager.LoaderCallbacks<Cursor> {
 
+    private Tracker mTracker;
     private static final int IMAGES_LOADER_ID = 50;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppUtils.checkInternetPermissions(this);
+        mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,6 +49,12 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
         getSupportLoaderManager().initLoader(IMAGES_LOADER_ID, null, this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppUtils.sendTrackerHit(mTracker, getClass());
     }
 
     @Override

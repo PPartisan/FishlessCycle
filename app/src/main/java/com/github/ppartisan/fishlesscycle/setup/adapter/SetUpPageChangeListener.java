@@ -2,6 +2,7 @@ package com.github.ppartisan.fishlesscycle.setup.adapter;
 
 import android.animation.ArgbEvaluator;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 
@@ -45,7 +46,9 @@ public final class SetUpPageChangeListener implements ViewPager.OnPageChangeList
     }
 
     @Override
-    public void onPageSelected(int position) { }
+    public void onPageSelected(int position) {
+        mCallback.onPageSelected(position);
+    }
 
     @Override
     public void onPageScrollStateChanged(int state) { }

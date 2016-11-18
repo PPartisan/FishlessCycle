@@ -23,13 +23,17 @@ import android.view.Window;
 
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.Tracker;
 
 public final class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = 5;
+
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        AppUtils.checkInternetPermissions(this);
+        mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
+
         final AdView adView = (AdView) findViewById(R.id.da_ad_view);
         final AdRequest request = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -67,6 +74,12 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppUtils.sendTrackerHit(mTracker, getClass());
     }
 
     @Override

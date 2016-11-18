@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
@@ -23,11 +24,13 @@ import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListenerC
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpWizardAdapter;
 import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 import com.github.ppartisan.fishlesscycle.setup.view.DotIndicatorView;
+import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.DataUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,8 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
 
     private static final String TAG = SetUpWizardActivity.class.getSimpleName();
     public static final String TANK_BUILDER_KEY = TAG + ".TANK_BUILDER_KEY";
+
+    private Tracker mTracker;
 
     private ViewGroup mParent;
     private ImageView mImage;
@@ -52,6 +57,9 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_wizard);
+
+
+        mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
         MobileAds.initialize(getApplicationContext(), getString(R.string.test_banner_ad_unit_id));
 
@@ -156,6 +164,12 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         mIndicator.setColor(colorDark);
         ViewUtils.setStatusBarColor(this, colorDark);
 
+    }
+
+    @Override
+    public void onPageSelected(int page) {
+        final Class<?> c = mAdapter.getItem(page).getClass();
+        AppUtils.sendTrackerHit(mTracker, c);
     }
 
     @Override

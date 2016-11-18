@@ -2,6 +2,7 @@ package com.github.ppartisan.fishlesscycle;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -11,19 +12,25 @@ import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.TankBuilderSupplier;
 import com.github.ppartisan.fishlesscycle.setup.fragment.ConfirmationFragment;
+import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
+import com.google.android.gms.analytics.Tracker;
 
 public final class EditTankActivity extends AppCompatActivity implements TankBuilderSupplier {
 
     private static final String TAG = EditTankActivity.class.getSimpleName();
     public static final String TANK_BUILDER_KEY = TAG + ".TANK_BUILDER_KEY";
 
+    private Tracker mTracker;
     private Tank.Builder mTankBuilder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tank);
+
+        AppUtils.checkInternetPermissions(this);
+        mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
         if (savedInstanceState == null) {
             mTankBuilder = getIntent().getParcelableExtra(TANK_BUILDER_KEY);
@@ -32,6 +39,7 @@ public final class EditTankActivity extends AppCompatActivity implements TankBui
         }
 
         final ImageView image = (ImageView) findViewById(R.id.tea_image);
+        image.setColorFilter(ContextCompat.getColor(this, R.color.primary_dark));
         Glide.with(this).load(R.drawable.tank_white).into(image);
 
         if (getSupportFragmentManager().findFragmentById(R.id.tea_parent) == null) {
@@ -41,6 +49,12 @@ public final class EditTankActivity extends AppCompatActivity implements TankBui
                     .commit();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppUtils.sendTrackerHit(mTracker, getClass());
     }
 
     @Override

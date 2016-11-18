@@ -14,10 +14,12 @@ import android.view.WindowManager;
 
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
+import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
@@ -26,12 +28,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final int LOADER_ID = 4;
 
+    private Tracker mTracker;
     private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        AppUtils.checkInternetPermissions(this);
+        mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
         mAdView = (AdView) findViewById(R.id.ma_ad_view);
         final AdRequest request = new AdRequest.Builder()
@@ -49,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppUtils.sendTrackerHit(mTracker, getClass());
     }
 
     @Override

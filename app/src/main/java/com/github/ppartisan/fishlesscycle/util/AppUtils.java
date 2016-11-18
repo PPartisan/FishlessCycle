@@ -12,6 +12,10 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,13 +34,38 @@ public final class AppUtils {
     private static final String FILE_PREFIX = "file:";
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private static final int REQUEST_INTERNET = 2;
+    private static final String[] PERMISSIONS_INTERNET = {
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE
+    };
+
     private AppUtils() { throw new AssertionError(); }
 
+    public static void checkInternetPermissions(Activity activity) {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
+        final int permission = ActivityCompat.checkSelfPermission(
+                activity, Manifest.permission.ACCESS_NETWORK_STATE
+        );
+
+        if(permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_INTERNET,
+                    REQUEST_INTERNET
+            );
+        }
+
+    }
 
     public static void checkStoragePermissions(Activity activity) {
 
@@ -44,7 +73,7 @@ public final class AppUtils {
             return;
         }
 
-        int permission = ActivityCompat.checkSelfPermission(
+        final int permission = ActivityCompat.checkSelfPermission(
                 activity, Manifest.permission.WRITE_EXTERNAL_STORAGE
         );
 
@@ -97,6 +126,13 @@ public final class AppUtils {
 
     public static String withFilePrefix(String path) {
         return FILE_PREFIX + path.trim();
+    }
+
+    public static void sendTrackerHit(Tracker tracker, Class c) {
+        final String name = c.getSimpleName();
+        Log.i(name, "Analytics. Setting Screen: " + name);
+        tracker.setScreenName(name);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
 }
