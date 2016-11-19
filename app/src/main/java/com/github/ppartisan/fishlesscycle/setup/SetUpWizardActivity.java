@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListener;
 import com.github.ppartisan.fishlesscycle.setup.adapter.SetUpPageChangeListenerCallbacks;
@@ -107,6 +108,7 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
         Tank.Builder builder = new Tank.Builder();
         builder.setIdentifier(identifier);
         builder.setName(getString(R.string.app_name));
+        builder.setControlReading(new Reading(identifier,System.currentTimeMillis(),0,0,0,true));
 
         return builder;
     }

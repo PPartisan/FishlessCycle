@@ -30,10 +30,8 @@ public final class ReadingUtils {
         if (cursor.moveToFirst()) {
 
             do {
-
-                final long id =
+                final long identifier =
                         cursor.getLong(cursor.getColumnIndex(ReadingEntry.COLUMN_IDENTIFIER));
-
                 final long date =
                         cursor.getLong(cursor.getColumnIndex(ReadingEntry.COLUMN_DATE));
                 final float ammonia =
@@ -48,7 +46,7 @@ public final class ReadingUtils {
                         (cursor.getInt(cursor.getColumnIndex(ReadingEntry.COLUMN_IS_CONTROL)) == 1);
 
                 final Reading reading = new Reading(
-                        id, date, ammonia, nitrite, nitrate, isControl
+                        identifier, date, ammonia, nitrite, nitrate, isControl
                 );
                 reading.setNote(note);
                 readings.add(reading);
@@ -64,7 +62,7 @@ public final class ReadingUtils {
     public static ContentValues toContentValues(Reading reading) {
 
         ContentValues cv = new ContentValues();
-        cv.put(ReadingEntry.COLUMN_IDENTIFIER, reading.id);
+        cv.put(ReadingEntry.COLUMN_IDENTIFIER, reading.identifier);
         cv.put(ReadingEntry.COLUMN_DATE, reading.date);
         cv.put(ReadingEntry.COLUMN_AMMONIA, reading.ammonia);
         cv.put(ReadingEntry.COLUMN_NITRITE, reading.nitrite);

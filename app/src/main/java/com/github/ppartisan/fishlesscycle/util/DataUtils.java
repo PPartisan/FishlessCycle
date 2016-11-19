@@ -29,14 +29,6 @@ public final class DataUtils {
 
         ops.add(op);
 
-
-        Reading control = builder.getControlReading();
-        if(control == null) {
-            control =
-                    new Reading(builder.getIdentifier(), System.currentTimeMillis(), 0, 0, 0, true);
-            builder.setControlReading(control);
-        }
-
         op = ContentProviderOperation.newInsert(Contract.ReadingEntry.CONTENT_URI)
                 .withValues(ReadingUtils.toContentValues(builder.getControlReading()))
                 .build();

@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -208,21 +207,21 @@ public final class Provider extends ContentProvider {
     }
 
     private static final String TANK_QUERY = "SELECT " +
-    TankEntry.TABLE_NAME + ".*, " +
-    ReadingEntry.COLUMN_IDENTIFIER + ", " +
-    ReadingEntry.COLUMN_AMMONIA + ", " +
-    ReadingEntry.COLUMN_NITRITE + ", " +
-    ReadingEntry.COLUMN_NITRATE + ", " +
-    ReadingEntry.COLUMN_DATE + ", " +
-    ReadingEntry.COLUMN_NOTES + ", " +
-    ReadingEntry.COLUMN_IS_CONTROL + " " +
-    "FROM " + TankEntry.TABLE_NAME + " LEFT OUTER JOIN " + ReadingEntry.TABLE_NAME + " " +
-    "ON " + TankEntry.TABLE_NAME + "." + TankEntry._ID + "=" + ReadingEntry.COLUMN_IDENTIFIER + " " +
-    "WHERE (" + ReadingEntry.COLUMN_DATE + " IS NULL) " +
-    "OR (" + ReadingEntry.COLUMN_DATE + "=" +
-    "(SELECT MAX(r2." + ReadingEntry.COLUMN_DATE + ") FROM " + ReadingEntry.TABLE_NAME + " " +
-     "r2 WHERE " + ReadingEntry.TABLE_NAME + "." + ReadingEntry.COLUMN_IDENTIFIER + "=" +
-     "r2." + ReadingEntry.COLUMN_IDENTIFIER + ")" +
-     ");";
+            TankEntry.TABLE_NAME + ".*, " +
+            ReadingEntry.COLUMN_IDENTIFIER + ", " +
+            ReadingEntry.COLUMN_AMMONIA + ", " +
+            ReadingEntry.COLUMN_NITRITE + ", " +
+            ReadingEntry.COLUMN_NITRATE + ", " +
+            ReadingEntry.COLUMN_DATE + ", " +
+            ReadingEntry.COLUMN_NOTES + ", " +
+            ReadingEntry.COLUMN_IS_CONTROL + " " +
+            "FROM " + TankEntry.TABLE_NAME + " LEFT OUTER JOIN " + ReadingEntry.TABLE_NAME + " " +
+            "ON " + TankEntry.TABLE_NAME + "." + TankEntry._ID + "=" + ReadingEntry.COLUMN_IDENTIFIER + " " +
+            "WHERE (" + ReadingEntry.COLUMN_DATE + " IS NULL) " +
+            "OR (" + ReadingEntry.COLUMN_DATE + "=" +
+            "(SELECT MAX(r2." + ReadingEntry.COLUMN_DATE + ") FROM " + ReadingEntry.TABLE_NAME + " " +
+            "r2 WHERE " + ReadingEntry.TABLE_NAME + "." + ReadingEntry.COLUMN_IDENTIFIER + "=" +
+            "r2." + ReadingEntry.COLUMN_IDENTIFIER + ")" +
+            ");";
 
 }

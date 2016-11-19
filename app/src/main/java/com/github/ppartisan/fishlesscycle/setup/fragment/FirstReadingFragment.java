@@ -178,12 +178,19 @@ public final class FirstReadingFragment extends BaseSetUpWizardPagerFragment {
             final Tank.Builder builder = getTankBuilderSupplier().getTankBuilder();
 
             if(!isTextWidgetInGroupEmpty(mControlAmmonia, mControlNitrite, mControlNitrate)) {
-                final long time = System.currentTimeMillis();
                 final int ammonia = (int) ViewUtils.getParsedFloatFromTextWidget(mControlAmmonia);
                 final int nitrite = (int) ViewUtils.getParsedFloatFromTextWidget(mControlNitrite);
                 final int nitrate = (int) ViewUtils.getParsedFloatFromTextWidget(mControlNitrate);
+                //noinspection ConstantConditions
                 final Reading controlReading =
-                        new Reading(builder.getIdentifier(), time, ammonia, nitrite, nitrate, true);
+                        new Reading(
+                                builder.getIdentifier(),
+                                builder.getControlReading().date,
+                                ammonia,
+                                nitrite,
+                                nitrate,
+                                true
+                        );
                 builder.setControlReading(controlReading);
             }
         }

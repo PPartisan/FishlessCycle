@@ -5,13 +5,13 @@ import android.os.Parcelable;
 
 public final class Reading implements Parcelable {
 
-    public final long id, date;
+    public final long identifier, date;
     public final float ammonia, nitrite, nitrate;
     private String note;
     public final boolean isControl;
 
-    public Reading(long id, long date, float ammonia, float nitrite, float nitrate, boolean isControl) {
-        this.id = id;
+    public Reading(long identifier, long date, float ammonia, float nitrite, float nitrate, boolean isControl) {
+        this.identifier = identifier;
         this.date = date;
         this.ammonia = ammonia;
         this.nitrite = nitrite;
@@ -20,7 +20,7 @@ public final class Reading implements Parcelable {
     }
 
     protected Reading(Parcel in) {
-        id = in.readLong();
+        identifier = in.readLong();
         date = in.readLong();
         ammonia = in.readFloat();
         nitrite = in.readFloat();
@@ -31,7 +31,7 @@ public final class Reading implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
+        dest.writeLong(identifier);
         dest.writeLong(date);
         dest.writeFloat(ammonia);
         dest.writeFloat(nitrite);
@@ -68,7 +68,7 @@ public final class Reading implements Parcelable {
     @Override
     public int hashCode() {
         int result = 5;
-        result = 31 * result + (int) (id^(id>>>32));
+        result = 31 * result + (int) (identifier ^(identifier >>>32));
         result = 31 * result + (int) (date^(date>>>32));
         result = 31 * result + Float.floatToIntBits(ammonia);
         result = 31 * result + Float.floatToIntBits(nitrite);
@@ -83,7 +83,7 @@ public final class Reading implements Parcelable {
         if(obj==this)return true;
         if(!(obj instanceof Reading))return false;
         final Reading other = (Reading) obj;
-        return this.id == other.id &&
+        return this.identifier == other.identifier &&
                 this.date == other.date &&
                 this.ammonia == other.ammonia &&
                 this.nitrite == other.nitrite &&
