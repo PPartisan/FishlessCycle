@@ -5,45 +5,32 @@ import android.support.annotation.Nullable;
 public abstract class InfoItem {
 
     public final String content;
-    public final boolean isOptional;
 
     public abstract boolean isHeader();
     public abstract boolean isChild();
     public abstract boolean hasChild();
     public abstract Child getChild();
 
-    public InfoItem(String content, boolean isOptional) {
+    private InfoItem(String content) {
         this.content = content;
-        this.isOptional = isOptional;
-    }
-
-    public static Parent buildParent(String parentContent, boolean isParentOptional, String childContent, boolean isOptional) {
-        return new Parent(parentContent, isOptional, new Child(childContent, isOptional));
     }
 
     public static class ParentBuilder {
 
         private final String content;
-        private final boolean isOptional;
         private Child child;
 
-        public ParentBuilder(String content, boolean isOptional) {
+        public ParentBuilder(String content) {
             this.content = content;
-            this.isOptional = isOptional;
         }
 
-        public ParentBuilder setChild(Child child) {
-            this.child = child;
-            return this;
-        }
-
-        public ParentBuilder setChild(String childContent, boolean isChildOptional) {
-            this.child = new Child(childContent, isChildOptional);
+        public ParentBuilder setChild(String childContent) {
+            this.child = new Child(childContent);
             return this;
         }
 
         public Parent build() {
-            return new Parent(content, isOptional, child);
+            return new Parent(content, child);
         }
 
     }
@@ -52,8 +39,8 @@ public abstract class InfoItem {
 
         private boolean isVisible = false;
 
-        private Child(String content, boolean isOptional) {
-            super(content, isOptional);
+        private Child(String content) {
+            super(content);
         }
 
         @Override
@@ -90,8 +77,8 @@ public abstract class InfoItem {
 
         @Nullable private final Child mChild;
 
-        private Parent(String content, boolean isOptional, @Nullable Child child) {
-            super(content, isOptional);
+        private Parent(String content, @Nullable Child child) {
+            super(content);
             this.mChild = child;
         }
 
@@ -119,7 +106,7 @@ public abstract class InfoItem {
     public static final class Header extends InfoItem {
 
         public Header(String content) {
-            super(content, false);
+            super(content);
         }
 
         @Override

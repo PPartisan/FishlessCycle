@@ -318,6 +318,7 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
     }
 
     private Snackbar buildReadingDeletedSnackBar(final Reading reading) {
+        @SuppressWarnings("ConstantConditions")
         Snackbar snackbar = Snackbar.make(
                 getView(),
                 getString(R.string.deleted_template, ReadingUtils.getReadableDateString(reading.date)),

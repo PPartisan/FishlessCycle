@@ -2,7 +2,6 @@ package com.github.ppartisan.fishlesscycle.setup.adapter;
 
 import android.animation.ArgbEvaluator;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.setup.model.ColorPack;
 

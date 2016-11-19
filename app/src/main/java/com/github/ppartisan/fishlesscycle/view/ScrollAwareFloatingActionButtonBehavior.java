@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
+@SuppressWarnings("unused")
 public final class ScrollAwareFloatingActionButtonBehavior extends FloatingActionButton.Behavior {
     private static final String TAG = "ScrollAwareFABBehavior";
 

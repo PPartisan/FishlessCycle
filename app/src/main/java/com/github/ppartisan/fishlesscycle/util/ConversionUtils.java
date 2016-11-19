@@ -38,10 +38,12 @@ public final class ConversionUtils {
 
     }
 
+    @SuppressWarnings("unused")
     public static float getCubicInchesAsImperialGallon(float cubicInches) {
         return cubicInches*0.0036047f;
     }
 
+    @SuppressWarnings("unused")
     public static float getCubicInchesAsUsGallon(float cubicInches) {
         return cubicInches*0.004329f;
     }

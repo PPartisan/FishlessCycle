@@ -12,7 +12,7 @@ public final class ImagePack implements Parcelable {
         this.paths = paths;
     }
 
-    protected ImagePack(Parcel in) {
+    private ImagePack(Parcel in) {
         titles = in.createStringArray();
         paths = in.createStringArray();
     }

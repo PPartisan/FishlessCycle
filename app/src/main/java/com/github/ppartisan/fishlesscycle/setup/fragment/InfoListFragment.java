@@ -23,7 +23,6 @@ public class InfoListFragment extends BaseSetUpWizardPagerFragment implements In
 
     private List<InfoItem> mItems;
 
-    private RecyclerView mRecycler;
     private InfoRecyclerAdapter mAdapter;
 
     public static InfoListFragment newInstance() {
@@ -46,14 +45,14 @@ public class InfoListFragment extends BaseSetUpWizardPagerFragment implements In
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_suw_info_list, container, false);
+        final View v = inflater.inflate(R.layout.fragment_suw_info_list, container, false);
 
-        mRecycler = (RecyclerView) v.findViewById(R.id.li_swuf_recycler);
+        final RecyclerView recycler = (RecyclerView) v.findViewById(R.id.li_swuf_recycler);
         mAdapter = new InfoRecyclerAdapter(mItems, this);
-        mRecycler.setAdapter(mAdapter);
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecycler.setItemAnimator(new DefaultItemAnimator());
-        mRecycler.setNestedScrollingEnabled(false);
+        recycler.setAdapter(mAdapter);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setItemAnimator(new DefaultItemAnimator());
+        recycler.setNestedScrollingEnabled(false);
 
         return v;
     }
@@ -69,20 +68,20 @@ public class InfoListFragment extends BaseSetUpWizardPagerFragment implements In
 
         List<InfoItem> items = new ArrayList<>();
         items.add(new InfoItem.Header(headers[0]));
-        items.add(new ParentBuilder(parents[0], false).build());
-        items.add(new ParentBuilder(parents[1], false).setChild(children[0], false).build());
-        items.add(new ParentBuilder(parents[2], false).setChild(children[1], false).build());
-        items.add(new ParentBuilder(parents[3], false).setChild(children[2], false).build());
-        items.add(new ParentBuilder(parents[4], false).setChild(children[3], false).build());
-        items.add(new ParentBuilder(parents[5], false).build());
-        items.add(new ParentBuilder(parents[6], false).setChild(children[4], false).build());
-        items.add(new ParentBuilder(parents[7], false).build());
-        items.add(new ParentBuilder(parents[8], false).setChild(children[5], false).build());
+        items.add(new ParentBuilder(parents[0]).build());
+        items.add(new ParentBuilder(parents[1]).setChild(children[0]).build());
+        items.add(new ParentBuilder(parents[2]).setChild(children[1]).build());
+        items.add(new ParentBuilder(parents[3]).setChild(children[2]).build());
+        items.add(new ParentBuilder(parents[4]).setChild(children[3]).build());
+        items.add(new ParentBuilder(parents[5]).build());
+        items.add(new ParentBuilder(parents[6]).setChild(children[4]).build());
+        items.add(new ParentBuilder(parents[7]).build());
+        items.add(new ParentBuilder(parents[8]).setChild(children[5]).build());
         items.add(new InfoItem.Header(headers[1]));
-        items.add(new ParentBuilder(parentOpt[0], true).setChild(childrenOpt[0], true).build());
-        items.add(new ParentBuilder(parentOpt[1], true).setChild(childrenOpt[1], true).build());
-        items.add(new ParentBuilder(parentOpt[2], true).build());
-        items.add(new ParentBuilder(parentOpt[3], true).setChild(childrenOpt[2], true).build());
+        items.add(new ParentBuilder(parentOpt[0]).setChild(childrenOpt[0]).build());
+        items.add(new ParentBuilder(parentOpt[1]).setChild(childrenOpt[1]).build());
+        items.add(new ParentBuilder(parentOpt[2]).build());
+        items.add(new ParentBuilder(parentOpt[3]).setChild(childrenOpt[2]).build());
 
         return items;
     }

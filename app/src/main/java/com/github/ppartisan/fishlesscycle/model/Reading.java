@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 public final class Reading implements Parcelable {
 
-    public static final int NO_ID = -1;
     public static final long CONTROL_DATE = Long.MIN_VALUE;
 
     public final long id, date;
@@ -78,7 +77,7 @@ public final class Reading implements Parcelable {
         result = 31 * result + Float.floatToIntBits(nitrate);
         result = 31 * result + note.hashCode();
         result = 31 * result + (isControl ? 1 : 0);
-        return super.hashCode();
+        return result;
     }
 
     @Override

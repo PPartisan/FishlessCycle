@@ -1,9 +1,6 @@
 package com.github.ppartisan.fishlesscycle.setup.adapter;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.IntDef;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,13 +36,15 @@ public final class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecycler
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        @ViewType int type = viewType;
+
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         int resId;
         View v;
         BaseViewHolder vh = null;
 
-        switch (viewType) {
+        switch (type) {
             case HEADER:
                 resId = R.layout.row_suw_info_heading;
                 v = inflater.inflate(resId, parent, false);

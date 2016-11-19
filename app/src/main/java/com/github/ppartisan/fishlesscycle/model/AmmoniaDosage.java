@@ -7,7 +7,7 @@ public final class AmmoniaDosage implements Parcelable {
 
     public final float dosage, targetConcentration;
 
-    public AmmoniaDosage(AmmoniaDosage ammoniaDosage) {
+    AmmoniaDosage(AmmoniaDosage ammoniaDosage) {
         this(ammoniaDosage.dosage, ammoniaDosage.targetConcentration);
     }
 
@@ -16,7 +16,7 @@ public final class AmmoniaDosage implements Parcelable {
         this.targetConcentration = targetConcentration;
     }
 
-    protected AmmoniaDosage(Parcel in) {
+    private AmmoniaDosage(Parcel in) {
         dosage = in.readFloat();
         targetConcentration = in.readFloat();
     }

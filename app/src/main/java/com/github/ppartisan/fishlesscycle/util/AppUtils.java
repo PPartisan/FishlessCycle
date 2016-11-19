@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
@@ -93,7 +92,7 @@ public final class AppUtils {
             return null;
         }
 
-        File file = null;
+        File file;
         try{
             file = createImageFile(activity);
         } catch (IOException e) {
@@ -107,7 +106,7 @@ public final class AppUtils {
         return takePictureIntent;
     }
 
-    public static File createImageFile(Context context) throws IOException {
+    private static File createImageFile(Context context) throws IOException {
 
         final String timeStamp = TIME_STAMP_FORMAT.format(Calendar.getInstance().getTime());
         final String imageFileName = "JPEG_" + timeStamp + "_";

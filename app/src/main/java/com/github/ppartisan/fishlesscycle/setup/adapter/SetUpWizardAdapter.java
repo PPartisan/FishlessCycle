@@ -20,7 +20,7 @@ import java.util.Set;
 
 public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
 
-    private static final int NUM_PAGES = 7;
+    public static final int NUM_PAGES = 7;
 
     private final Set<TankBuilderObserver> mTankBuilderObservers = new HashSet<>(NUM_PAGES);
 
@@ -31,7 +31,7 @@ public final class SetUpWizardAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        BaseSetUpWizardPagerFragment f = null;
+        BaseSetUpWizardPagerFragment f;
 
         switch (position) {
             case 0:

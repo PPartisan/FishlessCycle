@@ -32,13 +32,6 @@ import static com.github.ppartisan.fishlesscycle.util.TankUtils.getVolumeAsLitre
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.getParsedFloatFromTextWidget;
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpty;
 
-//ToDo: See Below
-/*
-This class should pull the unit preference value from SharedPreferences, which is configured in
-"Settings" menu, and update SharedPreferences based on the switch value. Revisit once the
-"Settings" activity/fragment is configured.
- */
-
 public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFragment
         implements TextWatcher, View.OnClickListener {
 
@@ -49,7 +42,6 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
     private @PreferenceUtils.VolumeUnit int volumeUnit = PreferenceUtils.METRIC;
 
     private TextView mUnitDescription;
-    private ImageButton mSettingsBtn;
 
     public static TankVolumeCalculatorFragment newInstance() {
 
@@ -92,8 +84,8 @@ public final class TankVolumeCalculatorFragment extends BaseSetUpWizardPagerFrag
 
         mUnitDescription = (TextView) v.findViewById(R.id.vt_suwf_unit_description);
 
-        mSettingsBtn = (ImageButton) v.findViewById(R.id.vt_suwf_switch_units);
-        mSettingsBtn.setOnClickListener(this);
+        final ImageButton settings = (ImageButton) v.findViewById(R.id.vt_suwf_switch_units);
+        settings.setOnClickListener(this);
 
         return v;
 

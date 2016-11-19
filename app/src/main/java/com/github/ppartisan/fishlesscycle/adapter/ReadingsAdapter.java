@@ -2,9 +2,7 @@ package com.github.ppartisan.fishlesscycle.adapter;
 
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,7 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        int layoutId = 0;
+        int layoutId;
         View v;
         RecyclerView.ViewHolder vh = null;
 
@@ -92,11 +90,6 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void setDataItems(List<Reading> items) {
         mReadings = items;
-    }
-
-    public void addDataItem(Reading item) {
-        mReadings.add(item);
-        notifyItemInserted(mReadings.size());
     }
 
     public Reading getDataItem(int index) {

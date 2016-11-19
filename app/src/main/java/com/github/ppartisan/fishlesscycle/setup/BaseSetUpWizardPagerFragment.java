@@ -7,12 +7,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
 import com.github.ppartisan.fishlesscycle.model.Tank;
-import com.google.android.gms.analytics.Tracker;
 
 
-public class BaseSetUpWizardPagerFragment extends Fragment implements TankBuilderObserver, SharedPreferences.OnSharedPreferenceChangeListener {
+public class BaseSetUpWizardPagerFragment extends Fragment implements
+        TankBuilderObserver, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private TankBuilderSupplier mTankBuilderSupplier;
 

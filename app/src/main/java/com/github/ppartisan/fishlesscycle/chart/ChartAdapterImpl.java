@@ -8,7 +8,7 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -105,6 +105,8 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
         mReading = readingsCopy;
 
+        Log.e(getClass().getSimpleName(), "Is hcart empty? " + mChart.isEmpty());
+
         switch (chartMode) {
             case LINE:
                 mLineData = null;
@@ -118,8 +120,9 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
                 break;
         }
 
-        mChart.setData(mCombinedData);
-        mChart.invalidate();
+        applyCombinedDataToChart();
+
+        Log.e(getClass().getSimpleName(), "Is hcart empty? " + mChart.isEmpty());
 
         if (highlight != null && highlight.dataSetIndex >= 0) {
             Highlight h = new Highlight(highlight.x, highlight.dataSetIndex, highlight.stackIndex);
@@ -138,8 +141,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         final BarData barData = mCombinedData.getBarData();
         if (barData != null) barData.clearValues();
         mCombinedData.setData(getLineData());
-        mChart.setData(mCombinedData);
-        mChart.invalidate();
+        applyCombinedDataToChart();
     }
 
     @Override
@@ -148,8 +150,7 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         final LineData lineData = mCombinedData.getLineData();
         if (lineData != null) lineData.clearValues();
         mCombinedData.setData(getBarData());
-        mChart.setData(mCombinedData);
-        mChart.invalidate();
+        applyCombinedDataToChart();
     }
 
     @Override
@@ -227,6 +228,15 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         legend.setEnabled(true);
         legend.setTextColor(Color.WHITE);
 
+    }
+
+    private void applyCombinedDataToChart() {
+        if (mCombinedData == null || mCombinedData.getEntryCount() == 0) {
+            mChart.setData(null);
+        } else {
+            mChart.setData(mCombinedData);
+        }
+        mChart.invalidate();
     }
 
     private LineData getLineData() {

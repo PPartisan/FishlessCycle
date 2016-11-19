@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int LOADER_ID = 4;
 
     private Tracker mTracker;
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +31,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         AppUtils.checkInternetPermissions(this);
         mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
-        mAdView = (AdView) findViewById(R.id.ma_ad_view);
+        final AdView adView = (AdView) findViewById(R.id.ma_ad_view);
         final AdRequest request = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("C07A980181A0030AB61A20553A00CD1E")
                 .build();
-        mAdView.loadAd(request);
+        adView.loadAd(request);
 
         if(getSupportFragmentManager().findFragmentById(R.id.ma_container) == null) {
             getSupportFragmentManager()

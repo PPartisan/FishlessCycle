@@ -1,7 +1,6 @@
 package com.github.ppartisan.fishlesscycle.setup;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -53,8 +51,6 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     private DotIndicatorView mIndicator;
     private Tank.Builder mTankBuilder;
 
-    private List<ColorPack> mColors;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,17 +74,17 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
 
         Glide.with(this).load(R.drawable.tank_white).into(mImage);
 
-        mColors = new ArrayList<>();
-        mColors.add(ColorPack.buildFromId(this, R.color.cyan_700, R.color.cyan_900));
-        mColors.add(ColorPack.buildFromId(this, R.color.grey_500, R.color.grey_700));
-        mColors.add(ColorPack.buildFromId(this, R.color.indigo_300, R.color.indigo_500));
-        mColors.add(ColorPack.buildFromId(this, R.color.blue_grey_300, R.color.blue_grey_500));
-        mColors.add(ColorPack.buildFromId(this, R.color.cyan_500, R.color.cyan_700));
-        mColors.add(ColorPack.buildFromId(this, R.color.grey_500, R.color.grey_700));
-        mColors.add(ColorPack.buildFromId(this, R.color.blue_500, R.color.blue_700));
+        final List<ColorPack> colors = new ArrayList<>(SetUpWizardAdapter.NUM_PAGES);
+        colors.add(ColorPack.buildFromId(this, R.color.cyan_700, R.color.cyan_900));
+        colors.add(ColorPack.buildFromId(this, R.color.grey_500, R.color.grey_700));
+        colors.add(ColorPack.buildFromId(this, R.color.indigo_300, R.color.indigo_500));
+        colors.add(ColorPack.buildFromId(this, R.color.blue_grey_300, R.color.blue_grey_500));
+        colors.add(ColorPack.buildFromId(this, R.color.cyan_500, R.color.cyan_700));
+        colors.add(ColorPack.buildFromId(this, R.color.grey_500, R.color.grey_700));
+        colors.add(ColorPack.buildFromId(this, R.color.blue_500, R.color.blue_700));
 
         mPager = (ViewPager) findViewById(R.id.wusa_pager);
-        mPager.addOnPageChangeListener(new SetUpPageChangeListener(this, mColors));
+        mPager.addOnPageChangeListener(new SetUpPageChangeListener(this, colors));
         mAdapter = new SetUpWizardAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
 

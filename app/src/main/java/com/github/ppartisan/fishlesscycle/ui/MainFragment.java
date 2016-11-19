@@ -54,11 +54,9 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     private ImageCapture mImageCapture = new ImageCapture();
 
-    private EmptyRecyclerView mRecyclerView;
     private TanksAdapter mAdapter;
 
     private Toolbar mToolbar;
-    private FloatingActionButton mFab;
 
     public static MainFragment newInstance() {
 
@@ -89,14 +87,14 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         mToolbar.inflateMenu(R.menu.main_menu);
         mToolbar.setOnMenuItemClickListener(this);
 
-        mFab = (FloatingActionButton) view.findViewById(R.id.fm_fab);
-        mFab.setOnClickListener(this);
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fm_fab);
+        fab.setOnClickListener(this);
 
         final ImageView emptyImageView = (ImageView) view.findViewById(R.id.fm_empty_view_image);
         Glide.with(getContext()).load(R.drawable.f_cycle_grey).into(emptyImageView);
 
-        mRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.fm_recycler);
-        mRecyclerView.setEmptyView(view.findViewById(R.id.fm_empty_view));
+        final EmptyRecyclerView recycler = (EmptyRecyclerView) view.findViewById(R.id.fm_recycler);
+        recycler.setEmptyView(view.findViewById(R.id.fm_empty_view));
 
         final @DosageUnit int dosUnitType =
                 PreferenceUtils.getDosageUnitType(getContext());
@@ -105,9 +103,9 @@ public final class MainFragment extends Fragment implements View.OnClickListener
                 PreferenceUtils.getVolumeUnit(getContext());
 
         mAdapter = new TanksAdapter(this, null, dosUnitType, volUnitType);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        recycler.setAdapter(mAdapter);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setItemAnimator(new DefaultItemAnimator());
 
         if (savedInstanceState != null) {
             mImageCapture = savedInstanceState.getParcelable(ImageCapture.KEY);
@@ -226,6 +224,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     }
 
     private Snackbar buildTankDeletedSnackBar(final Tank tank) {
+        @SuppressWarnings("ConstantConditions")
         Snackbar snackbar = Snackbar.make(
                 getView(),
                 getString(R.string.deleted_template, tank.name),

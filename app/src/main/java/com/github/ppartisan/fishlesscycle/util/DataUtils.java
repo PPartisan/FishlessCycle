@@ -1,7 +1,6 @@
 package com.github.ppartisan.fishlesscycle.util;
 
 import android.content.ContentProviderOperation;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Reading;

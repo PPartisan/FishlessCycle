@@ -1,12 +1,10 @@
 package com.github.ppartisan.fishlesscycle.setup.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +45,6 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     private EditText mTitle, mVolume, mAmmonia;
     private CheckBox mHeater, mSeedMaterial;
     private RadioButton mNoPlants, mLightlyPlanted, mHeavilyPlanted;
-    private Button mConfirm;
 
     public static ConfirmationFragment newInstance(boolean isVisibleByDefault) {
 
@@ -84,8 +81,8 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
         mLightlyPlanted = (RadioButton) v.findViewById(R.id.c_suwf_radio_light_plants);
         mHeavilyPlanted = (RadioButton) v.findViewById(R.id.c_suwf_radio_heavy_plants);
 
-        mConfirm = (Button) v.findViewById(R.id.c_suwf_confirm);
-        mConfirm.setOnClickListener(this);
+        Button confirm = (Button) v.findViewById(R.id.c_suwf_confirm);
+        confirm.setOnClickListener(this);
 
         final RadioGroup group = (RadioGroup) v.findViewById(R.id.c_suwf_planted);
         group.setOnCheckedChangeListener(this);
@@ -365,10 +362,9 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
             final float parsedAmmonia = ViewUtils.getParsedFloatFromTextWidget(mAmmonia);
             final AmmoniaDosage dosage = builder.getAmmoniaDosage();
 
-            final float targetConcentration = (dosage == null)
-                    ? Tank.DEFAULT_TARGET_CONCENTRATION : dosage.targetConcentration;
+            final float targetConcentration = dosage.targetConcentration;
 
-            if (dosage == null || dosage.dosage != parsedAmmonia) {
+            if (dosage.dosage != parsedAmmonia) {
                 builder.setAmmoniaDosage(parsedAmmonia, targetConcentration);
                 getTankBuilderSupplier().notifyTankBuilderUpdated();
             }

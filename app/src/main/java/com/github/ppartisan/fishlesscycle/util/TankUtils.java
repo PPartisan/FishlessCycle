@@ -22,9 +22,6 @@ import com.github.ppartisan.fishlesscycle.model.Tank.PlantStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.MGL;
-import static com.github.ppartisan.fishlesscycle.util.ConversionUtils.PPM;
-
 public final class TankUtils {
 
     private TankUtils() { throw new AssertionError(); }
@@ -86,38 +83,6 @@ public final class TankUtils {
         }
 
         return tanks;
-
-    }
-
-
-    public static String getStageString(Resources res, @Tank.TankStatus int tankStatus) {
-
-        final String[] stages = res.getStringArray(R.array.tank_stage);
-
-        int index = -1;
-
-        switch (tankStatus) {
-            case Tank.NOT_STARTED:
-                index = 0;
-                break;
-            case Tank.STARTED:
-                index = 1;
-                break;
-            case Tank.CYCLING_AMMONIA:
-                index = 2;
-                break;
-            case Tank.CYCLING_NITRITE:
-                index = 3;
-                break;
-            case Tank.CYCLE_COMPLETE:
-                index = 4;
-                break;
-            default:
-                throw new IllegalArgumentException("tankStatus must match constant value in " +
-                        Tank.TankStatus.class.getCanonicalName());
-        }
-
-        return stages[index];
 
     }
 
@@ -241,26 +206,6 @@ public final class TankUtils {
         cv.put(TankEntry._ID, builder.getIdentifier());
 
         return cv;
-
-    }
-
-    public static String getUserDosageUnitAsString(Resources res, @ConversionUtils.DosageUnit int unit) {
-
-        String unitString;
-
-        switch (unit) {
-            case MGL:
-                unitString = res.getString(R.string.unit_metric);
-                break;
-            case PPM:
-                unitString = res.getString(R.string.unit_imperial);
-                break;
-            default:
-                throw new IllegalArgumentException("'type' parameter must be of type "
-                        + ConversionUtils.DosageUnit.class.getCanonicalName());
-        }
-
-        return unitString;
 
     }
 

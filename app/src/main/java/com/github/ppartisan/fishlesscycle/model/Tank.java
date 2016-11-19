@@ -186,8 +186,7 @@ public final class Tank {
         }
 
         public Builder setAmmoniaDosage(float dosage, float targetConcentration) {
-            this.ammoniaDosage = new AmmoniaDosage(dosage, targetConcentration);
-            return this;
+            return setAmmoniaDosage(new AmmoniaDosage(dosage, targetConcentration));
         }
 
         public Builder setLastReading(Reading reading) {

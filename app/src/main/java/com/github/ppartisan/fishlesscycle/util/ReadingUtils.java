@@ -3,7 +3,6 @@ package com.github.ppartisan.fishlesscycle.util;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresPermission;
 
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.model.Reading;
@@ -22,10 +21,6 @@ public final class ReadingUtils {
 
     public static String getReadableDateString(long date) {
         return DATE_FORMAT.format(date);
-    }
-
-    public static String toOneDecimalPlace(double input) {
-        return String.valueOf(String.format(Locale.getDefault(), "%.1f", input));
     }
 
     public static List<Reading> getReadingsList(@NonNull Cursor cursor) {

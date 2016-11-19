@@ -11,10 +11,9 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.widget.RemoteViews;
 
-import com.github.ppartisan.fishlesscycle.ui.MainActivity;
 import com.github.ppartisan.fishlesscycle.R;
+import com.github.ppartisan.fishlesscycle.ui.MainActivity;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.widget.WidgetProvider;
