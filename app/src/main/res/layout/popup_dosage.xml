@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/horizontal_margin_default_small"
+    android:paddingRight="@dimen/horizontal_margin_default_small"
+    android:paddingTop="@dimen/vertical_margin_default_small"
+    android:paddingBottom="@dimen/vertical_margin_default_small"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/p_dosage_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/primary_dark"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:id="@+id/p_dosage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:paddingLeft="@dimen/horizontal_margin_default_small"
+            android:paddingRight="@dimen/horizontal_margin_default_small"
+            android:paddingTop="@dimen/vertical_margin_default_small"
+            android:paddingBottom="@dimen/vertical_margin_default_small"
+            android:textColor="@android:color/white"
+            tools:text="Dosage: 0.7ml"/>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

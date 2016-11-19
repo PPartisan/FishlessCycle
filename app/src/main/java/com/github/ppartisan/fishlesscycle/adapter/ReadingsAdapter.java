@@ -65,7 +65,7 @@ public final class ReadingsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         final Reading item = mReadings.get(--position);
 
         String dateText;
-        if(item.date == Reading.CONTROL_DATE) {
+        if(item.isControl) {
             dateText = holder.itemView.getResources().getString(R.string.df_control);
         } else {
             dateText = ReadingUtils.getReadableDateString(item.date);

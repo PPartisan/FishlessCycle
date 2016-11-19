@@ -40,15 +40,17 @@ import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.setup.view.HiddenViewManager;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
+import com.github.ppartisan.fishlesscycle.view.DosagePopUpWindow;
 
 import java.util.List;
 
 import static com.github.ppartisan.fishlesscycle.util.ViewUtils.isTextWidgetEmpty;
 
 public final class DetailFragment extends Fragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener,ViewTreeObserver.OnGlobalLayoutListener, HiddenViewManager.AnimationCallbacks, TextWatcher, DataRowCallbacks {
-    private static final String TAG = DetailFragment.class.getCanonicalName();
+    private static final String TAG = DetailFragment.class.getSimpleName();
     public static final String KEY_IDENTIFIER = TAG + ".KEY_IDENTIFIER";
     public static final String KEY_NAME = TAG + ".KEY_NAME";
+    public static final String KEY_DOSAGE = TAG + ".KEY_DOSAGE";
     private static final String FAB_ROTATION_TAG = TAG + ".FAB_ROTATION_TAG";
 
     private static final float RECYCLER_ELEVATION = 4f;
@@ -69,11 +71,14 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
     private ChartAdapter mChartAdapter;
 
-    public static DetailFragment newInstance(String name, long identifier) {
+    private DosagePopUpWindow mDosagePopUp;
+
+    public static DetailFragment newInstance(String name, long identifier, float dosage) {
 
         Bundle args = new Bundle();
         args.putLong(KEY_IDENTIFIER, identifier);
         args.putString(KEY_NAME, name);
+        args.putFloat(KEY_DOSAGE, dosage);
 
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
@@ -137,10 +142,14 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         mChartAdapter = new ChartAdapterImpl(chart);
         mChartAdapter.setData(null);
 
+        final View popupAnchor = view.findViewById(R.id.md_action_dosage);
+        mDosagePopUp = new DosagePopUpWindow(popupAnchor, getName(), getDosage());
+
         if (savedInstanceState != null) {
             mEditModel = savedInstanceState.getParcelable(EditModel.KEY);
             mHiddenViewManager.onRestoreInstanceState(savedInstanceState);
             mChartAdapter.onRestoreInstanceState(savedInstanceState);
+            mDosagePopUp.onRestoreInstanceState(savedInstanceState);
             ViewCompat.setRotation(mFab, savedInstanceState.getFloat(FAB_ROTATION_TAG, 0));
         }
 
@@ -169,8 +178,15 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         super.onSaveInstanceState(outState);
         mChartAdapter.onSaveInstanceState(outState);
         mHiddenViewManager.onSaveInstanceState(outState);
+        mDosagePopUp.onSaveInstanceState(outState);
         outState.putFloat(FAB_ROTATION_TAG, ViewCompat.getRotation(mFab));
         outState.putParcelable(EditModel.KEY, mEditModel);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mDosagePopUp.dismiss();
     }
 
     @Override
@@ -180,10 +196,15 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.md_action_switch_graph) {
-            mChartAdapter.switchChartType();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.md_action_dosage:
+                mDosagePopUp.show();
+                return true;
+            case R.id.md_action_switch_graph:
+                mChartAdapter.switchChartType();
+                return true;
         }
+
         return false;
     }
 
@@ -193,6 +214,10 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
     private String getName() {
         return getArguments().getString(KEY_NAME);
+    }
+
+    private float getDosage() {
+        return getArguments().getFloat(KEY_DOSAGE);
     }
 
     public void updateReadings(List<Reading> readings) {

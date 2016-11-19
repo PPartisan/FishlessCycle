@@ -61,7 +61,8 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
 
         if (getSupportFragmentManager().findFragmentById(R.id.da_container) == null) {
 
-            final DetailFragment f = DetailFragment.newInstance(getName(), getIdentifier());
+            final DetailFragment f =
+                    DetailFragment.newInstance(getName(), getIdentifier(), getDosage());
             final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.da_container, f);
             ft.commit();
@@ -107,6 +108,10 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
 
     private String getName() {
         return getIntent().getStringExtra(DetailFragment.KEY_NAME);
+    }
+
+    private float getDosage() {
+        return getIntent().getFloatExtra(DetailFragment.KEY_DOSAGE, 0f);
     }
 
 }

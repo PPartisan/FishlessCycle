@@ -33,7 +33,7 @@ public final class DataUtils {
         Reading control = builder.getControlReading();
         if(control == null) {
             control =
-                    new Reading(builder.getIdentifier(), Reading.CONTROL_DATE, 0, 0, 0, true);
+                    new Reading(builder.getIdentifier(), System.currentTimeMillis(), 0, 0, 0, true);
             builder.setControlReading(control);
         }
 

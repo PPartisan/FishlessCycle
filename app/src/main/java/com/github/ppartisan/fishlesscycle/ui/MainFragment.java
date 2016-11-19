@@ -167,6 +167,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(DetailFragment.KEY_IDENTIFIER, tank.identifier);
         intent.putExtra(DetailFragment.KEY_NAME, vh.title.getText());
+        intent.putExtra(DetailFragment.KEY_DOSAGE, tank.getAmmoniaDosage().dosage);
 
         Pair<View,String> p2 = Pair.create((View)vh.title, ViewCompat.getTransitionName(vh.title));
 
@@ -244,7 +245,7 @@ public final class MainFragment extends Fragment implements View.OnClickListener
             @Override
             public void onDismissed(Snackbar snackbar, int event) {
                 //Action means "Undo" was clicked
-                if (event == DISMISS_EVENT_ACTION) {
+                if (event == DISMISS_EVENT_ACTION || getContext() == null) {
                     return;
                 }
                 final String where = Contract.ReadingEntry.COLUMN_IDENTIFIER+"=?";

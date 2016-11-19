@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/md_action_dosage"
+        android:title="@string/md_action_dosage"
+        android:icon="@drawable/ic_opacity_white_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/md_action_switch_graph"
         android:title="@string/md_action_switch_graph"
         android:icon="@drawable/ic_switch_graph"

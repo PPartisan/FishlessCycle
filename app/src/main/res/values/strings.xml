@@ -64,7 +64,11 @@
     <string name="mrd_action_delete">Delete</string>
 
     <!-- Detail Menu -->
+    <string name="md_action_dosage">Dosage</string>
     <string name="md_action_switch_graph">Switch Graph Type</string>
+
+    <!-- Dosage PopUpWindow -->
+    <string name="p_dosage_content">Ammonia dosage for %1$s is %2$.1f ml</string>
 
     <!-- Tank Card Menu -->
     <string name="mct_action_edit_title">Edit Aquarium</string>
@@ -77,20 +81,19 @@
     <!-- 1. Introduction Fragment -->
     <string name="wus_intro_content">
         This guide will help you set-up your new aquarium!\n\nThe following pages will give a list
-        of recommended items to buy, provide tools to help calculate dosage amounts and configure
-        extra items.\n\nIf you prefer, you may skip the guide and enter these details manually by
-        pressing the "Skip" button. Otherwise, swipe right to continue.
+        of recommended items to buy, provide tools to help calculate dosage amounts and offer
+        guidance on conducting your first readings.\n\nIf you prefer, you may skip the guide and
+        enter these details manually by pressing the "Skip" button. Otherwise, swipe right to continue.
     </string>
     <string name="wus_intro_continue">Continue</string>
     <string name="wus_intro_skip">Skip</string>
 
     <!-- 2. Purchasing List Fragment -->
     <string name="wus_pl_content">
-        This is a list of essential and optional items required for setting up a new
-        aquarium.\n\nIt is possible to continue without some of the \"Essential\"
-        items, but they are included because of their usefulness.
+        This is a list of essential, recommended and optional items required for setting up a new
+        aquarium.
     </string>
-    <string name="wus_pl_essential_title">Essential</string>
+    <string name="wus_pl_essential_title">Essential/Recommended</string>
     <string name="wus_pl_optional_title">Optional</string>
     <string name="wus_pl_acc_expand">Expand</string>
 
