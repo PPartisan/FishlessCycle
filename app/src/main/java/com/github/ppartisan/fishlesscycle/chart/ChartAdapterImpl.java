@@ -105,8 +105,6 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
 
         mReading = readingsCopy;
 
-        Log.e(getClass().getSimpleName(), "Is hcart empty? " + mChart.isEmpty());
-
         switch (chartMode) {
             case LINE:
                 mLineData = null;
@@ -121,8 +119,6 @@ public class ChartAdapterImpl implements ChartAdapter, OnChartValueSelectedListe
         }
 
         applyCombinedDataToChart();
-
-        Log.e(getClass().getSimpleName(), "Is hcart empty? " + mChart.isEmpty());
 
         if (highlight != null && highlight.dataSetIndex >= 0) {
             Highlight h = new Highlight(highlight.x, highlight.dataSetIndex, highlight.stackIndex);

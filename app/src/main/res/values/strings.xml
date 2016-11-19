@@ -22,7 +22,7 @@
     <string name="as_label">Settings</string>
 
     <!-- Main Fragment -->
-    <string name="fm_empty_view_text">No Tanks Yet!\n\nPress The Floating Action Button To Add Your
+    <string name="fm_empty_view_text">No Tanks Yet!\n\nPress The Floating Button To Add Your
         First Aquarium!</string>
     <string name="fm_colon" translatable="false">:</string>
     <string name="fm_last_updated_template">Last updated on %1$s</string>
