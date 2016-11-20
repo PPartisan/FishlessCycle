@@ -96,7 +96,7 @@ public final class ReminderTimePreferenceDialog extends DialogPreference {
     @SuppressWarnings("deprecation")
     private Integer getCurrentHour() {
         if(picker == null) return 0;
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
             return picker.getHour();
         } else {
             return picker.getCurrentHour();
@@ -106,7 +106,7 @@ public final class ReminderTimePreferenceDialog extends DialogPreference {
     @SuppressWarnings("deprecation")
     private Integer getCurrentMinute() {
         if(picker == null) return 0;
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
             return picker.getMinute();
         } else {
             return picker.getCurrentMinute();
@@ -116,7 +116,7 @@ public final class ReminderTimePreferenceDialog extends DialogPreference {
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.M)
     private void setPickerFields(int hour, int minute) {
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
             picker.setHour(hour);
             picker.setMinute(minute);
         } else {
