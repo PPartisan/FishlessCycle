@@ -1,6 +1,6 @@
 # Udacity-CapstoneStageII
 
-Android app that helps aquarium owners set up their new tanks and conduct a 'fishless cycle'. This is a submission for the second and final phase of the Capstone project on the Udacity Android Developers Nanodegree. Some of the rubric specifications were met in the following way:
+Android app that helps aquarium owners set up their new tanks and conduct a 'fishless cycle'. This is a submission for the second and final phase of the Capstone project on the [Udacity Android Developers Nanodegree](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801?v=ad1_). Some of the rubric specifications were met in the following way:
 
 **App integrates a third-party library:** App uses the [Glide](https://github.com/bumptech/glide) and [MPAndroidChartLibraries](https://github.com/PhilJay/MPAndroidChart).
 
