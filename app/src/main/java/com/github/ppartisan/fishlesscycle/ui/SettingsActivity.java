@@ -36,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.mm_action_settings);
 
         AppUtils.checkInternetPermissions(this);
         mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();

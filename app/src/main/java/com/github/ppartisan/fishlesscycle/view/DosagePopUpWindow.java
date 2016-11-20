@@ -3,10 +3,11 @@ package com.github.ppartisan.fishlesscycle.view;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.PopupWindowCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +21,32 @@ public final class DosagePopUpWindow {
 
     private static final String TAG = DosagePopUpWindow.class.getSimpleName();
     private static final String IS_OPEN_KEY = TAG + ".IS_OPEN_KEY";
+    //Auto-Close PopUpWindow after 3.5seconds
+    private static final long TIME_OUT_DURATION = 3500;
 
     private final PopupWindow mWindow;
     private final View mAnchor;
+    private final Handler mTimeOutHandler;
+    private final Runnable mTimeOutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mWindow != null && mWindow.isShowing()) {
+                mWindow.dismiss();
+            }
+        }
+    };
 
     public DosagePopUpWindow(View anchor, String tankName, float dosage) {
         final Context context = anchor.getContext();
         mAnchor = anchor;
         mWindow = buildDosagePopUp(context, buildContentString(context,tankName,dosage));
+        mTimeOutHandler = new Handler(Looper.getMainLooper());
     }
 
     public void show() {
         if(!mWindow.isShowing()) {
             PopupWindowCompat.showAsDropDown(mWindow, mAnchor, 0, 0, GravityCompat.END);
+            mTimeOutHandler.postDelayed(mTimeOutRunnable, TIME_OUT_DURATION);
         }
     }
 

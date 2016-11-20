@@ -37,7 +37,7 @@ import com.github.ppartisan.fishlesscycle.chart.ChartAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapterImpl;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Reading;
-import com.github.ppartisan.fishlesscycle.setup.view.HiddenViewManager;
+import com.github.ppartisan.fishlesscycle.view.HiddenViewManager;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
 import com.github.ppartisan.fishlesscycle.util.ViewUtils;
 import com.github.ppartisan.fishlesscycle.view.DosagePopUpWindow;
@@ -272,6 +272,7 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
                 getContext().getContentResolver().update(
                         Contract.ReadingEntry.CONTENT_URI, cv, where, whereArgs
                 );
+                mEditModel.isInEditMode = false;
             }
             mAmmonia.getText().clear();
             mNitrite.getText().clear();

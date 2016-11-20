@@ -79,6 +79,7 @@
     <string name="mct_action_delete_tank">Delete Aquarium</string>
 
     <!-- Set-Up Wizard -->
+    <string name="wus_title">Set-Up Guide</string>
 
     <!-- 1. Introduction Fragment -->
     <string name="wus_intro_content">

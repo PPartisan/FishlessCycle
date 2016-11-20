@@ -1,4 +1,4 @@
-package com.github.ppartisan.fishlesscycle.setup.view;
+package com.github.ppartisan.fishlesscycle.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

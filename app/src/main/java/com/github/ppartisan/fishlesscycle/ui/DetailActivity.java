@@ -47,6 +47,7 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
         ActivityCompat.postponeEnterTransition(this);
 
         super.onCreate(savedInstanceState);
+        setTitle(getName());
         setContentView(R.layout.activity_detail);
 
         AppUtils.checkInternetPermissions(this);

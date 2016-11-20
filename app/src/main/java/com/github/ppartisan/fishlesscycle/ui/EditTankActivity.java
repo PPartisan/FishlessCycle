@@ -28,6 +28,7 @@ public final class EditTankActivity extends AppCompatActivity implements TankBui
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.mct_action_edit_title);
         setContentView(R.layout.activity_edit_tank);
 
         AppUtils.checkInternetPermissions(this);

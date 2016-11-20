@@ -55,8 +55,8 @@ public final class SetUpWizardActivity extends AppCompatActivity implements Tank
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.wus_title);
         setContentView(R.layout.activity_set_up_wizard);
-
 
         mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
