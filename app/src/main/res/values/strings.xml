@@ -17,6 +17,8 @@
     <string name="pref_reminder_interval_title">Set Reminder Intervals</string>
     <string name="pref_widget_image_path_key">widget_image_path_key</string>
     <string name="pref_widget_image_path_title">Set Widget Image</string>
+    <string name="pref_widget_image_path_summary">Set app widget background to match an image from your
+        list of aquariums.</string>
 
     <!-- Settings Activity -->
     <string name="as_label">Settings</string>
@@ -93,8 +95,6 @@
         This is a list of essential, recommended and optional items required for setting up a new
         aquarium.
     </string>
-    <string name="wus_pl_essential_title">Essential/Recommended</string>
-    <string name="wus_pl_optional_title">Optional</string>
     <string name="wus_pl_acc_expand">Expand</string>
 
     <!-- 3. Tank Volume Calculator Fragment -->

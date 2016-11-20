@@ -49,7 +49,8 @@
 
         <ListPreference
             android:key="@string/pref_widget_image_path_key"
-            android:title="@string/pref_widget_image_path_title" />
+            android:title="@string/pref_widget_image_path_title"
+            android:summary="@string/pref_widget_image_path_summary"/>
 
     </PreferenceCategory>
 

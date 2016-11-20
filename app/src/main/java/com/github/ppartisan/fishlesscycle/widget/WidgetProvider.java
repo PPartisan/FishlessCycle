@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.github.ppartisan.fishlesscycle.ui.MainActivity;
@@ -38,6 +37,7 @@ public final class WidgetProvider extends AppWidgetProvider {
         for(int widgetId : appWidgetIds) {
 
             final Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             final PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
             final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);

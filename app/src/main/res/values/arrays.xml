@@ -14,8 +14,8 @@
     </string-array>
 
     <string-array name="pref_dosage_unit_entries">
-        <item>mg/L</item>
-        <item>ppm</item>
+        <item>Milligrams-per-litre (mg/L)</item>
+        <item>Parts-per-million (ppm)</item>
     </string-array>
 
     <string-array name="pref_dosage_unit_values">
@@ -88,7 +88,7 @@
     </string-array>
 
     <string-array name="info_item_headers">
-        <item>Essential</item>
+        <item>Essential - Recommended</item>
         <item>Optional</item>
     </string-array>
     
