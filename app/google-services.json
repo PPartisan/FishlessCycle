@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "624226539285",
+    "project_id": "fishless-cycle"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624226539285:android:17ddbbc9b281b4b4",
+        "android_client_info": {
+          "package_name": "com.github.ppartisan.fishlesscycle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnqJjejesX3sS-Na1zSCKPFxVJxT2xH1w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-65899273-3"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
