@@ -31,7 +31,7 @@ public final class DosagePopUpWindow {
         @Override
         public void run() {
             if (mWindow != null && mWindow.isShowing()) {
-                mWindow.dismiss();
+                dismiss();
             }
         }
     };
@@ -52,6 +52,7 @@ public final class DosagePopUpWindow {
 
     public void dismiss() {
         mWindow.dismiss();
+        mTimeOutHandler.removeCallbacks(mTimeOutRunnable);
     }
 
     public void onSaveInstanceState(Bundle outState) {
