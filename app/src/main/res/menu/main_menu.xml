@@ -8,4 +8,9 @@
         android:icon="@drawable/ic_settings_white_24dp"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/mm_action_about"
+        android:title="@string/mm_action_about"
+        app:showAsAction="never" />
+
 </menu>

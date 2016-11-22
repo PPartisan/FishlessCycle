@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="?dialogPreferredPadding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/list_item_small"
+            android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+            android:layout_marginRight="@dimen/horizontal_margin_default_small"
+            android:layout_marginStart="@dimen/horizontal_margin_default_small"
+            android:layout_marginEnd="@dimen/horizontal_margin_default_small"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginStart="@dimen/horizontal_margin_default_small"
+                android:text="@string/app_name"
+                android:singleLine="true"/>
+
+            <TextView
+                android:id="@+id/af_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/horizontal_margin_default_small"
+                android:layout_marginStart="@dimen/horizontal_margin_default_small"
+                android:textStyle="italic"
+                android:singleLine="true"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin_default_small"
+        android:text="@string/fa_name"/>
+
+    <TextView
+        android:id="@+id/af_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin_default_small"
+        android:text="@string/fa_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <ImageButton
+            android:id="@+id/af_google_plus"
+            android:layout_width="@dimen/image_button_default"
+            android:layout_height="@dimen/image_button_default"
+            android:src="@drawable/ic_plus_one_white_24dp"
+            android:tint="@color/primary"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+
+        <ImageButton
+            android:id="@+id/af_email"
+            android:layout_width="@dimen/image_button_default"
+            android:layout_height="@dimen/image_button_default"
+            android:src="@drawable/ic_email_white_24dp"
+            android:tint="@color/primary"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <ImageButton
+            android:id="@+id/af_github"
+            android:layout_width="@dimen/image_button_default"
+            android:layout_height="@dimen/image_button_default"
+            android:src="@drawable/ic_code_white_24dp"
+            android:tint="@color/primary"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

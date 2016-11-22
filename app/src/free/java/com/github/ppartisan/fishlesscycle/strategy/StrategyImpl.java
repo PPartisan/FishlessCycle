@@ -38,7 +38,7 @@ public class StrategyImpl implements AdStrategy, AnimStrategy {
     @Override
     public void initializeAd(Context context) {
         MobileAds.initialize(
-                context.getApplicationContext(), context.getString(R.string.test_banner_ad_unit_id)
+                context.getApplicationContext(), context.getString(R.string.ad_unit_id)
         );
     }
 

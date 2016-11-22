@@ -161,6 +161,9 @@ public final class MainFragment extends Fragment implements View.OnClickListener
                         ViewUtils.buildCircleRevealActivityTransition(overflow, getView());
                 ActivityCompat.startActivity(getContext(), settingsIntent, reveal.toBundle());
                 break;
+            case R.id.mm_action_about:
+                final AboutDialogFragment f = AboutDialogFragment.newInstance();
+                f.show(getFragmentManager(), null);
         }
 
         return true;

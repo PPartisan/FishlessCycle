@@ -59,6 +59,7 @@
 
     <!-- Main Menu -->
     <string name="mm_action_settings">Settings</string>
+    <string name="mm_action_about">About</string>
 
     <!-- Reading Row Menu -->
     <string name="mrd_action_notes">Notes</string>
@@ -192,7 +193,16 @@
     <string name="r_content">Time to dose your aquarium!</string>
 
     <!-- AdMob -->
-    <string name="test_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!-- About -->
+    <string name="fa_name" formatted="false">Developed by <b>Tom Calver</b></string>
+    <string name="fa_content">Most of the code for this app is available at the GitHub repository
+    linked below.</string>
+    <string name="fa_google_plus">Join Google+ Community</string>
+    <string name="fa_email">Email Developer</string>
+    <string name="fa_github">View App Source Code</string>
+    <string name="fa_version_template">v.%1$s</string>
 
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>
