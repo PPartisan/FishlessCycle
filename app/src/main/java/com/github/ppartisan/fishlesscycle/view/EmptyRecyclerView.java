@@ -10,6 +10,8 @@ public final class EmptyRecyclerView extends RecyclerView {
     private View mEmptyView;
     private final AdapterDataObserver mEmptyObserver = new EmptyRecyclerDataObserver();
 
+    private Callback mCallback;
+
     public EmptyRecyclerView(Context context) {
         super(context);
     }
@@ -20,6 +22,10 @@ public final class EmptyRecyclerView extends RecyclerView {
 
     public EmptyRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    public void setCallback(Callback callback) {
+        mCallback = callback;
     }
 
     @Override
@@ -49,9 +55,14 @@ public final class EmptyRecyclerView extends RecyclerView {
                 else {
                     mEmptyView.setVisibility(View.GONE);
                     EmptyRecyclerView.this.setVisibility(View.VISIBLE);
+                    if(mCallback != null) mCallback.onEmpty();
                 }
             }
         }
+    }
+
+    public interface Callback {
+        void onEmpty();
     }
 
 }

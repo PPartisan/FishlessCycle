@@ -20,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -102,9 +103,10 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         final @VolumeUnit int volUnitType =
                 PreferenceUtils.getVolumeUnit(getContext());
 
+        final int colCount = getResources().getInteger(R.integer.fm_recycler_column_count);
         mAdapter = new TanksAdapter(this, null, dosUnitType, volUnitType);
         recycler.setAdapter(mAdapter);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setLayoutManager(new GridLayoutManager(getContext(), colCount));
         recycler.setItemAnimator(new DefaultItemAnimator());
 
         if (savedInstanceState != null) {

@@ -2,20 +2,22 @@ package com.github.ppartisan.fishlesscycle.ui;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.compat.BuildConfig;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.strategy.Strategy;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.TankUtils;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.Tracker;
 
+import static com.github.ppartisan.fishlesscycle.data.Contract.CONTENT_AUTHORITY;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -28,22 +30,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.e(getClass().getSimpleName(), CONTENT_AUTHORITY);
+
         AppUtils.checkInternetPermissions(this);
         mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
-        final AdView adView = (AdView) findViewById(R.id.ma_ad_view);
-        final AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("C07A980181A0030AB61A20553A00CD1E")
-                .build();
-        adView.loadAd(request);
-
-        if(getSupportFragmentManager().findFragmentById(R.id.ma_container) == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.ma_container, MainFragment.newInstance())
-                    .commit();
-        }
+        Strategy.get().initializeAd(this);
+        Strategy.get().loadAdForActivity(this);
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 

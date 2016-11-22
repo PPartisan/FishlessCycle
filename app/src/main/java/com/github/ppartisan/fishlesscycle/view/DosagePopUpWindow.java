@@ -46,6 +46,7 @@ public final class DosagePopUpWindow {
     public void show() {
         if(!mWindow.isShowing()) {
             PopupWindowCompat.showAsDropDown(mWindow, mAnchor, 0, 0, GravityCompat.END);
+            mTimeOutHandler.removeCallbacks(mTimeOutRunnable);
             mTimeOutHandler.postDelayed(mTimeOutRunnable, TIME_OUT_DURATION);
         }
     }

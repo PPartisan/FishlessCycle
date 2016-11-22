@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <com.github.ppartisan.fishlesscycle.view.EmptyRecyclerView
+        android:id="@+id/fd_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:descendantFocusability="afterDescendants"
+        android:background="@android:color/white"
+        android:layout_weight="1"
+        android:elevation="12dp"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/fd_coordinator"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.github.mikephil.charting.charts.CombinedChart
+            android:id="@+id/fd_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:background="@color/primary"/>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fd_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:title="@string/app_name"
+            app:theme="@style/Theme.AppCompat"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/fd_hidden_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:clickable="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/fd_card_padding"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/primary">
+
+            <android.support.v7.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/vertical_margin_default"
+                android:layout_marginBottom="@dimen/vertical_margin_default"
+                android:layout_marginStart="@dimen/horizontal_margin_default"
+                android:layout_marginEnd="@dimen/horizontal_margin_default"
+                android:layout_marginLeft="@dimen/horizontal_margin_default"
+                android:layout_marginRight="@dimen/horizontal_margin_default"
+                app:columnCount="2">
+
+                <TextView
+                    android:id="@+id/fd_hidden_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/df_add_new_entry"
+                    android:textColor="@android:color/white"
+                    app:layout_columnSpan="2"/>
+
+                <TextView
+                    android:id="@+id/fd_ammonia_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/list_item_small"
+                    android:text="@string/ammonia"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/vertical_margin_default_small"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@android:color/white"
+                    app:layout_gravity="start|center_vertical"/>
+
+                <EditText
+                    android:id="@+id/fd_ammonia_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/list_item_small"
+                    android:minEms="2"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@android:color/white"
+                    android:theme="@style/NoteEditText"
+                    android:contentDescription="@string/df_acc_enter_ammonia"
+                    app:layout_gravity="end|center_vertical" />
+
+                <TextView
+                    android:id="@+id/fd_nitrite_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/list_item_small"
+                    android:text="@string/nitrite"
+                    android:textStyle="bold"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@android:color/white"
+                    app:layout_gravity="start|center_vertical"/>
+
+                <EditText
+                    android:id="@+id/fd_nitrite_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/list_item_small"
+                    android:minEms="2"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@android:color/white"
+                    android:theme="@style/NoteEditText"
+                    android:contentDescription="@string/df_acc_enter_nitrite"
+                    app:layout_gravity="end|center_vertical" />
+
+                <TextView
+                    android:id="@+id/fd_nitrate_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/list_item_small"
+                    android:text="@string/nitrate"
+                    android:textStyle="bold"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@android:color/white"
+                    app:layout_gravity="start|center_vertical"/>
+
+                <EditText
+                    android:id="@+id/fd_nitrate_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/list_item_small"
+                    android:minEms="2"
+                    android:maxLength="3"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:gravity="end|center_vertical"
+                    android:textColor="@android:color/white"
+                    android:theme="@style/NoteEditText"
+                    android:contentDescription="@string/df_acc_enter_nitrate"
+                    app:layout_gravity="end|center_vertical" />
+
+            </android.support.v7.widget.GridLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fd_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_24dp"
+            android:layout_marginEnd="@dimen/fab_margin_anchored"
+            android:layout_marginRight="@dimen/fab_margin_anchored"
+            android:layout_marginBottom="@dimen/fab_margin_anchored"
+            android:contentDescription="@string/df_add_new_entry"
+            app:useCompatPadding="false"
+            app:fabSize="normal"
+            app:layout_anchorGravity="top|right|end"
+            app:layout_anchor="@+id/fd_hidden_card"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

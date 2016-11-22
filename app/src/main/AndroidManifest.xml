@@ -45,12 +45,13 @@
         <service android:name=".service.LoadImagePackService" />
 
         <provider
-            android:authorities="com.github.ppartisan.fishlesscycle"
+            android:authorities="${applicationId}.data.Provider"
             android:name=".data.Provider"
+            android:enabled="true"
             android:exported="false" />
 
         <provider
-            android:authorities="com.github.ppartisan.fishlesscycle.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:name="android.support.v4.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

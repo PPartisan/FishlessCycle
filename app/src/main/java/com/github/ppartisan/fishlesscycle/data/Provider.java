@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
@@ -59,6 +60,8 @@ public final class Provider extends ContentProvider {
 
     @Override
     public String getType(@NonNull Uri uri) {
+
+        Log.e(getClass().getSimpleName(), uri.toString());
 
         switch (MATCHER.match(uri)) {
             case TANKS:

@@ -189,8 +189,8 @@ public final class ViewUtils {
     }
 
     private static String removeFilePrefixFromPath(String path) {
-        if(path.startsWith("file:")) {
-            return path.substring(5);
+        if(path.startsWith(AppUtils.FILE_PREFIX)) {
+            return path.substring(AppUtils.FILE_PREFIX.length());
         }
         return path;
     }

@@ -7,21 +7,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 
-public final class DatabaseHelper extends SQLiteOpenHelper {
+final class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "fishlesscycle.db";
-    public static final int SCHEMA = 1;
+    private static final String DATABASE_NAME = "fishlesscycle.db";
+    private static final int SCHEMA = 1;
 
     private static DatabaseHelper sInstance = null;
 
-    public static synchronized DatabaseHelper getInstance(Context context) {
+    static synchronized DatabaseHelper getInstance(Context context) {
         if (sInstance == null) {
             sInstance = new DatabaseHelper(context.getApplicationContext());
         }
         return sInstance;
     }
 
-    public DatabaseHelper(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
     }
 

@@ -37,6 +37,10 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/vertical_margin_default"
         android:layout_marginBottom="@dimen/vertical_margin_default"
+        android:layout_marginStart="@dimen/vertical_margin_default"
+        android:layout_marginLeft="@dimen/vertical_margin_default"
+        android:layout_marginRight="@dimen/vertical_margin_default"
+        android:layout_marginEnd="@dimen/vertical_margin_default"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
@@ -48,7 +52,7 @@
             android:text="@string/fm_empty_view_text"/>
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/fm_empty_view_image"

@@ -5,9 +5,13 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.github.ppartisan.fishlesscycle.BuildConfig;
+
 public final class Contract {
 
-    public static final String CONTENT_AUTHORITY = "com.github.ppartisan.fishlesscycle";
+    private Contract() { throw new AssertionError(); }
+
+    public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".data.Provider";
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 

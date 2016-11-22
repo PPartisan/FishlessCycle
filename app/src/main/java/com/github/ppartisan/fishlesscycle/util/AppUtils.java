@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
+import com.github.ppartisan.fishlesscycle.BuildConfig;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -27,10 +28,11 @@ public final class AppUtils {
     private static final String TAG = AppUtils.class.getCanonicalName();
     public static final String FILE_PATH_EXTRA = TAG + ".FILE_PATH_EXTRA";
 
-    private static final String AUTHORITY = "com.github.ppartisan.fishlesscycle.fileprovider";
-    private static final SimpleDateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+    private static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".fileprovider";
+    private static final SimpleDateFormat TIME_STAMP_FORMAT =
+            new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
 
-    private static final String FILE_PREFIX = "file:";
+    static final String FILE_PREFIX = "file:";
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final String[] PERMISSIONS_STORAGE = {

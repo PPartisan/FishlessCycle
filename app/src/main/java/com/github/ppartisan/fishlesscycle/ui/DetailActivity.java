@@ -19,10 +19,9 @@ import com.github.ppartisan.fishlesscycle.FishlessCycleApplication;
 import com.github.ppartisan.fishlesscycle.R;
 import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.strategy.Strategy;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.Tracker;
 
 public final class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -36,12 +35,12 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            final Transition slide = new Explode();
-            slide.excludeTarget(android.R.id.statusBarBackground, true);
-            slide.excludeTarget(R.id.fd_fab, true);
-            slide.excludeTarget(R.id.da_ad_view, true);
-            slide.excludeTarget(getAnimTargetName(), true);
-            getWindow().setEnterTransition(slide);
+            final Transition explode = new Explode();
+            explode.excludeTarget(android.R.id.statusBarBackground, true);
+            explode.excludeTarget(R.id.fd_fab, true);
+            explode.excludeTarget(getAnimTargetName(), true);
+            Strategy.get().addExcludedTarget(explode);
+            getWindow().setEnterTransition(explode);
         }
 
         ActivityCompat.postponeEnterTransition(this);
@@ -53,12 +52,8 @@ public final class DetailActivity extends AppCompatActivity implements LoaderMan
         AppUtils.checkInternetPermissions(this);
         mTracker = ((FishlessCycleApplication)getApplication()).getDefaultTracker();
 
-        final AdView adView = (AdView) findViewById(R.id.da_ad_view);
-        final AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("C07A980181A0030AB61A20553A00CD1E")
-                .build();
-        adView.loadAd(request);
+        Strategy.get().initializeAd(this);
+        Strategy.get().loadAdForActivity(this);
 
         if (getSupportFragmentManager().findFragmentById(R.id.da_container) == null) {
 
