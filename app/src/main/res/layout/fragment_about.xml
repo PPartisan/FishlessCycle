@@ -48,22 +48,23 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/vertical_margin_default_small"
-        android:text="@string/fa_name"/>
-
-    <TextView
         android:id="@+id/af_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/vertical_margin_default_small"
         android:text="@string/fa_content"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin_default_small"
+        android:text="@string/fa_name"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/vertical_margin_default_small"
         android:gravity="end">
 
         <ImageButton
@@ -90,7 +91,14 @@
             android:tint="@color/primary"
             style="@style/Widget.AppCompat.Button.Borderless"/>
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/af_dismiss"
+            android:layout_width="@dimen/image_button_default"
+            android:layout_height="@dimen/image_button_default"
+            android:src="@drawable/ic_close_white_24dp"
+            android:tint="@color/accent"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored" />
 
+    </LinearLayout>
 
 </LinearLayout>

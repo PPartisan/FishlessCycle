@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -44,10 +45,12 @@ public final class AboutDialogFragment extends DialogFragment implements View.On
         final ImageButton gPlus = (ImageButton) v.findViewById(R.id.af_google_plus);
         final ImageButton email = (ImageButton) v.findViewById(R.id.af_email);
         final ImageButton github = (ImageButton) v.findViewById(R.id.af_github);
+        final ImageButton dismiss = (ImageButton) v.findViewById(R.id.af_dismiss);
 
         gPlus.setOnClickListener(this);
         email.setOnClickListener(this);
         github.setOnClickListener(this);
+        dismiss.setOnClickListener(this);
 
         return v;
 
@@ -65,18 +68,22 @@ public final class AboutDialogFragment extends DialogFragment implements View.On
         switch (view.getId()) {
             case R.id.af_google_plus:
                 i = new Intent(Intent.ACTION_VIEW, GOOGLE_PLUS_URI);
+                startActivity(i);
                 break;
             case R.id.af_email:
                 i = new Intent(Intent.ACTION_SENDTO);
                 i.setData(Uri.parse("mailto:" + Api.EMAIL));
-                i.putExtra(Intent.EXTRA_SUBJECT, "Re:" + getString(R.string.app_name));
+                i.putExtra(Intent.EXTRA_SUBJECT, "Re: " + getString(R.string.app_name));
+                startActivity(i);
                 break;
             case R.id.af_github:
                 i = new Intent(Intent.ACTION_VIEW, GITHUB_URI);
+                startActivity(i);
+                break;
+            case R.id.af_dismiss:
+                dismiss();
                 break;
         }
-
-        startActivity(i);
 
     }
 
