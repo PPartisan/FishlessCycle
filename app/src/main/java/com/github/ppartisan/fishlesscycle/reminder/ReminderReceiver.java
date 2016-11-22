@@ -27,12 +27,12 @@ public final class ReminderReceiver extends BroadcastReceiver {
 
         final NotificationManager manager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        final Intent notifIntent = new Intent(context, MainActivity.class);
-        notifIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        final Intent nIntent = new Intent(context, MainActivity.class);
+        nIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         final PendingIntent pIntent =
                 PendingIntent.getActivity(
-                        context, 0, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                        context, 0, nIntent, PendingIntent.FLAG_UPDATE_CURRENT
                 );
 
         final Bitmap largeIcon =

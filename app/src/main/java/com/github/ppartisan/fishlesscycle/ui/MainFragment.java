@@ -96,6 +96,12 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
         final EmptyRecyclerView recycler = (EmptyRecyclerView) view.findViewById(R.id.fm_recycler);
         recycler.setEmptyView(view.findViewById(R.id.fm_empty_view));
+        recycler.setCallback(new EmptyRecyclerView.Callback() {
+            @Override
+            public void onEmpty() {
+                if(!fab.isShown()) fab.show();
+            }
+        });
 
         final @DosageUnit int dosUnitType =
                 PreferenceUtils.getDosageUnitType(getContext());
