@@ -58,7 +58,7 @@
                 android:layout_marginEnd="@dimen/horizontal_margin_default"
                 android:layout_marginLeft="@dimen/horizontal_margin_default"
                 android:layout_marginRight="@dimen/horizontal_margin_default"
-                app:columnCount="2">
+                app:columnCount="3">
 
                 <TextView
                     android:id="@+id/fd_hidden_title"
@@ -67,7 +67,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/df_add_new_entry"
                     android:textColor="@android:color/white"
-                    app:layout_columnSpan="2"/>
+                    app:layout_columnSpan="3"/>
 
                 <TextView
                     android:id="@+id/fd_ammonia_label"
@@ -96,6 +96,14 @@
                     android:contentDescription="@string/df_acc_enter_ammonia"
                     app:layout_gravity="end|center_vertical" />
 
+                <ImageButton
+                    android:id="@+id/fd_ammonia_chart"
+                    android:layout_width="@dimen/image_button_default"
+                    android:layout_height="@dimen/list_item_small"
+                    android:src="@drawable/ic_more_vert_white_24dp"
+                    app:layout_gravity="center_vertical"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless" />
+
                 <TextView
                     android:id="@+id/fd_nitrite_label"
                     android:layout_width="wrap_content"
@@ -122,6 +130,14 @@
                     android:contentDescription="@string/df_acc_enter_nitrite"
                     app:layout_gravity="end|center_vertical" />
 
+                <ImageButton
+                    android:id="@+id/fd_nitrite_chart"
+                    android:layout_width="@dimen/image_button_default"
+                    android:layout_height="@dimen/list_item_small"
+                    android:src="@drawable/ic_more_vert_white_24dp"
+                    app:layout_gravity="center_vertical"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless" />
+
                 <TextView
                     android:id="@+id/fd_nitrate_label"
                     android:layout_width="wrap_content"
@@ -147,6 +163,14 @@
                     android:theme="@style/NoteEditText"
                     android:contentDescription="@string/df_acc_enter_nitrate"
                     app:layout_gravity="end|center_vertical" />
+
+                <ImageButton
+                    android:id="@+id/fd_nitrate_chart"
+                    android:layout_width="@dimen/image_button_default"
+                    android:layout_height="@dimen/list_item_small"
+                    android:src="@drawable/ic_more_vert_white_24dp"
+                    app:layout_gravity="center_vertical"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
             </android.support.v7.widget.GridLayout>
 

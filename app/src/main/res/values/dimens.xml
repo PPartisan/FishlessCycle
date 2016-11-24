@@ -23,6 +23,10 @@
     <dimen name="wus_image_dimen">168dp</dimen>
     <dimen name="wus_margin_top_half_button_height">24dp</dimen>
 
+    <!-- API Row -->
+    <dimen name="radf_color_width">72dp</dimen>
+    <dimen name="radf_color_padding">16dp</dimen>
+
     <!-- Widget -->
     <dimen name="w_min_width">256dp</dimen>
     <dimen name="w_min_height">86dp</dimen>

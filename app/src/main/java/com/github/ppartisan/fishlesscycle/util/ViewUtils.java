@@ -27,6 +27,7 @@ import java.lang.reflect.Field;
 public final class ViewUtils {
 
     private static final int SWITCH_STATE_LIST_ALPHA = (int)(0.3f*255);
+    private static final float DEFAULT_DARK_COLOR_MULTIPLIER = 0.5f;
 
     private ViewUtils() { throw new AssertionError(); }
 
@@ -193,6 +194,20 @@ public final class ViewUtils {
             return path.substring(AppUtils.FILE_PREFIX.length());
         }
         return path;
+    }
+
+    public static int buildDarkColor(int color) {
+        return buildDarkColor(color, DEFAULT_DARK_COLOR_MULTIPLIER);
+    }
+
+    public static int buildDarkColor(int color, float m) {
+
+        final int r = (int) (Color.red(color) * m);
+        final int g = (int) (Color.green(color) * m);
+        final int b = (int) (Color.blue(color) * m);
+
+        return Color.rgb(r,g,b);
+
     }
 
 }

@@ -176,7 +176,6 @@
     <string name="wus_frf_acc_first_nitrite">Enter Nitrite First Reading</string>
     <string name="wus_frf_acc_first_nitrate">Enter Nitrate First Reading</string>
 
-
     <!-- 7. Confirmation Fragment -->
     <string name="wus_cf_name">Name</string>
     <string name="wus_cf_heater">Heater</string>
@@ -204,6 +203,10 @@
     <string name="fa_github">View App Source Code</string>
     <string name="fa_version_template">v.%1$s</string>
 
+    <!-- Api Color Chart Dialog Fragment -->
+    <string name="fdac_summary">These colours and values are based on those used in the API
+        Freshwater Master Test Kit.</string>
+
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>
     <string name="units_description_template_double">Currently showing %1$s and %2$s</string>
@@ -226,5 +229,6 @@
     <string name="deleted_template">%1$s deleted</string>
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
+    <string name="two_string_template">%1$s %2$s</string>
 
 </resources>

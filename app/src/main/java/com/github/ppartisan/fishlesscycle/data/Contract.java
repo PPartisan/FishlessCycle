@@ -4,8 +4,12 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.IntDef;
 
 import com.github.ppartisan.fishlesscycle.BuildConfig;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public final class Contract {
 
@@ -17,6 +21,7 @@ public final class Contract {
 
     static final String PATH_TANKS = "tanks";
     static final String PATH_READINGS = "readings";
+    static final String PATH_API_COLOR_CHART = "apicolors";
 
     public static final class TankEntry implements BaseColumns {
 
@@ -77,6 +82,41 @@ public final class Contract {
 
         public static Uri buildReadingUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+    }
+
+    public static final class ApiColorChartEntry implements BaseColumns {
+
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef({AMMONIA,NITRITE,NITRATE})
+        public @interface Categories{}
+        public static final int AMMONIA = 10;
+        public static final int NITRITE = 20;
+        public static final int NITRATE = 30;
+
+        static final String TABLE_NAME = "apichart";
+
+        public static final String COLUMN_CATEGORY = TABLE_NAME + "_category";
+        public static final String COLUMN_COLOR = TABLE_NAME + "_color";
+        public static final String COLUMN_VALUE = TABLE_NAME + "_label";
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_API_COLOR_CHART).build();
+
+        static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_API_COLOR_CHART;
+
+        static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_API_COLOR_CHART;
+
+        public static Uri buildApiColorChartUri(@Categories int category) {
+            return ContentUris.withAppendedId(CONTENT_URI, category);
+        }
+
+        static @Categories int getApiColorChatCategory(Uri uri) {
+            final @Categories int category = Integer.parseInt(uri.getPathSegments().get(1));
+            return category;
         }
 
     }

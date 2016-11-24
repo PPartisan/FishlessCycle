@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -36,6 +37,7 @@ import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapter;
 import com.github.ppartisan.fishlesscycle.chart.ChartAdapterImpl;
 import com.github.ppartisan.fishlesscycle.data.Contract;
+import com.github.ppartisan.fishlesscycle.data.Contract.ApiColorChartEntry;
 import com.github.ppartisan.fishlesscycle.model.Reading;
 import com.github.ppartisan.fishlesscycle.view.HiddenViewManager;
 import com.github.ppartisan.fishlesscycle.util.ReadingUtils;
@@ -112,7 +114,15 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
         mNitrite = (EditText) view.findViewById(R.id.fd_nitrite_entry);
         mNitrate = (EditText) view.findViewById(R.id.fd_nitrate_entry);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.fd_toolbar);
+        final ImageButton ammoniaChart = (ImageButton) view.findViewById(R.id.fd_ammonia_chart);
+        final ImageButton nitriteChart = (ImageButton) view.findViewById(R.id.fd_nitrite_chart);
+        final ImageButton nitrateChart = (ImageButton) view.findViewById(R.id.fd_nitrate_chart);
+
+        ammoniaChart.setOnClickListener(this);
+        nitriteChart.setOnClickListener(this);
+        nitrateChart.setOnClickListener(this);
+
+        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.fd_toolbar);
         toolbar.inflateMenu(R.menu.detail_menu);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
@@ -191,7 +201,23 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        mHiddenViewManager.animate();
+
+        ApiColorChartDialogFragment f;
+
+        switch (view.getId()) {
+            case R.id.fd_fab:
+                mHiddenViewManager.animate();
+                break;
+            case R.id.fd_ammonia_chart:
+                showApiColorChartFragment(ApiColorChartEntry.AMMONIA);
+                break;
+            case R.id.fd_nitrite_chart:
+                showApiColorChartFragment(ApiColorChartEntry.NITRITE);
+                break;
+            case R.id.fd_nitrate_chart:
+                showApiColorChartFragment(ApiColorChartEntry.NITRATE);
+                break;
+        }
     }
 
     @Override
@@ -437,6 +463,12 @@ public final class DetailFragment extends Fragment implements View.OnClickListen
             parcel.writeByte((byte) (isInEditMode ? 1 : 0));
             parcel.writeInt(index);
         }
+    }
+
+    private void showApiColorChartFragment(@ApiColorChartEntry.Categories int category) {
+        final ApiColorChartDialogFragment fragment =
+                ApiColorChartDialogFragment.newInstance(category);
+        fragment.show(getFragmentManager(), fragment.getClass().getSimpleName());
     }
 
 }

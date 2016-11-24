@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.github.ppartisan.fishlesscycle.data.Contract.ApiColorChartEntry;
+import com.github.ppartisan.fishlesscycle.data.Contract.ApiColorChartEntry.Categories;
 import com.github.ppartisan.fishlesscycle.data.Contract.ReadingEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.TankEntry;
 
@@ -20,6 +22,7 @@ public final class Provider extends ContentProvider {
 
     static final int TANKS = 100;
     static final int READINGS = 101;
+    static final int API_COLORS = 102;
     static final int TANK = 500;
     static final int READING = 501;
 
@@ -45,6 +48,11 @@ public final class Provider extends ContentProvider {
             case READING:
                 final long identifier = ReadingEntry.getReadingId(uri);
                 cursor = getReading(identifier);
+                break;
+            case API_COLORS:
+                final @Categories int category =
+                        ApiColorChartEntry.getApiColorChatCategory(uri);
+                cursor = getApiColors(category);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
@@ -167,6 +175,7 @@ public final class Provider extends ContentProvider {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_TANKS, TANKS);
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_READINGS, READINGS);
+        matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_API_COLOR_CHART+"/#", API_COLORS);
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_TANKS+"/#", TANK);
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_READINGS+"/#", READING);
 
@@ -193,6 +202,19 @@ public final class Provider extends ContentProvider {
         return db.getReadableDatabase().query(
                 ReadingEntry.TABLE_NAME, null, selection, whereArgs, null, null, orderBy
         );
+    }
+
+    private Cursor getApiColors(@Categories int category) {
+        final String selection = ApiColorChartEntry.COLUMN_CATEGORY + "=?";
+        final String[] whereArgs = new String[] { String.valueOf(category) };
+        return db.getReadableDatabase().query(
+                ApiColorChartEntry.TABLE_NAME,
+                null,
+                selection,
+                whereArgs,
+                null,
+                null,
+                ApiColorChartEntry._ID);
     }
 
     private Uri insertTank(ContentValues cv) {

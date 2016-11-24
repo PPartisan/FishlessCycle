@@ -44,6 +44,8 @@
 
         <service android:name=".service.LoadImagePackService" />
 
+        <service android:name=".service.LoadApiColorChartService" />
+
         <provider
             android:authorities="${applicationId}.data.Provider"
             android:name=".data.Provider"
@@ -63,6 +65,8 @@
         </provider>
 
         <receiver android:name=".service.LoadImagePackReceiver" />
+
+        <receiver android:name=".service.LoadApiColorChartReceiver" />
 
         <receiver android:name=".reminder.ReminderReceiver" />
 
