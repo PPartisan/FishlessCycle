@@ -196,8 +196,7 @@
 
     <!-- About -->
     <string name="fa_name" formatted="false">Developed by <b>Tom Calver</b></string>
-    <string name="fa_content">Most of the code for this app is available at the GitHub repository
-    linked below.</string>
+    <string name="fa_content">A utility app for new aquarium owners.</string>
     <string name="fa_google_plus">Join Google+ Community</string>
     <string name="fa_email">Email Developer</string>
     <string name="fa_github">View App Source Code</string>
