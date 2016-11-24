@@ -103,8 +103,8 @@ final class DatabaseHelper extends SQLiteOpenHelper {
 
             category = ApiColorChartEntry.NITRITE;
 
-            insertRowIntoApiColorChart(db, cv, category, "#8aa7d1", 0f);
-            insertRowIntoApiColorChart(db, cv, category, "#b9cafe", 0.25f);
+            insertRowIntoApiColorChart(db, cv, category, "#a0cfd9", 0f);
+            insertRowIntoApiColorChart(db, cv, category, "#8aa7d1", 0.25f);
             insertRowIntoApiColorChart(db, cv, category, "#a593e1", 0.5f);
             insertRowIntoApiColorChart(db, cv, category, "#8e4594", 1f);
             insertRowIntoApiColorChart(db, cv, category, "#8c1e75", 2f);

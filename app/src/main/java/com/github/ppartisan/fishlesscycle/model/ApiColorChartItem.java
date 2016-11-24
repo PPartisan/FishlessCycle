@@ -18,7 +18,7 @@ public final class ApiColorChartItem implements Parcelable {
     }
 
     @SuppressWarnings("WrongConstant")
-    protected ApiColorChartItem(Parcel in) {
+    private ApiColorChartItem(Parcel in) {
         category = in.readInt();
         color = in.readInt();
         value = in.readFloat();

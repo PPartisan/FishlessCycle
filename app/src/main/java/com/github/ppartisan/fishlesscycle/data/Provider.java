@@ -80,6 +80,8 @@ public final class Provider extends ContentProvider {
                 return ReadingEntry.CONTENT_TYPE;
             case READING:
                 return ReadingEntry.CONTENT_ITEM_TYPE;
+            case API_COLORS:
+                return ApiColorChartEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
         }

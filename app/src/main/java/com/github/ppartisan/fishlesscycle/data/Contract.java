@@ -101,14 +101,11 @@ public final class Contract {
         public static final String COLUMN_COLOR = TABLE_NAME + "_color";
         public static final String COLUMN_VALUE = TABLE_NAME + "_label";
 
-        public static final Uri CONTENT_URI =
+        static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_API_COLOR_CHART).build();
 
         static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_API_COLOR_CHART;
-
-        static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_API_COLOR_CHART;
 
         public static Uri buildApiColorChartUri(@Categories int category) {
             return ContentUris.withAppendedId(CONTENT_URI, category);

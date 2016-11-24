@@ -26,15 +26,6 @@ public final class Tank {
     public static final int LIGHT = 5;
     public static final int HEAVY = 6;
 
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({NOT_STARTED, STARTED, CYCLING_AMMONIA, CYCLING_NITRITE,CYCLE_COMPLETE})
-    public @interface TankStatus {}
-    public static final int NOT_STARTED = 10;
-    public static final int STARTED = 12;
-    public static final int CYCLING_AMMONIA = 13;
-    public static final int CYCLING_NITRITE = 14;
-    public static final int CYCLE_COMPLETE = 15;
-
     public final String name, image;
     public final float volumeInLitres;
     private final AmmoniaDosage mAmmoniaDosage;
