@@ -74,6 +74,22 @@ public final class ReadingUtils {
 
     }
 
+    public static ContentValues[] toContentValuesArray(List<Reading> readings) {
+
+        if(readings == null) return new ContentValues[0];
+
+        final int size = readings.size();
+
+        final ContentValues[] cvs = new ContentValues[size];
+
+        for (int i = 0; i < size; i++) {
+            cvs[i] = toContentValues(readings.get(i));
+        }
+
+        return cvs;
+
+    }
+
     public static boolean equals(Reading r1, Reading r2) {
         return r1 == r2 || r1 != null && r2 != null && r1.equals(r2);
     }

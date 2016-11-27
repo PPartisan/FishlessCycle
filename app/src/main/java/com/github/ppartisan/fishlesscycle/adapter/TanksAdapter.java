@@ -73,7 +73,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         final Resources res = ctx.getResources();
 
         Glide.with(ctx).load(tank.image)
-                .listener(new ImageLoadCallbacks(holder.image, tank.image))
+                .listener(new ImageLoadCallbacks(tank.image, holder.image))
                 .placeholder(R.drawable.tank_white)
                 .into(holder.image);
 
@@ -224,12 +224,12 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
 
     private static final class ImageLoadCallbacks implements RequestListener<String, GlideDrawable> {
 
-        private final ImageView mImage;
         private final String mPath;
+        private final ImageView mImage;
 
-        private ImageLoadCallbacks(ImageView image, String path) {
-            mImage = image;
+        private ImageLoadCallbacks(String path, ImageView image) {
             mPath = path;
+            mImage = image;
         }
 
         @Override
@@ -246,8 +246,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
         public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
             mImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             mImage.clearColorFilter();
-            if (isFirstResource) {
-                //When loading for the first time images will not correctly fit imageview dimens.
+            if(isFirstResource) {
                 Glide.with(mImage.getContext()).load(mPath).into(mImage);
             }
             return false;

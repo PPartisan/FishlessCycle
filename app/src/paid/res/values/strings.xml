@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App -->
+    <string name="app_name" translatable="false">Fishless Cycle</string>
+
+    <!-- Sync -->
+    <string name="sync_message">Syncing with free version…</string>
+    <string name="sync_content">Thank you for installing the ad-free version of %1$s!\n\nYour
+    aquariums have already been copied from the free version of the app. This will only happen
+        once.\n\nTo prevent the free and paid versions of %1$s falling out of sync, it is strongly
+        recommended you now uninstall the free version.\n\nYou can do this automatically by leaving the
+    checkbox below checked, and pressing Continue.</string>
+    <string name="sync_label">Uninstall the free version of %1$s now</string>
+
+    <!-- Preferences -->
+    <string name="pref_sync_key">pref_sync_key</string>
+
+    <!-- Misc -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="continue_">Continue</string>
+    <string name="uninstall_success">Uninstall Successful</string>
+    <string name="uninstall_cancelled">Uninstall Cancelled</string>
+    <string name="uninstall_fail">Uninstall Failed</string>
+
+</resources>

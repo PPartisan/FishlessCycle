@@ -16,8 +16,10 @@ public final class Contract {
     private Contract() { throw new AssertionError(); }
 
     public static final String CONTENT_AUTHORITY = BuildConfig.APPLICATION_ID + ".data.Provider";
+    public static final String FREE_AUTHORITY = "com.github.ppartisan.fishlesscycle.free.data.Provider";
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    private static final Uri BASE_FREE_CONTENT_URI = Uri.parse("content://" + FREE_AUTHORITY);
 
     static final String PATH_TANKS = "tanks";
     static final String PATH_READINGS = "readings";
@@ -38,6 +40,9 @@ public final class Contract {
 
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_TANKS).build();
+
+        public static final Uri FREE_URI =
+                BASE_FREE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_TANKS).build();
 
         static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TANKS;
@@ -69,6 +74,8 @@ public final class Contract {
 
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_READINGS).build();
+        public static final Uri FREE_URI =
+                BASE_FREE_CONTENT_URI.buildUpon().appendEncodedPath(PATH_READINGS).build();
 
         static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_READINGS;

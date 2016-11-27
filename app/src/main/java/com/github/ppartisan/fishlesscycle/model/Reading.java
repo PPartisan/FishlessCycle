@@ -73,7 +73,7 @@ public final class Reading implements Parcelable {
         result = 31 * result + Float.floatToIntBits(ammonia);
         result = 31 * result + Float.floatToIntBits(nitrite);
         result = 31 * result + Float.floatToIntBits(nitrate);
-        result = 31 * result + note.hashCode();
+        result = 31 * result + ((note==null) ? 0 : note.hashCode());
         result = 31 * result + (isControl ? 1 : 0);
         return result;
     }

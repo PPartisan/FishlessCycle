@@ -8,7 +8,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.github.ppartisan.fishlesscycle.data.Contract.ApiColorChartEntry;
 import com.github.ppartisan.fishlesscycle.data.Contract.ApiColorChartEntry.Categories;
@@ -25,7 +24,6 @@ public final class Provider extends ContentProvider {
     static final int API_COLORS = 102;
     static final int TANK = 500;
     static final int READING = 501;
-
     static final UriMatcher MATCHER = buildUriMatcher();
 
     private DatabaseHelper db = null;
@@ -54,6 +52,9 @@ public final class Provider extends ContentProvider {
                         ApiColorChartEntry.getApiColorChatCategory(uri);
                 cursor = getApiColors(category);
                 break;
+            case READINGS:
+                cursor = getAllReadings();
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
         }
@@ -68,8 +69,6 @@ public final class Provider extends ContentProvider {
 
     @Override
     public String getType(@NonNull Uri uri) {
-
-        Log.e(getClass().getSimpleName(), uri.toString());
 
         switch (MATCHER.match(uri)) {
             case TANKS:
@@ -172,6 +171,45 @@ public final class Provider extends ContentProvider {
         return rowsUpdated;
     }
 
+    @Override
+    public int bulkInsert(@NonNull Uri uri,@NonNull ContentValues[] values) {
+
+        int insertCount = 0;
+        String table;
+
+        switch (MATCHER.match(uri)) {
+            case TANKS:
+                table = TankEntry.TABLE_NAME;
+                break;
+            case READINGS:
+                table = ReadingEntry.TABLE_NAME;
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown Uri: " + uri);
+        }
+
+        db.getWritableDatabase().beginTransaction();
+
+        try {
+
+            for(ContentValues cv : values) {
+                final long id = db.getWritableDatabase()
+                        .insertWithOnConflict(table, null, cv,SQLiteDatabase.CONFLICT_REPLACE);
+                if (id < 0) {
+                    throw new SQLException("Failed to insert row into " + uri);
+                }
+            }
+            db.getWritableDatabase().setTransactionSuccessful();
+            if (getContext() != null) {
+                getContext().getContentResolver().notifyChange(uri, null);
+            }
+            insertCount = values.length;
+        } finally {
+            db.getWritableDatabase().endTransaction();
+        }
+        return insertCount;
+    }
+
     private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -180,6 +218,7 @@ public final class Provider extends ContentProvider {
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_API_COLOR_CHART+"/#", API_COLORS);
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_TANKS+"/#", TANK);
         matcher.addURI(Contract.CONTENT_AUTHORITY, Contract.PATH_READINGS+"/#", READING);
+        //todo These are conflicting with CONTENT_AUTHORITY path in free mode...
 
         return matcher;
 
@@ -231,6 +270,18 @@ public final class Provider extends ContentProvider {
                 ReadingEntry.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE
         );
         return (id >= 0) ? ReadingEntry.buildReadingUri(id) : null;
+    }
+
+//    private Cursor getAllTanks() {
+//        return db.getReadableDatabase().query(
+//                TankEntry.TABLE_NAME, null, null, null, null, null, null
+//        );
+//    }
+
+    private Cursor getAllReadings() {
+        return db.getReadableDatabase().query(
+                ReadingEntry.TABLE_NAME, null, null, null, null, null, null
+        );
     }
 
     private static final String TANK_QUERY = "SELECT " +

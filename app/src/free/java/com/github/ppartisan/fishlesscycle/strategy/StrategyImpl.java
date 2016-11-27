@@ -3,7 +3,10 @@ package com.github.ppartisan.fishlesscycle.strategy;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 
 import com.github.ppartisan.fishlesscycle.R;
@@ -19,7 +22,7 @@ import java.util.Map;
 
 import static com.github.ppartisan.fishlesscycle.util.Api.OUKITEL_DEVICE_ID;
 
-public class StrategyImpl implements AdStrategy, AnimStrategy {
+class StrategyImpl implements AppStrategy {
 
     private final Map<String, Integer> mAdIdMap = buildAdIdMap();
 
@@ -58,5 +61,14 @@ public class StrategyImpl implements AdStrategy, AnimStrategy {
     public void addExcludedTarget(Transition transition) {
         transition.excludeTarget(R.id.da_ad_view, true);
     }
+
+    @Override
+    public void launchSyncAppFragment(AppCompatActivity activity) {
+        activity.startActivity(new Intent(activity, MainActivity.class));
+        activity.finish();
+    }
+
+    @Override
+    public void setSyncNoticeAlreadyDisplayed(Context context, boolean isAlreadyDisplayed) {}
 
 }

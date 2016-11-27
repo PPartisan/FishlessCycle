@@ -21,7 +21,6 @@ import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +37,7 @@ import com.github.ppartisan.fishlesscycle.adapter.TanksAdapter;
 import com.github.ppartisan.fishlesscycle.data.Contract;
 import com.github.ppartisan.fishlesscycle.model.Tank;
 import com.github.ppartisan.fishlesscycle.setup.SetUpWizardActivity;
+import com.github.ppartisan.fishlesscycle.strategy.Strategy;
 import com.github.ppartisan.fishlesscycle.util.AppUtils;
 import com.github.ppartisan.fishlesscycle.util.ConversionUtils.DosageUnit;
 import com.github.ppartisan.fishlesscycle.util.PreferenceUtils;
@@ -59,9 +59,10 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     private Toolbar mToolbar;
 
-    public static MainFragment newInstance() {
+    public static MainFragment newInstance(String uninstallMessage) {
 
         Bundle args = new Bundle();
+        args.putString(MainActivity.UNINSTALL_MESSAGE_EXTRA, uninstallMessage);
 
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
@@ -124,6 +125,15 @@ public final class MainFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final String uninstallMessage = getMessage();
+        if(uninstallMessage != null) {
+            buildUninstallMessageSnackBar(uninstallMessage).show();
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(ImageCapture.KEY, mImageCapture);
@@ -138,6 +148,10 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     public void updateTankList(List<Tank> tanks) {
         mAdapter.updateTanksList(tanks);
+    }
+
+    private String getMessage() {
+        return getArguments().getString(MainActivity.UNINSTALL_MESSAGE_EXTRA);
     }
 
     @Override
@@ -211,7 +225,6 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onChangePhotoCameraClick(int position) {
-        AppUtils.checkStoragePermissions(getActivity());
         final Intent photoIntent = AppUtils.buildTakePictureIntent(getActivity());
         if (photoIntent != null) {
             mImageCapture.path = photoIntent.getStringExtra(AppUtils.FILE_PATH_EXTRA);
@@ -222,10 +235,13 @@ public final class MainFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onChangePhotoGalleryClick(int position) {
-        AppUtils.checkStoragePermissions(getActivity());
         mImageCapture.adapterPosition = position;
         final Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, REQUEST_IMAGE_RETRIEVAL);
+    }
+
+    public void refreshAdapter() {
+        mAdapter.notifyDataSetChanged();
     }
 
     private void deleteTank(Tank tank) {
@@ -268,6 +284,24 @@ public final class MainFragment extends Fragment implements View.OnClickListener
         });
 
         return snackbar;
+    }
+
+    private Snackbar buildUninstallMessageSnackBar(String message) {
+        final Snackbar s = Snackbar.make(getView(), message, Snackbar.LENGTH_INDEFINITE);
+        s.setAction(R.string.dismiss, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                s.dismiss();
+            }
+        });
+        s.setCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                Strategy.get().setSyncNoticeAlreadyDisplayed(getContext(), true);
+                getArguments().putString(MainActivity.UNINSTALL_MESSAGE_EXTRA, null);
+            }
+        });
+        return s;
     }
 
     @Override

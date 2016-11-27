@@ -206,6 +206,9 @@
     <string name="fdac_summary">These colours and values are based on those used in the API
         Freshwater Master Test Kit.</string>
 
+    <!-- Manifest -->
+
+
     <!-- Units Misc -->
     <string name="units_description_template_single">Currently showing %1$s</string>
     <string name="units_description_template_double">Currently showing %1$s and %2$s</string>

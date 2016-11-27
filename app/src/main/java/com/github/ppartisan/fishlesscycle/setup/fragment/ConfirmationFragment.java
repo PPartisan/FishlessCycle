@@ -39,11 +39,12 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
 
     private @PreferenceUtils.VolumeUnit int volumeUnit;
 
-    private boolean isVisible = false;
+    private boolean isVisible = true;
 
     private TextView mVolumeLabel;
     private EditText mTitle, mVolume, mAmmonia;
     private CheckBox mHeater, mSeedMaterial;
+    private RadioGroup mPlantGroup;
     private RadioButton mNoPlants, mLightlyPlanted, mHeavilyPlanted;
 
     public static ConfirmationFragment newInstance(boolean isVisibleByDefault) {
@@ -60,7 +61,6 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         volumeUnit = PreferenceUtils.getVolumeUnit(getContext());
-        isVisible = isVisibleByDefault();
     }
 
     @Override
@@ -84,8 +84,7 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
         Button confirm = (Button) v.findViewById(R.id.c_suwf_confirm);
         confirm.setOnClickListener(this);
 
-        final RadioGroup group = (RadioGroup) v.findViewById(R.id.c_suwf_planted);
-        group.setOnCheckedChangeListener(this);
+        mPlantGroup = (RadioGroup) v.findViewById(R.id.c_suwf_planted);
 
         return v;
     }
@@ -119,6 +118,8 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
 
         mHeater.setOnCheckedChangeListener(this);
         mSeedMaterial.setOnCheckedChangeListener(this);
+
+        mPlantGroup.setOnCheckedChangeListener(this);
 
     }
 
@@ -266,7 +267,9 @@ public final class ConfirmationFragment extends BaseSetUpWizardPagerFragment imp
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         //Without this, Radio Group auto-checks first button in group on page swipe.
-        this.isVisible = isVisibleToUser;
+        if(!isVisibleByDefault()) {
+            this.isVisible = isVisibleToUser;
+        }
     }
 
     @Override

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:padding="?dialogPreferredPadding"
+    android:scrollbarStyle="outsideOverlay">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin_default"
+        android:layout_marginBottom="@dimen/vertical_margin_default"
+        android:paddingTop="@dimen/vertical_margin_default"
+        android:paddingBottom="@dimen/vertical_margin_default"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginBottom="@dimen/vertical_margin_default"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/sdf_confirm_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/sdf_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/vertical_margin_default"
+                    tools:text="@string/sync_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/vertical_margin_default">
+
+                    <TextView
+                        android:id="@+id/sdf_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start|center_vertical"
+                        tools:text="@string/sync_label"/>
+
+                    <CheckBox
+                        android:id="@+id/sdf_uninstall_check"
+                        android:layout_width="@dimen/image_button_small"
+                        android:layout_height="@dimen/image_button_default"
+                        android:layout_weight="0"
+                        android:checked="true"
+                        android:gravity="end|center_vertical"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/sdf_continue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/continue_"
+                    android:layout_gravity="end"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/sdf_progress_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sync_message"
+                    android:layout_marginLeft="@dimen/horizontal_margin_default"
+                    android:layout_marginRight="@dimen/horizontal_margin_default"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

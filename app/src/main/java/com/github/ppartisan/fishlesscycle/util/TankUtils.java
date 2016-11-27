@@ -246,6 +246,22 @@ public final class TankUtils {
 
     }
 
+    public static ContentValues[] toContentValuesArray(List<Tank> tanks) {
+
+        if(tanks == null) return new ContentValues[0];
+
+        final int size = tanks.size();
+
+        final ContentValues[] cvs = new ContentValues[size];
+
+        for (int i = 0; i < size; i++) {
+            cvs[i] = toContentValues(tanks.get(i));
+        }
+
+        return cvs;
+
+    }
+
     public static boolean equals(AmmoniaDosage a1, AmmoniaDosage a2) {
         return a1 == a2 || a1 != null && a2 != null && a1.equals(a2);
     }
