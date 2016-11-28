@@ -28,17 +28,20 @@ class StrategyImpl implements AppStrategy {
         final PackageManager pm = activity.getPackageManager();
         final FragmentManager fm = activity.getSupportFragmentManager();
 
-        if(SyncUtil.isFreeVersionInstalled(pm) && !SyncUtil.isSyncNoticeAlreadyDisplayed(activity)) {
-            if(fm.findFragmentByTag(SyncUiFragment.TAG) == null) {
+        final SyncUiFragment frag = (SyncUiFragment) fm.findFragmentByTag(SyncUiFragment.TAG);
+
+        if(frag == null) {
+            if((SyncUtil.isFreeVersionInstalled(pm) &&
+                    !SyncUtil.isSyncNoticeAlreadyDisplayed(activity))) {
                 fm.beginTransaction()
                         .add(SyncUiFragment.newInstance(), SyncUiFragment.TAG)
                         .commit();
+            } else {
+                final Intent mainActivityIntent = new Intent(activity,MainActivity.class);
+                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                activity.startActivity(mainActivityIntent);
+                activity.finish();
             }
-        } else {
-            final Intent mainActivityIntent = new Intent(activity,MainActivity.class);
-            mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(mainActivityIntent);
-            activity.finish();
         }
 
     }

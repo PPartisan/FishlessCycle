@@ -38,7 +38,7 @@ public final class SyncUiFragment extends AppCompatDialogFragment implements Syn
     private static final int REQUEST_UNINSTALL_CODE = 12;
 
     private SyncReceiver mReceiver;
-    private boolean mIsSyncComplete;
+    private boolean mIsSyncComplete, mIsUninstallComplete;
 
     private ViewGroup mSyncingLayout, mConfirmLayout;
     private CheckBox mUninstallCheckBox;
@@ -55,13 +55,24 @@ public final class SyncUiFragment extends AppCompatDialogFragment implements Syn
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+        After uninstalling, the Activity and Fragment are relaunched, so check to make sure
+        the free version is installed. If it isn't, and we're seeing this Fragment, it means the
+        uninstall is complete, so we can skip rendering a UI or launching the Service and go
+        straight to onActivityResult() to launch MainActivity.
+         */
+        mIsUninstallComplete = !SyncUtil.isFreeVersionInstalled(getActivity().getPackageManager());
+        if(mIsUninstallComplete) return;
         mReceiver = new SyncReceiver(this);
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SyncDialog);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if (mIsUninstallComplete) return null;
 
         final View v = inflater.inflate(R.layout.fragment_dialog_sync, container, false);
 
@@ -97,14 +108,17 @@ public final class SyncUiFragment extends AppCompatDialogFragment implements Syn
     @Override
     public void onResume() {
         super.onResume();
+        if (mIsUninstallComplete) return;
         final IntentFilter filter = new IntentFilter(SyncService.ACTION_COMPLETE);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, filter);
         getActivity().startService(new Intent(getContext(), SyncService.class));
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        if (mIsUninstallComplete) return;
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
