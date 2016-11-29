@@ -12,4 +12,4 @@ App uses Admob and Analytics.
 **If it needs to pull or send data to/from a web service or API only once, or on a per request basis (such as a search application), app uses an IntentService to do so:** [SettingsActivity](https://github.com/PPartisan/Udacity-CapstoneStageII/blob/master/app/src/main/java/com/github/ppartisan/fishlesscycle/ui/SettingsActivity.java) uses an [IntentService](https://github.com/PPartisan/Udacity-CapstoneStageII/blob/master/app/src/main/java/com/github/ppartisan/fishlesscycle/service/LoadImagePackService.java) to query a [ContentProvider](https://github.com/PPartisan/Udacity-CapstoneStageII/blob/master/app/src/main/java/com/github/ppartisan/fishlesscycle/data/Provider.java). In all other cases a `Loader` is used.
 
 ##Fishless Cycle
-![icon](https://github.com/PPartisan/Udacity-CapstoneStageII/blob/master/images/banner.png?raw=true)
+![icon](https://raw.githubusercontent.com/PPartisan/Udacity-CapstoneStageII/master/images/banner_merge.png)
