@@ -248,6 +248,7 @@ public final class TanksAdapter extends RecyclerView.Adapter<TanksAdapter.ViewHo
             mImage.clearColorFilter();
             if(isFirstResource) {
                 Glide.with(mImage.getContext()).load(mPath).into(mImage);
+                return true;
             }
             return false;
         }
