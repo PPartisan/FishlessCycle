@@ -32,6 +32,8 @@
         <com.github.ppartisan.fishlesscycle.ui.ReminderTimePreferenceDialog
             android:key="@string/pref_reminder_time_key"
             android:title="@string/pref_reminder_time_title"
+            android:dialogTitle=""
+            android:dialogLayout="@layout/dialog_time_picker"
             android:dependency="@string/pref_include_reminder_key"/>
 
         <ListPreference

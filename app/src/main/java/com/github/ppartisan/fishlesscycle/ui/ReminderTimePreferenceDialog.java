@@ -40,14 +40,9 @@ public final class ReminderTimePreferenceDialog extends DialogPreference {
     }
 
     @Override
-    protected View onCreateDialogView() {
-        picker=new TimePicker(getContext());
-        return(picker);
-    }
-
-    @Override
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
+        picker = (TimePicker) v.findViewById(R.id.ptd_picker);
         setPickerFields(lastHour, lastMinute);
     }
 
