@@ -1,5 +1,7 @@
 # Udacity-CapstoneStageII
 
+*The [free](https://play.google.com/store/apps/details?id=com.github.ppartisan.fishlesscycle.free) and [paid](https://play.google.com/store/apps/details?id=com.github.ppartisan.fishlesscycle.paid) flavors of Fishless Cycle are available on the Google Play Store.*
+
 Android app that helps aquarium owners set up their new tanks and conduct a 'fishless cycle'. This is a submission for the second and final phase of the Capstone project on the [Udacity Android Developers Nanodegree](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801?v=ad1_). Some of the rubric specifications were met in the following way:
 
 **App integrates a third-party library:** App uses the [Glide](https://github.com/bumptech/glide) and [MPAndroidChartLibraries](https://github.com/PhilJay/MPAndroidChart).
